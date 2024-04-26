@@ -127,17 +127,17 @@ class PyDataSimem:
         """
         Generator to deliver a list of date ranges 
         """
-        start_date = dt.strptime(start_date, "%Y-%m-%d")  # Typing
-        end_date = dt.strptime(end_date, "%Y-%m-%d")
+        start_date = dt.strptime(start_date, DATE_FORMAT)  # Typing
+        end_date = dt.strptime(end_date, DATE_FORMAT)
 
         intervals = (end_date - start_date)/resolution
 
         for i in range(0, intervals.days + 1, 2):
-            yield (start_date + timedelta(days=resolution)*i).strftime("%Y-%m-%d")
+            yield (start_date + timedelta(days=resolution)*i).strftime(DATE_FORMAT)
             
             if start_date + timedelta(days=resolution)*(i+1) < end_date:
-                yield (start_date + timedelta(days=resolution)*(i+1)).strftime("%Y-%m-%d")
-        yield (end_date.strftime("%Y-%m-%d"))
+                yield (start_date + timedelta(days=resolution)*(i+1)).strftime(DATE_FORMAT)
+        yield (end_date.strftime(DATE_FORMAT))
 
 
 
