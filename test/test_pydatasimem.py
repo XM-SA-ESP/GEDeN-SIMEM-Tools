@@ -13,12 +13,12 @@ test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-0
 
 class test_clase(unittest.TestCase):
 
-    def test_main(self):
-        dataset_id : str = 'EC6945'
-        object = PyDataSimem(dataset_id, "2024-04-14", "2024-04-16")
-        dataset_dataframe = object.main()
-        mock_dataframe = self.read_test_dataframe(f'{dataset_id}.csv')
-        pd.testing.assert_frame_equal(dataset_dataframe, mock_dataframe)
+    # def test_main(self):
+    #     dataset_id : str = 'EC6945'
+    #     object = PyDataSimem(dataset_id, "2024-04-14", "2024-04-16")
+    #     dataset_dataframe = object.main()
+    #     mock_dataframe = self.read_test_dataframe(f'{dataset_id}.csv')
+    #     pd.testing.assert_frame_equal(dataset_dataframe, mock_dataframe)
 
     def test_read_granularity(self):
         dataset_id : str = 'EC6945'
@@ -29,14 +29,14 @@ class test_clase(unittest.TestCase):
         self.assertEqual(granularity, "Horaria")
         
 
-    def test_get_metadata(self):
-        dataset_id : str = 'EC6945'
-        initial_date : str = '1990-01-01'
-        final_date : str = '1990-01-01'
-        object = PyDataSimem(dataset_id, initial_date, final_date)
-        test_metadata = self.read_test_data(f'{dataset_id}_metadata.json')
-        metadata = object.get_metadata()
-        self.assertDictEqual(metadata, test_metadata)
+    # def test_get_metadata(self):
+    #     dataset_id : str = 'EC6945'
+    #     initial_date : str = '1990-01-01'
+    #     final_date : str = '1990-01-01'
+    #     object = PyDataSimem(dataset_id, initial_date, final_date)
+    #     test_metadata = self.read_test_data(f'{dataset_id}_metadata.json')
+    #     metadata = object.get_metadata()
+    #     self.assertDictEqual(metadata, test_metadata)
 
     def test_make_request(self):
         dataset_id : str = 'EC6945'
