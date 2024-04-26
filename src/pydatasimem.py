@@ -9,16 +9,9 @@ from datetime import datetime as dt
 from datetime import timedelta 
 from itertools import repeat, chain
 
-# # logger = logging.get# logger("application")
-# sh = logging.StreamHandler()
-# formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s", "", "%")
-# sh.setFormatter(formatter)
-# # logger.addHandler(sh)
-# # logger.addHandler(logging.FileHandler(os.getcwd()+ os.sep +r'log/mylog.log'))
-# # logger.setLevel(logging.DEBUG)
-# # logger.info('\n inicia extraccion PyDataSIMEM %s', str(dt.strftime(dt.now(), format='%Y-%m-%d %H:%m:%S')))
-
 DATASETID = 'EC6945'
+DATE_FORMAT = "%Y-%m-%d"
+
 
 @dataclass
 class PyDataSimem:
@@ -39,23 +32,13 @@ class PyDataSimem:
         Creates a .csv or .json file with the information about the required dataset 
         in the given dates
         """
-        # logger.info(f"For the dataset {self.dataset_id} and the dates {self.start_date} to {self.end_date}")
         granularity: str = self.read_granularity()
         resolution: int = self.check_date_resolution(granularity)
         urls: list[str] = self.create_urls(self.start_date, self.end_date, resolution)
-        records = (map(self.get_records, urls))
+        records: list[list] = list(map(self.get_records, urls))
         dataset_info: dict = self.get_dataset_info()
         dataset: dict = self.save_dataset(dataset_info, records)
         self.session.close()
-        # if path is None:
-        #     path = os.getcwd() + "\\" + self.dataset_id
-        
-        # if filetype == "json":
-        #     self.dict_to_json(dataset, path)
-
-        # elif filetype == "csv":
-        #     dataset = pd.DataFrame(dataset["result"]["records"])
-        #     dataset.to_csv(path + ".csv", index=index)
 
         return pd.DataFrame.from_dict(dataset["result"]["records"])
 
@@ -65,7 +48,6 @@ class PyDataSimem:
         """
         metadata: dict = self.get_metadata()
         granularity: str = metadata["granularity"]
-        # logger.info(f"Granularity -> {granularity}")
         return granularity
 
     def get_metadata(self) -> dict:
@@ -76,7 +58,6 @@ class PyDataSimem:
         url = self.url_api.format(self.ref_date, self.ref_date, self.dataset_id.lower())
         response: dict =  self.make_request(url)  # Typing
         metadata: dict = response["result"]["metadata"]
-        # logger.info("Metadata saved.")
         return metadata
     
     def get_records(self, url: str) -> list:
@@ -86,7 +67,6 @@ class PyDataSimem:
         """
         response = self.make_request(url)
         records = response["result"]["records"]
-        # logger.info(f"There are {len(records)} records")
         return records
 
     def get_dataset_info(self) -> dict:
@@ -116,7 +96,6 @@ class PyDataSimem:
         with the response
         """
         response = self.session.get(url)
-        # logger.info("Request done with status code {response.status_code}")
         return response.json()
 
     def check_date_resolution(self, granularity: str) -> int:
@@ -142,7 +121,6 @@ class PyDataSimem:
         with open(name, 'w') as file:
             json.dump(response, file)
         file.close()
-        # logger.info("Dictionary saved in JSON file")
         return None
     
     def generate_start_dates(self, start_date: str, end_date: str, resolution: int):
