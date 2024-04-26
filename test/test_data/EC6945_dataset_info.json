@@ -1,0 +1,78 @@
+{
+    "parameters": {
+        "idDataset": "EC6945",
+        "startDate": "2024-04-14",
+        "endDate": "2024-04-16"
+    },
+    "success": true,
+    "result": {
+        "idDataset": "EC6945",
+        "name": "Precio de bolsa horario",
+        "metadata": {
+            "description": "Precio de bolsa horario nacional, internacional y TIE",
+            "creationDate": "2023-10-02 21:36:52",
+            "lastUpdate": "2024-04-24 21:23:50",
+            "entity": "XM",
+            "category": "Precio de bolsa horario",
+            "periodicity": "Diaria",
+            "granularity": "Horaria",
+            "historicData": "NaN",
+            "private": false
+        },
+        "filterDate": "FechaHora",
+        "records": [],
+        "variables": [
+            {
+                "variableCode": "PB_Tie",
+                "variableName": "Precio de bolsa TIE",
+                "measurementUnit": "COP/kWh",
+                "description": " precio de bolsa TIE (Ecuador)"
+            },
+            {
+                "variableCode": "PB_Nal",
+                "variableName": "Precio de bolsa nacional",
+                "measurementUnit": "COP/kWh",
+                "description": "Precio de bolsa nacional"
+            },
+            {
+                "variableCode": "PB_Int",
+                "variableName": "Precio de bolsa internacional",
+                "measurementUnit": "COP/kWh",
+                "description": "Precio de bolsa internacional"
+            }
+        ],
+        "columns": [
+            {
+                "nameColumn": "CodigoVariable",
+                "dataType": "texto",
+                "description": "C\u00f3digo de la variable"
+            },
+            {
+                "nameColumn": "Valor",
+                "dataType": "flotante",
+                "description": "Valor de la variable"
+            },
+            {
+                "nameColumn": "UnidadMedida",
+                "dataType": "texto",
+                "description": "Unidad de medida en la que se encuentra la variable"
+            },
+            {
+                "nameColumn": "Version",
+                "dataType": "texto",
+                "description": "Versi\u00f3n de la liquidaci\u00f3n"
+            },
+            {
+                "nameColumn": "FechaHora",
+                "dataType": "fecha hora",
+                "description": "Fecha y hora de representaci\u00f3n del dato"
+            },
+            {
+                "nameColumn": "CodigoDuracion",
+                "dataType": "texto",
+                "description": "C\u00f3digo de duraci\u00f3n de la variable en formato ISO8601"
+            }
+        ],
+        "tags": []
+    }
+}
