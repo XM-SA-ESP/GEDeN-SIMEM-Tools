@@ -14,7 +14,7 @@ sh = logging.StreamHandler()
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s", "", "%")
 sh.setFormatter(formatter)
 logger.addHandler(sh)
-logger.addHandler(logging.FileHandler(r'log/mylog.log'))
+logger.addHandler(logging.FileHandler(os.getcwd()+ os.sep +r'log/mylog.log'))
 logger.setLevel(logging.DEBUG)
 logger.info('\n inicia extraccion PyDataSIMEM %s', str(dt.strftime(dt.now(), format='%Y-%m-%d %H:%m:%S')))
 
