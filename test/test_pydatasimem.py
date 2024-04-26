@@ -124,18 +124,18 @@ class test_clase(unittest.TestCase):
         dataset_id : str = 'EC6945'
         object = PyDataSimem(dataset_id)
         dictionary = object.get_metadata()
-        path = r'D:/Repos/PyDataSimem/test/test_data/test_write_file.json'
+        path = os.getcwd()+os.sep + r'test/test_data/test_write_file.json'
         object.dict_to_json(dictionary, path)
         test_json = self.read_test_data('test_write_file.json')
         self.assertDictEqual(dictionary, test_json)
 
     def read_test_data(self, filename):
-        path = r'D:/Repos/PyDataSimem/test/test_data/' + filename
+        path = os.getcwd()+os.sep + r'test/test_data/' + filename
         with open(path) as file:
             filedata = json.load(file)
         return filedata
     
     def read_test_dataframe(self, filename):
-        path = r'D:/Repos/PyDataSimem/test/test_data/' + filename
+        path = os.getcwd()+os.sep + r'test/test_data/' + filename
         dataframe = pd.read_csv(path)
         return dataframe
