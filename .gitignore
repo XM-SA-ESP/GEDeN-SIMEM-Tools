@@ -162,6 +162,5 @@ cython_debug/
 # Project folders
 demos/
 log/
-test/
 coverage-reports/
 

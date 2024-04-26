@@ -1,0 +1,3458 @@
+[
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.9041748046875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.339111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.339111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1201.1632080078125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1201.1632080078125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1199.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1199.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.339111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.339111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.339111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.9041748046875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.9041748046875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8841552734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8841552734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8841552734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8841552734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8841552734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.30419921875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-16 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.9097900390625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.3447265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.3447265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1201.1688232421875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1201.1688232421875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1199.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1199.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.3447265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.3447265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.3447265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.9097900390625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.9097900390625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.8897705078125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.8897705078125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.8897705078125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.8897705078125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.8897705078125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-16 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.309814453125
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.8590087890625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1199
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1103.0350341796875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1041
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-16 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1100.1300048828125
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5899658203125
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.9185791015625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.318603515625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.318603515625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200.318603515625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.9185791015625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1100.4486083984375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.9185791015625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.9085693359375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.8985595703125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.3746337890625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1100.1300048828125
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5899658203125
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1100.1300048828125
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5899658203125
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-15 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.14111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.5411376953125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.5411376953125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200.5411376953125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.14111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1100.671142578125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.14111328125
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.131103515625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5899658203125
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1100.1300048828125
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1200
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5999755859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-15 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.5799560546875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.59716796875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-15 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1057.12109375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.61572265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.61669921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1005
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1003.791015625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.6165771484375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.615478515625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.615478515625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1005.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1003.9065551757812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010.1155395507812
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.615478515625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.6165771484375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.1715087890625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1005
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1003.791015625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Tie",
+        "FechaHora": "2024-04-14 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1003.9066772460938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1005.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010.1156616210938
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.61572265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.61572265625
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.61669921875
+    },
+    {
+        "CodigoVariable": "PB_Nal",
+        "FechaHora": "2024-04-14 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.171630859375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 23:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 22:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 21:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 20:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 19:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 18:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1003.791015625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1005
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX1",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 00:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 01:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 02:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 03:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 04:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 05:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 06:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 07:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1005
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 08:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1003.791015625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 09:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 10:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 11:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 12:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 13:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 14:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1010
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 15:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 16:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1055.5009765625
+    },
+    {
+        "CodigoVariable": "PB_Int",
+        "FechaHora": "2024-04-14 17:00:00",
+        "CodigoDuracion": "PT1H",
+        "UnidadMedida": "COP/kWh",
+        "Version": "TX2",
+        "Valor": 1056.0560302734375
+    }
+]
