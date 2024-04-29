@@ -34,3 +34,9 @@ dataset_df.to_csv(path, index=False)
 
 ### Documentación API
 También se puede realizar la consulta utilizando directamente la API. Descarga la [documentación](https://www.simem.co/recursos/Documentacion%20API%20SIMEM.pdf) para ver los ejemplos
+
+### Funcionalidades/Features:
+
+1. Descargar datos desde el SIMEM utilizando python
+2. Consolidar diferentes fechas sin necesidad de detenerse por las restricciones del API
+3. Ser un puente para integraciones con otros productos de datos basados en información del Mercado de Energía Mayorista
