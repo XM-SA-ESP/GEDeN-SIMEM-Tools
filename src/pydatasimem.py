@@ -9,8 +9,7 @@ from datetime import datetime as dt
 from datetime import timedelta 
 from itertools import repeat, chain
 
-
-DATASETID = 'EC6945'
+DATASETID = 'e007fb'
 DATE_FORMAT = "%Y-%m-%d"
 
 
@@ -19,20 +18,20 @@ class PyDataSimem:
     """
     Class to request datasets to SIMEM using API
     """
-
-    dataset_id: str
-    start_date: str = '1990-01-01'
-    end_date: str = '1990-01-01'
-    url_api: str = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}&datasetId={}"
-    ref_date = '1990-01-01'
-    session = requests.Session()
+    def __init__(self):
+        self.url_api: str = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}&datasetId={}"
+        self.ref_date = '1990-01-01'
+        self.session = requests.Session()
     
 
-    def main(self) -> pd.DataFrame:
+    def main(self, dataset_id: str, start_date: str = '1990-01-01', end_date : str = '1990-01-01') -> pd.DataFrame:
         """
         Creates a .csv or .json file with the information about the required dataset 
         in the given dates
         """
+        self.dataset_id = dataset_id
+        self.start_date = start_date
+        self.end_date = end_date
         granularity: str = self.read_granularity()
         resolution: int = self.check_date_resolution(granularity)
         urls: list[str] = self.create_urls(self.start_date, self.end_date, resolution)
@@ -49,6 +48,10 @@ class PyDataSimem:
         """
         metadata: dict = self.get_metadata()
         granularity: str = metadata["granularity"]
+        if granularity == 'NA' and self.dataset_id == 'e007fb':
+            granularity = 'Diaria'
+        elif granularity == 'NA':
+            pass # determinar por periodicidad, pues es un archivo
         return granularity
 
     def get_metadata(self) -> dict:
@@ -86,8 +89,7 @@ class PyDataSimem:
         Creates a deserialized json in a dictionary that includes the dataset info and 
         the records of the selected dates
         """
-        dataset_info["result"]["records"].extend(
-            [item for sublist in records for item in sublist])
+        dataset_info["result"]["records"] = [item for sublist in records for item in sublist]
 
         return dataset_info
     
@@ -162,9 +164,9 @@ if __name__ == '__main__':
 
     start = time.perf_counter()
 
-    object = PyDataSimem(DATASETID, "2024-04-14", "2024-04-16")
-    dataset_df = object.main()
-    path = r'D:/Repos/PyDataSimem/test/test_data/' + f'{object.dataset_id}.csv'
+    object = PyDataSimem()
+    dataset_df = object.main(DATASETID, "2024-05-07", "2024-05-07")
+    path = r'D:\Repos\RP-GEDeN-SIMEM-Tools\test\test_data' + f'{object.dataset_id}.csv'
     dataset_df.to_csv(path, index=False)
 
     end = time.perf_counter()
