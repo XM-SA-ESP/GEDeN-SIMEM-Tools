@@ -74,7 +74,7 @@ class test_clase(unittest.TestCase):
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
         records = obj.get_records(url)
         mock_records = self.read_test_data(f'{dataset_id}_records.json')
-        self.assertTrue(True, True)
+        self.assertTrue(len(records), len(mock_records))
     
     def test_get_dataset_info(self):
         dataset_id : str = 'EC6945'
