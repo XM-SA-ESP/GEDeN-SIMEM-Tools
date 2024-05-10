@@ -48,7 +48,7 @@ class PyDataSimem:
         """
         metadata: dict = self.get_metadata()
         granularity: str = metadata["granularity"]
-        if granularity == 'NA' and self.dataset_id == 'e007fb':
+        if granularity == 'NA' and (self.dataset_id.lower()) == 'e007fb':
             granularity = 'Diaria'
         elif granularity == 'NA':
             pass # determinar por periodicidad, pues es un archivo
@@ -113,19 +113,7 @@ class PyDataSimem:
             resolution = 1827
         
         return resolution
-    
-    def dict_to_json(self, response: dict, name: str= None) -> None:
-        """
-        Saves the given dictionary in a .json file
-        """
-        if name is None:
-            name = self.dataset_id
 
-        with open(name, 'w') as file:
-            json.dump(response, file)
-        file.close()
-        return None
-    
     def generate_start_dates(self, start_date: str, end_date: str, resolution: int):
         """
         Generator to deliver a list of date ranges 
@@ -160,14 +148,3 @@ class PyDataSimem:
 
 
 
-if __name__ == '__main__':
-
-    start = time.perf_counter()
-
-    object = PyDataSimem()
-    dataset_df = object.main(DATASETID, "2024-05-07", "2024-05-07")
-    path = r'D:\Repos\RP-GEDeN-SIMEM-Tools\test\test_data' + f'{object.dataset_id}.csv'
-    dataset_df.to_csv(path, index=False)
-
-    end = time.perf_counter()
-    print(f"Time taken: {end - start:.3f} seconds")

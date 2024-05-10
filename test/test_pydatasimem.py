@@ -13,12 +13,26 @@ test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-0
 
 class test_clase(unittest.TestCase):
 
-    def test_read_granularity(self):
+    def test_main(self):
         dataset_id : str = 'EC6945'
+        inital_date = '2024-03-14'
+        final_date = '2024-04-16'
         obj = PyDataSimem()
-        obj.dataset_id = dataset_id
+        df = obj.main(dataset_id, inital_date, final_date)
+        df.sort_values('FechaHora', inplace=True)
+        df.reset_index(inplace=True, drop=True)
+        mock_df = self.read_test_dataframe(f"{dataset_id}.csv")
+        pd.testing.assert_frame_equal(df, mock_df)
+
+    def test_read_granularity(self):
+        obj = PyDataSimem()
+        obj.dataset_id = 'EC6945'
         granularity = obj.read_granularity()
         self.assertEqual(granularity, "Horaria")
+
+        obj.dataset_id = 'e007fb'
+        granularity = obj.read_granularity()
+        self.assertEqual(granularity, 'Diaria')
 
     def test_make_request(self):
         dataset_id : str = 'EC6945'
@@ -104,16 +118,6 @@ class test_clase(unittest.TestCase):
 
         self.assertEqual(dataset_metadata, mock_dataset_metadata)
         self.assertCountEqual(dataset_records, mock_dataset_records)
-
-    def test_dict_to_json(self):
-        dataset_id : str = 'EC6945'
-        obj = PyDataSimem()
-        obj.dataset_id = dataset_id
-        dictionary = obj.get_metadata()
-        path = os.getcwd()+os.sep + r'test/test_data/test_write_file.json'
-        obj.dict_to_json(dictionary, path)
-        test_json = self.read_test_data('test_write_file.json')
-        self.assertDictEqual(dictionary, test_json)
 
     def read_test_data(self, filename):
         path = os.getcwd()+os.sep + r'test/test_data/' + filename
