@@ -33,7 +33,6 @@ class test_clase(unittest.TestCase):
         self.assertGreater(response_records_amount, 0)
 
     def test_check_date_resolution(self):
-        dataset_id : str = 'EC6945'
         mock_granularity = 'Horaria'
         obj = PyDataSimem()
         resolution = obj.check_date_resolution(mock_granularity)
