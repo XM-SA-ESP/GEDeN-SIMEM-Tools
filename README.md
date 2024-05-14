@@ -26,8 +26,8 @@ Para realizar una descarga de información se requieren 3 variables:
 ### Ejemplo de uso
 Crea un objeto de interacción con la API y guarda los registros del conjunto de datos entre las fechas en un archivo CSV
 ```python
-conjunto = PyDataSimem("e007fb", "2024-04-14", "2024-04-16")
-dataset_df = conjunto.main()
+conjunto = PyDataSimem()
+dataset_df = conjunto.main("e007fb", "2024-04-14", "2024-04-16")
 path = os.getcwd + os.sep + r'demos' + os.sep + f'{object.dataset_id}.csv'
 dataset_df.to_csv(path, index=False)
 ```
