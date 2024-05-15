@@ -21,7 +21,6 @@ class test_clase(unittest.TestCase):
         df = obj.main(dataset_id, inital_date, final_date)
         df.sort_values(df.columns.to_list(), inplace=True)
         df.reset_index(inplace=True, drop=True)
-        df.to_csv('test.csv', index=False)
         mock_df = self.read_test_dataframe(f"{dataset_id}.csv")
         pd.testing.assert_frame_equal(df, mock_df, check_like=True)
 
