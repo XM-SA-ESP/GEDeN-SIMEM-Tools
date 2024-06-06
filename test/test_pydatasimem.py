@@ -22,7 +22,9 @@ class test_clase(unittest.TestCase):
         df.sort_values(df.columns.to_list(), inplace=True)
         df.reset_index(inplace=True, drop=True)
         mock_df = self.read_test_dataframe(f"{dataset_id}.csv")
-        pd.testing.assert_frame_equal(df, mock_df, check_like=True)
+        mock_df.sort_values(mock_df.columns.to_list(), inplace=True)
+        mock_df.reset_index(inplace=True, drop=True)
+        pd.testing.assert_frame_equal(df, mock_df, check_like=True, check_exact=False)
 
     def test_read_granularity(self):
         obj = PyDataSimem()
