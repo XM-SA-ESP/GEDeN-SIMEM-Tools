@@ -147,4 +147,7 @@ class PyDataSimem:
         return urls
 
 
-
+if __name__ == '__main__':
+    simem = PyDataSimem()
+    df = simem.main('EC6945', '2024-03-14', '2024-04-16')
+    df.to_csv(r'D:\OneDrive\OneDrive - INTERCONEXION ELECTRICA S.A. E.S.P\SIMEM\EC6945.csv',index=False)

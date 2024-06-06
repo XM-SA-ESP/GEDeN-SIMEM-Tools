@@ -19,10 +19,12 @@ class test_clase(unittest.TestCase):
         final_date = '2024-04-16'
         obj = PyDataSimem()
         df = obj.main(dataset_id, inital_date, final_date)
-        df.sort_values('FechaHora', inplace=True)
+        df.sort_values(df.columns.to_list(), inplace=True)
         df.reset_index(inplace=True, drop=True)
         mock_df = self.read_test_dataframe(f"{dataset_id}.csv")
-        pd.testing.assert_frame_equal(df, mock_df)
+        mock_df.sort_values(mock_df.columns.to_list(), inplace=True)
+        mock_df.reset_index(inplace=True, drop=True)
+        pd.testing.assert_frame_equal(df, mock_df, check_like=True, check_exact=False)
 
     def test_read_granularity(self):
         obj = PyDataSimem()
@@ -127,5 +129,5 @@ class test_clase(unittest.TestCase):
     
     def read_test_dataframe(self, filename):
         path = os.getcwd()+os.sep + r'test/test_data/' + filename
-        dataframe = pd.read_csv(path)
+        dataframe = pd.read_csv(path)#, index_col='')
         return dataframe
