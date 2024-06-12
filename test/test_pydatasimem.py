@@ -35,6 +35,14 @@ class test_clase(unittest.TestCase):
         obj.dataset_id = 'e007fb'
         granularity = obj.read_granularity()
         self.assertEqual(granularity, 'Diaria')
+    
+    def test_get_filter_date(self):
+        obj = PyDataSimem()
+        obj.dataset_id = 'EC6945'
+        filter_date = obj.get_filter_date()
+        self.assertEqual(filter_date,'FechaHora')
+
+
 
     def test_make_request(self):
         dataset_id : str = 'EC6945'
