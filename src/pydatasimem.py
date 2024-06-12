@@ -48,7 +48,7 @@ class PyDataSimem:
         """
         metadata: dict = self.get_metadata()
         granularity: str = metadata["granularity"]
-        if granularity == 'NA' and (self.dataset_id.lower()) == 'e007fb':
+        if granularity == 'NA' and self.dataset_id.lower() in ('e007fb','a5a6c4'):
             granularity = 'Diaria'
         elif granularity == 'NA':
             pass # determinar por periodicidad, pues es un archivo
@@ -63,6 +63,16 @@ class PyDataSimem:
         response: dict =  self.make_request(url)  # Typing
         metadata: dict = response["result"]["metadata"]
         return metadata
+    
+    def get_filter_date(self) -> str:
+        """
+        Make the API request with dates that gives only the dataset
+        information about its filter date
+        """
+        url = self.url_api.format(self.ref_date, self.ref_date, self.dataset_id.lower())
+        response: dict =  self.make_request(url)  # Typing
+        filter_date: dict = response["result"]["filterDate"]
+        return filter_date
     
     def get_records(self, url: str) -> list:
         """
