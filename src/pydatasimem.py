@@ -120,7 +120,7 @@ class PyDataSimem:
         elif granularity in ['Mensual','Semanal']:
             resolution = 731
         elif granularity == 'Anual':
-            resolution = 1827
+            resolution = 1825
         
         return resolution
 
