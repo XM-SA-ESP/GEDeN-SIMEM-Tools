@@ -5,7 +5,7 @@ import random
 import json
 import pandas as pd
 sys.path.append(os.getcwd())
-from src.pydatasimem import PyDataSimem
+from src.pydatasimem import ReadSIMEM
 
 test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=EC6945', 
              'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=EC6945']
@@ -17,7 +17,7 @@ class test_clase(unittest.TestCase):
         dataset_id : str = 'EC6945'
         inital_date = '2024-03-14'
         final_date = '2024-04-16'
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         df = obj.main(dataset_id, inital_date, final_date)
         df.sort_values(df.columns.to_list(), inplace=True)
         df.reset_index(inplace=True, drop=True)
@@ -27,7 +27,7 @@ class test_clase(unittest.TestCase):
         pd.testing.assert_frame_equal(df, mock_df, check_like=True, check_exact=False)
 
     def test_read_granularity(self):
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         obj.dataset_id = 'EC6945'
         granularity = obj.read_granularity()
         self.assertEqual(granularity, "Horaria")
@@ -37,7 +37,7 @@ class test_clase(unittest.TestCase):
         self.assertEqual(granularity, 'Diaria')
     
     def test_get_filter_date(self):
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         obj.dataset_id = 'EC6945'
         filter_date = obj.get_filter_date()
         self.assertEqual(filter_date,'FechaHora')
@@ -46,7 +46,7 @@ class test_clase(unittest.TestCase):
 
     def test_make_request(self):
         dataset_id : str = 'EC6945'
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
         response = obj.make_request(url)
         response_status = response['success']
@@ -58,7 +58,7 @@ class test_clase(unittest.TestCase):
 
     def test_check_date_resolution(self):
         mock_granularity = 'Horaria'
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         resolution = obj.check_date_resolution(mock_granularity)
         self.assertEqual(resolution, 31)
 
@@ -76,7 +76,7 @@ class test_clase(unittest.TestCase):
         inital_date = '2024-03-14'
         final_date = '2024-04-16'
         resolution = 31
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         obj.dataset_id = dataset_id
         urls = obj.create_urls(inital_date, final_date, resolution)
         self.assertListEqual(urls, test_urls)
@@ -85,14 +85,14 @@ class test_clase(unittest.TestCase):
         initial_date = '2024-03-14'
         final_date = '2024-04-16'
         resolution = 31
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         dates = list(date for date in obj.generate_start_dates(initial_date, final_date, resolution))
         mock_dates = ['2024-03-14', '2024-04-14', '2024-04-16']
         self.assertListEqual(dates, mock_dates)
 
     def test_get_records(self):
         dataset_id : str = 'EC6945'
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         obj.dataset_id = dataset_id
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
         records = obj.get_records(url)
@@ -101,7 +101,7 @@ class test_clase(unittest.TestCase):
     
     def test_get_dataset_info(self):
         dataset_id : str = 'EC6945'
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         obj.dataset_id = dataset_id
         obj.start_date = '2024-03-14'
         obj.end_date = '2024-04-16'
@@ -115,7 +115,7 @@ class test_clase(unittest.TestCase):
 
     def test_save_dataset(self):
         dataset_id = 'EC6945'
-        obj = PyDataSimem()
+        obj = ReadSIMEM()
         dataset_info = self.read_test_data(f'{dataset_id}_dataset_info.json')
         records = [self.read_test_data(f'{dataset_id}_records.json')]
         dataset = obj.save_dataset(dataset_info, records)

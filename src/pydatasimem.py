@@ -14,7 +14,7 @@ DATE_FORMAT = "%Y-%m-%d"
 
 
 @dataclass
-class PyDataSimem:
+class ReadSIMEM:
     """
     Class to request datasets to SIMEM using API
     """
