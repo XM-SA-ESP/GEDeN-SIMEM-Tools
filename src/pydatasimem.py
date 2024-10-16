@@ -14,7 +14,7 @@ DATE_FORMAT = "%Y-%m-%d"
 
 
 @dataclass
-class PyDataSimem:
+class ReadSIMEM:
     """
     Class to request datasets to SIMEM using API
     """
@@ -120,7 +120,7 @@ class PyDataSimem:
         elif granularity in ['Mensual','Semanal']:
             resolution = 731
         elif granularity == 'Anual':
-            resolution = 1827
+            resolution = 1825
         
         return resolution
 
