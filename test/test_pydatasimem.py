@@ -68,7 +68,7 @@ class test_clase(unittest.TestCase):
 
         mock_granularity = 'Anual'
         resolution = obj.check_date_resolution(mock_granularity)
-        self.assertEqual(resolution, 1827)
+        self.assertEqual(resolution, 1825)
 
 
     def test_create_urls(self):
