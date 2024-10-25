@@ -7,8 +7,8 @@ import pandas as pd
 sys.path.append(os.getcwd())
 from src.pydatasimem import ReadSIMEM
 
-test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=EC6945', 
-             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=EC6945']
+test_urls = ['https://www.simem.co/backend-files/api/PublicData?datasetId=EC6945&startdate=2024-03-14&enddate=2024-04-13', 
+             'https://www.simem.co/backend-files/api/PublicData?datasetId=EC6945&startdate=2024-04-14&enddate=2024-04-16']
 
 
 class test_clase(unittest.TestCase):
