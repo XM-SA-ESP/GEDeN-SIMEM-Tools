@@ -19,7 +19,7 @@ class ReadSIMEM:
     Class to request datasets to SIMEM using API
     """
     def __init__(self):
-        self.url_api: str = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}&datasetId={}"
+        self.url_api: str = "https://www.simem.co/backend-files/api/PublicData?datasetId={}&startdate={}&enddate={}"
         self.ref_date = '1990-01-01'
         self.session = requests.Session()
     
@@ -30,8 +30,8 @@ class ReadSIMEM:
         in the given dates
         """
         self.dataset_id = dataset_id
-        self.start_date = start_date
-        self.end_date = end_date
+        self.start_date = self.set_date_1(start_date)
+        self.end_date = self.set_date_2(end_date)
         granularity: str = self.read_granularity()
         resolution: int = self.check_date_resolution(granularity)
         urls: list[str] = self.create_urls(self.start_date, self.end_date, resolution)
@@ -41,6 +41,20 @@ class ReadSIMEM:
         self.session.close()
 
         return pd.DataFrame.from_dict(dataset["result"]["records"])
+
+    def set_date_1(self, start_date):
+        if self.dataset_id in ('e007fb', 'a5a6c4'):
+            return '1990-01-01'
+        else: 
+            return start_date
+    
+    def set_date_2(self, end_date):
+        if self.dataset_id in ('e007fb', 'a5a6c4'):
+            ayer = dt.strftime(dt.today() - timedelta(days=1),'%Y-%m-%d')
+            return ayer 
+        else: 
+            return end_date
+
 
     def read_granularity(self) -> str:
         """
@@ -59,7 +73,7 @@ class ReadSIMEM:
         Make the API request with dates that gives only the dataset
         information and converts into a dictionary
         """
-        url = self.url_api.format(self.ref_date, self.ref_date, self.dataset_id.lower())
+        url = self.url_api.format(self.dataset_id.lower(), self.ref_date, self.ref_date)
         response: dict =  self.make_request(url)  # Typing
         metadata: dict = response["result"]["metadata"]
         return metadata
@@ -69,7 +83,7 @@ class ReadSIMEM:
         Make the API request with dates that gives only the dataset
         information about its filter date
         """
-        url = self.url_api.format(self.ref_date, self.ref_date, self.dataset_id.lower())
+        url = self.url_api.format(self.dataset_id.lower(), self.ref_date, self.ref_date)
         response: dict =  self.make_request(url)  # Typing
         filter_date: dict = response["result"]["filterDate"]
         return filter_date
@@ -87,7 +101,7 @@ class ReadSIMEM:
         """
         Make the request to get the dataset information with 0 records
         """
-        url = self.url_api.format(self.ref_date, self.ref_date, self.dataset_id.lower())
+        url = self.url_api.format(self.dataset_id.lower(), self.ref_date, self.ref_date)
         dataset_info: dict =  self.make_request(url)
         dataset_info["parameters"]["startDate"] = self.start_date
         dataset_info["parameters"]["endDate"] = self.end_date
@@ -147,11 +161,14 @@ class ReadSIMEM:
         Recieve the limit dates and delivers the API URLs for the dataset id 
         and different dates ranges based on resolution
         """
-        start_dates: list[str] = list(date for date in self.generate_start_dates(start_date, end_date, resolution))
-        end_dates: list[str] = [(dt.strptime(date,'%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d') for date in start_dates]
-        end_dates[-1] = start_dates[-1]
-        start_dates.pop(-1)
-        end_dates.pop(0)
-        urls: list[str] = list(map(self.url_api.format, start_dates, end_dates, repeat(self.dataset_id)))
-
+        if self.dataset_id in ('e007fb', 'a5a6c4'):
+            urls = [self.url_api.format(self.dataset_id, start_date, end_date)]
+        else: 
+            start_dates: list[str] = list(date for date in self.generate_start_dates(start_date, end_date, resolution))
+            end_dates: list[str] = [(dt.strptime(date,'%Y-%m-%d') - timedelta(days=1)).strftime('%Y-%m-%d') for date in start_dates]
+            end_dates[-1] = start_dates[-1]
+            start_dates.pop(-1)
+            end_dates.pop(0)
+            urls: list[str] = list(map(self.url_api.format, repeat(self.dataset_id), start_dates, end_dates))
+        print(urls)
         return urls
