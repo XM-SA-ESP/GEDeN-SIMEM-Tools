@@ -42,7 +42,11 @@ class test_clase(unittest.TestCase):
         filter_date = obj.get_filter_date()
         self.assertEqual(filter_date,'FechaHora')
 
-
+    def test_set_date_1(self):
+        self.assertEqual(1,1)
+    
+    def test_set_date_2(self):
+        self.assertEqual(1,1)
 
     def test_make_request(self):
         dataset_id : str = 'EC6945'
