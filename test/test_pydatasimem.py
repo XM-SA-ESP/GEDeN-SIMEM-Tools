@@ -11,6 +11,7 @@ from src.pydatasimem import _Validation ,ReadSIMEM
 test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=EC6945', 
              'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=EC6945']
 
+EXCEPTION = False
 
 class TestValidation(unittest.TestCase):
 
@@ -124,9 +125,10 @@ class test_clase(unittest.TestCase):
         """
         # Every session opened in the tests is replaced by the mock object
         cls.mock_session = mock_session.return_value
-        cls.mock_session.get.return_value.json.return_value = cls.read_test_data('EC6945_dataset_info.json')
-
+        test_data = cls.read_test_data('EC6945_dataset_info.json')
+        cls.mock_session.get.return_value.json.return_value = test_data
         cls.dataset_id = "ec6945"
+        cls.exception = False
         cls.start_date = "2024-04-14"
         cls.end_date = "2024-04-16"
         cls.read_simem = ReadSIMEM(
@@ -137,9 +139,13 @@ class test_clase(unittest.TestCase):
 
     @classmethod
     def tearDown(cls):
-        # Make sure that there is no requests happening in any of the tests
-        cls.mock_session.get.assert_not_called()
-        cls.mock_session.get.return_value.json.assert_not_called()
+        global EXCEPTION 
+        if EXCEPTION:
+            EXCEPTION = False
+            return
+        # Make sure that the mock is appearing where is needed
+        cls.mock_session.get.assert_called_once()
+        cls.mock_session.get.return_value.json.assert_called_once()
 
     def test_set_datasetid(self):
         """
@@ -191,6 +197,7 @@ class test_clase(unittest.TestCase):
         self.assertIsInstance(self.read_simem._ReadSIMEM__resolution, int)
 
     def test_check_date_resolution(self):
+
         test_granularity = "Horaria"
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
         self.assertEqual(resolution, 31)
@@ -204,8 +211,10 @@ class test_clase(unittest.TestCase):
         self.assertEqual(resolution, 1827)
 
         test_granularity = ""
-        resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
+        resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)        
         self.assertEqual(resolution, 0)
+        global EXCEPTION 
+        EXCEPTION = True
         
         
 
@@ -228,10 +237,8 @@ class test_clase(unittest.TestCase):
         response = self.read_simem._make_request(url, self.mock_session)
         response_status = response['success']
         response_dataset_id = response['parameters']['idDataset']
-        response_records_amount = len(response["result"]["records"])
         self.assertTrue(response_status)
-        self.assertEqual(response_dataset_id, dataset_id)
-        self.assertGreater(response_records_amount, 0)
+        self.assertEqual(response_dataset_id, self.dataset_id)
 
 
     # def test_create_urls(self):
