@@ -119,14 +119,14 @@ class test_clase(unittest.TestCase):
 
     @classmethod
     @patch('src.pydatasimem.requests.Session')
-    def setUpClass(cls, mock_session):
+    def setUp(cls, mock_session):
         """
         Initialization previous to each test, creates a ReadSIMEM object to work.
         """
         # Every session opened in the tests is replaced by the mock object
-        cls.mock_session = mock_session.return_value
+        cls.mock_session = mock_session
         test_data = cls.read_test_data('EC6945_dataset_info.json')
-        cls.mock_session.get.return_value.json.return_value = test_data
+        cls.mock_session.return_value.get.return_value.json.return_value = test_data
         cls.dataset_id = "ec6945"
         cls.exception = False
         cls.start_date = "2024-04-14"
@@ -144,9 +144,8 @@ class test_clase(unittest.TestCase):
             EXCEPTION = False
             return
         # Make sure that the mock is appearing where is needed
-        cls.mock_session.get.assert_called_once()
-        cls.mock_session.get.return_value.json.assert_called_once()
-
+        cls.mock_session.return_value.get.return_value.json.assert_called_once()
+        
     def test_set_datasetid(self):
         """
         Sets an allowed datasetid.
@@ -154,6 +153,7 @@ class test_clase(unittest.TestCase):
         test_id = 'ab1234'
         self.read_simem.set_datasetid(test_id)
         self.assertEqual(self.read_simem._ReadSIMEM__dataset_id, test_id)
+        self.apply_exception()
 
     def test_set_dates(self):
         """
@@ -165,11 +165,13 @@ class test_clase(unittest.TestCase):
         self.read_simem.set_dates(string_date, string_date)
         self.assertEqual(self.read_simem._ReadSIMEM__start_date, datetime_date)
         self.assertEqual(self.read_simem._ReadSIMEM__end_date, datetime_date)
-
+        
         # Checks the result when entered a datetime date
         self.read_simem.set_dates(datetime_date, datetime_date)
         self.assertEqual(self.read_simem._ReadSIMEM__start_date, datetime_date)
         self.assertEqual(self.read_simem._ReadSIMEM__end_date, datetime_date)
+        self.apply_exception()
+
 
     def test_set_filter(self):
         """
@@ -178,6 +180,7 @@ class test_clase(unittest.TestCase):
         list_filter = ('test_column', ["value1", "value2"])
         self.read_simem.set_filter(list_filter[0], list_filter[1])
         self.assertEqual(self.read_simem._ReadSIMEM__filter_values, list_filter)
+        self.apply_exception()
         
 
     def test_set_dataset_data(self):
@@ -232,7 +235,7 @@ class test_clase(unittest.TestCase):
 
     def test_make_request(self):
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-        response = self.read_simem._make_request(url, self.mock_session)
+        response = self.read_simem._make_request(url, self.mock_session.return_value)
         response_status = response['success']
         response_dataset_id = response['parameters']['idDataset']
         self.assertTrue(response_status)
@@ -257,15 +260,15 @@ class test_clase(unittest.TestCase):
         self.assertListEqual(dates, mock_dates)
         self.apply_exception()
 
-    # def test_get_records(self):
-    #     # TODO: Revisar y redefinir
-    #     dataset_id : str = 'EC6945'
-    #     obj = ReadSIMEM()
-    #     obj.__dataset_id = dataset_id
-    #     url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-    #     records = obj._get_records(url)
-    #     mock_records = self.read_test_data(f'{dataset_id}_records.json')
-    #     self.assertTrue(len(records), len(mock_records))
+    def test_get_records(self):
+        mock_records = self.read_test_data('EC6945_records.json')
+        test_records = self.read_test_data('EC6945_request.json')
+        self.mock_session.get.return_value.json.return_value = test_records
+        
+        url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
+        records = self.read_simem._get_records(url, self.mock_session)
+        self.assertTrue(len(records), len(mock_records))
+        self.apply_exception()
     
     # def test_get_dataset_info(self):
     #     # TODO: Eliminar
