@@ -119,6 +119,9 @@ class test_clase(unittest.TestCase):
     @classmethod
     @patch('src.pydatasimem.requests.Session')
     def setUpClass(cls, mock_session):
+        """
+        Initialization previous to each test, creates a ReadSIMEM object to work.
+        """
         cls.mock_session = mock_session.return_value
         cls.mock_session.get.return_value.json.return_value = cls.read_test_data('EC6945_dataset_info.json')
 
@@ -133,11 +136,17 @@ class test_clase(unittest.TestCase):
         cls.mock_session.get.return_value.json.assert_not_called()
 
     def test_set_datasetid(self):
+        """
+        Sets an allowed datasetid
+        """
         test_id = 'ab1234'
         self.read_simem.set_datasetid(test_id)
         self.assertEqual(self.read_simem._ReadSIMEM__dataset_id, test_id)
 
     def test_set_dates(self):
+        """
+        Sets two types of allowed dates 
+        """
         datetime_date = dt.datetime(2021, 1, 1, 0, 0)
         string_date = '2021-01-01'
         self.read_simem.set_dates(string_date, string_date)
@@ -149,13 +158,26 @@ class test_clase(unittest.TestCase):
         self.assertEqual(self.read_simem._ReadSIMEM__end_date, datetime_date)
 
     def test_set_filter(self):
+        """
+        Sets an allowed column and list of values
+        """
         list_filter = ('test_column', ["value1", "value2"])
         self.read_simem.set_filter(list_filter[0], list_filter[1])
-        self.assertEqual()
+        self.assertEqual(self.read_simem._ReadSIMEM__filter_values, list_filter)
         
-    # def test_set_dataset_data(self):
-    #     self.read_simem._set_dataset_data()
-    #     print(self.read_simem)
+        
+    def test_set_dataset_data(self):
+        self.read_simem._set_dataset_data()
+        print(self.read_simem)
+        self.assertIsInstance(self.read_simem._ReadSIMEM__columns, pd.DataFrame)
+        self.assertFalse(self.read_simem._ReadSIMEM__columns, "DataFrame is empty")
+
+        self.assertIsInstance(self.read_simem._ReadSIMEM__columns, pd.DataFrame)
+        self.assertIsInstance(self.read_simem._ReadSIMEM__columns, pd.DataFrame)
+        self.assertIsInstance(self.read_simem._ReadSIMEM__columns, pd.DataFrame)
+        self.assertIsInstance(self.read_simem._ReadSIMEM__columns, pd.DataFrame)
+        
+        
 
     # def test_main(self):
     #     # TODO: Revisar y redefinir
