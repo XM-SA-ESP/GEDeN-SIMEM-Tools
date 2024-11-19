@@ -1,12 +1,12 @@
 {
     "parameters": {
-        "idDataset": "EC6945",
+        "idDataset": "ec6945",
         "startDate": "2024-04-14",
         "endDate": "2024-04-16"
     },
     "success": true,
     "result": {
-        "idDataset": "EC6945",
+        "idDataset": "ec6945",
         "name": "Precio de bolsa horario",
         "metadata": {
             "description": "Precio de bolsa horario nacional, internacional y TIE",
