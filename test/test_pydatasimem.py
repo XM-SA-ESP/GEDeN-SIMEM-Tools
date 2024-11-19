@@ -8,8 +8,8 @@ from unittest.mock import patch, MagicMock
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.pydatasimem import _Validation ,ReadSIMEM 
 
-test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=EC6945', 
-             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=EC6945']
+test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=ec6945', 
+             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945']
 
 EXCEPTION = False
 
@@ -213,8 +213,7 @@ class test_clase(unittest.TestCase):
         test_granularity = ""
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)        
         self.assertEqual(resolution, 0)
-        global EXCEPTION 
-        EXCEPTION = True
+        self.apply_exception()
         
         
 
@@ -232,7 +231,6 @@ class test_clase(unittest.TestCase):
 
 
     def test_make_request(self):
-        # TODO: Revisar y redefinir
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
         response = self.read_simem._make_request(url, self.mock_session)
         response_status = response['success']
@@ -241,16 +239,13 @@ class test_clase(unittest.TestCase):
         self.assertEqual(response_dataset_id, self.dataset_id)
 
 
-    # def test_create_urls(self):
-    #     # TODO: Revisar y redefinir
-    #     dataset_id : str = 'EC6945'
-    #     inital_date = '2024-03-14'
-    #     final_date = '2024-04-16'
-    #     resolution = 31
-    #     obj = ReadSIMEM()
-    #     obj.__dataset_id = dataset_id
-    #     urls = obj.__create_urls(inital_date, final_date, resolution)
-    #     self.assertListEqual(urls, test_urls)
+    def test_create_urls(self):
+        inital_date = dt.datetime(2024, 3, 14, 0, 0)
+        final_date = dt.datetime(2024, 4, 16, 0, 0)
+        resolution = 31
+        urls = self.read_simem._ReadSIMEM__create_urls(inital_date, final_date, resolution)
+        self.assertListEqual(urls, test_urls)
+        self.apply_exception()
     
     # def test_generate_start_dates(self):
     #     # TODO: Revisar y redefinir
@@ -311,6 +306,11 @@ class test_clase(unittest.TestCase):
             filedata = json.load(file)
         return filedata
     
+    @staticmethod
+    def apply_exception():
+        global EXCEPTION
+        EXCEPTION = True
+
     # def read_test_dataframe(self, filename):
     #     path = os.getcwd() + os.sep + r'test/test_data/' + filename
     #     dataframe = pd.read_csv(path)
