@@ -240,22 +240,22 @@ class test_clase(unittest.TestCase):
 
 
     def test_create_urls(self):
-        inital_date = dt.datetime(2024, 3, 14, 0, 0)
+        initial_date = dt.datetime(2024, 3, 14, 0, 0)
         final_date = dt.datetime(2024, 4, 16, 0, 0)
         resolution = 31
-        urls = self.read_simem._ReadSIMEM__create_urls(inital_date, final_date, resolution)
+        urls = self.read_simem._ReadSIMEM__create_urls(initial_date, final_date, resolution)
         self.assertListEqual(urls, test_urls)
         self.apply_exception()
     
-    # def test_generate_start_dates(self):
-    #     # TODO: Revisar y redefinir
-    #     initial_date = '2024-03-14'
-    #     final_date = '2024-04-16'
-    #     resolution = 31
-    #     obj = ReadSIMEM()
-    #     dates = list(date for date in obj._generate_start_dates(initial_date, final_date, resolution))
-    #     mock_dates = ['2024-03-14', '2024-04-14', '2024-04-16']
-    #     self.assertListEqual(dates, mock_dates)
+    def test_generate_start_dates(self):
+        initial_date = dt.datetime(2024, 3, 14, 0, 0)
+        final_date = dt.datetime(2024, 4, 16, 0, 0)
+        resolution = 31
+        obj = self.read_simem
+        dates = list(date for date in obj._generate_start_dates(initial_date, final_date, resolution))
+        mock_dates = ['2024-03-14', '2024-04-14', '2024-04-16']
+        self.assertListEqual(dates, mock_dates)
+        self.apply_exception()
 
     # def test_get_records(self):
     #     # TODO: Revisar y redefinir
