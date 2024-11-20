@@ -12,6 +12,9 @@ test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-0
              'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945']
 
 EXCEPTION = False
+EC6945_REQUEST_FILE = 'EC6945_request.json'
+EC6945_RECORDS_FILE = 'EC6945_records.json'
+EC6945_DATASET_INFO_FILE = 'EC6945_dataset_info.json'
 
 class TestValidation(unittest.TestCase):
 
@@ -125,7 +128,7 @@ class test_clase(unittest.TestCase):
         """
         # Every session opened in the tests is replaced by the mock object
         cls.mock_session = mock_session
-        test_data = cls.read_test_data('EC6945_dataset_info.json')
+        test_data = cls.read_test_data(EC6945_DATASET_INFO_FILE)
         cls.mock_session.return_value.get.return_value.json.return_value = test_data
         cls.dataset_id = "ec6945"
         cls.exception = False
@@ -261,46 +264,30 @@ class test_clase(unittest.TestCase):
         self.apply_exception()
 
     def test_get_records(self):
-        mock_records = self.read_test_data('EC6945_records.json')
-        test_records = self.read_test_data('EC6945_request.json')
-        self.mock_session.get.return_value.json.return_value = test_records
+        mock_records = self.read_test_data(EC6945_RECORDS_FILE)
+        test_request = self.read_test_data(EC6945_REQUEST_FILE)
+        self.mock_session.get.return_value.json.return_value = test_request
         
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
         records = self.read_simem._get_records(url, self.mock_session)
         self.assertTrue(len(records), len(mock_records))
         self.apply_exception()
-    
-    # def test_get_dataset_info(self):
-    #     # TODO: Eliminar
-    #     dataset_id : str = 'EC6945'
-    #     obj = ReadSIMEM()
-    #     obj.__dataset_id = dataset_id
-    #     obj.start_date = '2024-03-14'
-    #     obj.end_date = '2024-04-16'
-    #     response = obj.__get_dataset_info()
-    #     response_status = response['success']
-    #     response_dataset_id = response['parameters']['idDataset']
-    #     response_records_amount = len(response["result"]["records"])
-    #     self.assertTrue(response_status)
-    #     self.assertEqual(response_dataset_id, dataset_id)
-    #     self.assertEqual(response_records_amount, 0)
 
-    # def test_save_dataset(self):
-    #     # TODO: Revisar y redefinir
-    #     dataset_id = 'EC6945'
-    #     obj = ReadSIMEM()
-    #     dataset_info = self.read_test_data(f'{dataset_id}_dataset_info.json')
-    #     records = [self.read_test_data(f'{dataset_id}_records.json')]
-    #     dataset = obj.__save_dataset(dataset_info, records)
-    #     dataset_metadata = dataset['result']['metadata']
-    #     dataset_records = dataset['result']['records']
+    def test_save_dataset(self):
         
-    #     mock_dataset = self.read_test_data(f'{dataset_id}_request.json')
-    #     mock_dataset_metadata = mock_dataset['result']['metadata']
-    #     mock_dataset_records = mock_dataset['result']['records']
+        dataset_info = self.read_test_data(EC6945_DATASET_INFO_FILE)
+        records = [self.read_test_data(EC6945_RECORDS_FILE)]
+        dataset = self.read_simem._ReadSIMEM__save_dataset(dataset_info, records)
+        dataset_metadata = dataset['result']['metadata']
+        dataset_records = dataset['result']['records']
+        
+        mock_dataset = self.read_test_data(EC6945_REQUEST_FILE)
+        mock_dataset_metadata = mock_dataset['result']['metadata']
+        mock_dataset_records = mock_dataset['result']['records']
 
-    #     self.assertEqual(dataset_metadata, mock_dataset_metadata)
-    #     self.assertCountEqual(dataset_records, mock_dataset_records)
+        self.assertEqual(dataset_metadata, mock_dataset_metadata)
+        self.assertCountEqual(dataset_records, mock_dataset_records)
+        self.apply_exception()
 
     @staticmethod
     def read_test_data(filename):
