@@ -370,23 +370,23 @@ class ReadSIMEM:
         """
         return self.__dataset_id
 
-    def get_startdate(self) -> str:
+    def get_startdate(self) -> dt.datetime:
         """
         Returns the start date of the dataset object.
         
         Returns:
-        str
-            The start date in 'YYYY-MM-DD' format.
+        dt.datetime
+            The start date in datetime object.
         """
         return self.__start_date
 
-    def get_enddate(self) -> str:
+    def get_enddate(self) -> dt.datetime:
         """
         Returns the end date of the dataset object.
         
         Returns:
-        str
-            The end date in 'YYYY-MM-DD' format.
+        dt.datetime
+            The end date in datetime object.
         """
         return self.__end_date
 
@@ -398,7 +398,7 @@ class ReadSIMEM:
         str
             The filter URL.
         """
-        var_filter_url = getattr(self, "__filter_url", None)
+        var_filter_url = getattr(self, "_ReadSIMEM__filter_url", None)
         if var_filter_url is None:
             logging.info("No filter assigned.")
         return var_filter_url
@@ -411,7 +411,7 @@ class ReadSIMEM:
         tuple | str
             The filter values.
         """
-        var_filter_values = getattr(self, "__filter_values", None)
+        var_filter_values = getattr(self, "_ReadSIMEM__filter_values", None)
         if var_filter_values is None:
             logging.info("No filter assigned.")  
         return var_filter_values  
