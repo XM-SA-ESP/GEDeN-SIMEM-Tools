@@ -312,6 +312,82 @@ class test_clase(unittest.TestCase):
         self.assertCountEqual(dataset_records, mock_dataset_records)
         self.apply_exception()
 
+    def test_get_datasetid(self):
+        object_value = self.read_simem._ReadSIMEM__dataset_id
+        function_return = self.read_simem.get_datasetid()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+
+    def test_get_startdate(self):
+        object_value = self.read_simem._ReadSIMEM__start_date
+        function_return = self.read_simem.get_startdate()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+    def test_get_enddate(self):
+        object_value = self.read_simem._ReadSIMEM__end_date
+        function_return = self.read_simem.get_enddate()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+    def test_get_filter_url(self):
+        test_list_filter = ('test_column', ["value1", "value2"])
+        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
+
+        object_value = self.read_simem._ReadSIMEM__filter_url
+        function_return = self.read_simem.get_filter_url()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+    def test_get_filters(self):
+        test_list_filter = ('test_column', ["value1", "value2"])
+        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
+        object_value = self.read_simem._ReadSIMEM__filter_values
+        function_return = self.read_simem.get_filters()
+        self.assertEqual(function_return, object_value)
+        self.apply_exception()
+
+
+    def test_get_resolution(self):
+        object_value = self.read_simem._ReadSIMEM__resolution
+        function_return = self.read_simem.get_resolution()
+        self.assertEqual(function_return, object_value)
+        self.apply_exception()
+
+
+    def test_get_granularity(self):
+        object_value = self.read_simem._ReadSIMEM__granularity
+        function_return = self.read_simem.get_granularity()
+        self.assertEqual(function_return,object_value)
+        self.apply_exception()
+
+
+    def test_get_metadata(self):
+        function_return = self.read_simem.get_metadata()
+        self.assertFalse(function_return.empty, "DataFrame is empty")
+        self.apply_exception()
+
+
+    def test_get_columns(self):
+        function_return = self.read_simem.get_columns()
+        self.assertFalse(function_return.empty, "DataFrame is empty")
+        self.apply_exception()
+
+
+    def test_get_name(self):
+        object_value = self.read_simem._ReadSIMEM__name
+        function_return = self.read_simem.get_name()
+        self.assertEqual(function_return,object_value)
+        self.apply_exception()
+
+
+    def test_get_dataset_info(self):
+        function_return = self.read_simem._ReadSIMEM__get_dataset_info()
+        self.assertIsInstance(function_return, dict)
+        self.apply_exception()
+
+
     @staticmethod
     def read_test_data(filename):
         path = os.getcwd()+os.sep + r'test/test_data/' + filename
@@ -324,10 +400,6 @@ class test_clase(unittest.TestCase):
         global EXCEPTION
         EXCEPTION = True
 
-    # def read_test_dataframe(self, filename):
-    #     path = os.getcwd() + os.sep + r'test/test_data/' + filename
-    #     dataframe = pd.read_csv(path)
-    #     return dataframe
 
 if __name__ == '__main__':
     unittest.main()
