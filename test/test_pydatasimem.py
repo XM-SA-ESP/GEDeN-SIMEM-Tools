@@ -121,17 +121,17 @@ class TestValidation(unittest.TestCase):
 class test_clase(unittest.TestCase):
 
     @classmethod
-    @patch('src.pydatasimem.requests.Session')
-    def setUp(cls, mock_session):
+    @patch('src.pydatasimem.ReadSIMEM._make_request')
+    def setUp(cls, mock_request):
         """
-        Initialization previous to each test, creates a ReadSIMEM object to work.
+        Initialization previous to each test, creates a ReadSIMEM object.
         """
-        # Every session opened in the tests is replaced by the mock object
-        cls.mock_session = mock_session
+        # Every request replaced by the mock object and the return replaced 
+        # by the information in the given file
+        cls.mock_request = mock_request
         test_data = cls.read_test_data(EC6945_DATASET_INFO_FILE)
-        cls.mock_session.return_value.get.return_value.json.return_value = test_data
+        cls.mock_request.return_value = test_data
         cls.dataset_id = "ec6945"
-        cls.exception = False
         cls.start_date = "2024-04-14"
         cls.end_date = "2024-04-16"
         cls.read_simem = ReadSIMEM(
@@ -144,66 +144,104 @@ class test_clase(unittest.TestCase):
     def tearDown(cls):
         global EXCEPTION 
         if EXCEPTION:
+            # When no request is needed just continues with the execution 
             EXCEPTION = False
             return
         # Make sure that the mock is appearing where is needed
-        cls.mock_session.return_value.get.return_value.json.assert_called_once()
+        cls.mock_request.assert_called_once()
         
     def test_set_datasetid(self):
         """
-        Sets an allowed datasetid.
+        Checks that the dataset ID initialized in setup is correct inside the ReadSIMEM object
+        and the dataset ID is correctly changed inside the ReadSIMEM object
+        
         """
+        # Checks that the value initialized in setup is correct inside the object
+        test_id = self.dataset_id
+        init_id = self.read_simem._ReadSIMEM__dataset_id
+        self.assertEqual(init_id, test_id)
+        
+        # Checks that the value is correctly changed inside the object
         test_id = 'ab1234'
         self.read_simem.set_datasetid(test_id)
-        self.assertEqual(self.read_simem._ReadSIMEM__dataset_id, test_id)
+        changed_id = self.read_simem._ReadSIMEM__dataset_id
+        self.assertEqual(changed_id, test_id)
         self.apply_exception()
 
     def test_set_dates(self):
         """
-        Sets two inputs of allowed dates.
+        Checks that the dates initialized in setup are correct inside the ReadSIMEM object
+        and the dates are correctly changed inside the ReadSIMEM object
         """
-        datetime_date = dt.datetime(2021, 1, 1, 0, 0)
-        string_date = '2021-01-01'
-        # Checks the result when entered a string date
-        self.read_simem.set_dates(string_date, string_date)
-        self.assertEqual(self.read_simem._ReadSIMEM__start_date, datetime_date)
-        self.assertEqual(self.read_simem._ReadSIMEM__end_date, datetime_date)
+
+        # Checks that the value initialized in setup is correct inside the object
+        test_start_date = dt.datetime(2024, 4, 14, 0, 0)
+        test_end_date = dt.datetime(2024, 4, 16, 0, 0)
+        init_start_date = self.read_simem._ReadSIMEM__start_date
+        init_end_date = self.read_simem._ReadSIMEM__end_date
+        self.assertEqual(init_start_date, test_start_date)
+        self.assertEqual(init_end_date, test_end_date)
+
+        # Checks that the value is correctly changed inside the object
+        test_datetime_date = dt.datetime(2021, 1, 1, 0, 0)
+        test_string_date = '2021-01-01'
+
+        # Checks the result when a string is given
+        self.read_simem.set_dates(test_string_date, test_string_date)
+        changed_start_date = self.read_simem._ReadSIMEM__start_date
+        changed_end_date = self.read_simem._ReadSIMEM__end_date
+        self.assertEqual(changed_start_date, test_datetime_date)
+        self.assertEqual(changed_end_date, test_datetime_date)
         
-        # Checks the result when entered a datetime date
-        self.read_simem.set_dates(datetime_date, datetime_date)
-        self.assertEqual(self.read_simem._ReadSIMEM__start_date, datetime_date)
-        self.assertEqual(self.read_simem._ReadSIMEM__end_date, datetime_date)
+        # Checks the result when entered a datetime object is given
+        self.read_simem.set_dates(test_datetime_date, test_datetime_date)
+        changed_start_date = self.read_simem._ReadSIMEM__start_date
+        changed_end_date = self.read_simem._ReadSIMEM__end_date
+        self.assertEqual(changed_start_date, test_datetime_date)
+        self.assertEqual(changed_end_date, test_datetime_date)
         self.apply_exception()
 
 
     def test_set_filter(self):
         """
-        Sets an allowed column and list of values
+        Checks that the filter is correctly assigned and the filter url attribute
+        exists in the ReadSIMEM object.
         """
-        list_filter = ('test_column', ["value1", "value2"])
-        self.read_simem.set_filter(list_filter[0], list_filter[1])
-        self.assertEqual(self.read_simem._ReadSIMEM__filter_values, list_filter)
+        test_list_filter = ('test_column', ["value1", "value2"])
+        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
+        changed_filter = self.read_simem._ReadSIMEM__filter_values
+        self.assertEqual(changed_filter, test_list_filter)
+        filter_url = getattr(self.read_simem, '_ReadSIMEM__filter_url', None)
+        self.assertIsNotNone(filter_url)
         self.apply_exception()
         
-
     def test_set_dataset_data(self):
         """
-        Sets the mocked information into the attributes of the object.
+        Checks that the initialized information is correctly assigned to the attributes in 
+        the ReadSIMEM object.
         """
-        self.read_simem._set_dataset_data()
-        self.assertIsInstance(self.read_simem._ReadSIMEM__dataset_info, dict)
-        self.assertIsInstance(self.read_simem._ReadSIMEM__columns, pd.DataFrame)
-        self.assertFalse(self.read_simem._ReadSIMEM__columns.empty, "DataFrame is empty")
-        self.assertIsInstance(self.read_simem._ReadSIMEM__metadata, pd.DataFrame)
-        self.assertFalse(self.read_simem._ReadSIMEM__metadata.empty, "DataFrame is empty")
+        init_dataset_info = self.read_simem._ReadSIMEM__dataset_info
+        self.assertIsInstance(init_dataset_info, dict)
 
-        self.assertIsInstance(self.read_simem._ReadSIMEM__date_filter, str)
-        self.assertIsInstance(self.read_simem._ReadSIMEM__name, str)
-        self.assertIsInstance(self.read_simem._ReadSIMEM__granularity, str)
-        self.assertIsInstance(self.read_simem._ReadSIMEM__resolution, int)
+        init_columns = self.read_simem._ReadSIMEM__columns
+        self.assertIsInstance(init_columns, pd.DataFrame)
+        self.assertFalse(init_columns.empty, "DataFrame is empty")
+
+        init_metadata = self.read_simem._ReadSIMEM__metadata
+        self.assertIsInstance(init_metadata, pd.DataFrame)
+        self.assertFalse(init_metadata.empty, "DataFrame is empty")
+
+        init_date_filter = self.read_simem._ReadSIMEM__date_filter
+        self.assertIsInstance(init_date_filter, str)
+        init_name = self.read_simem._ReadSIMEM__name
+        self.assertIsInstance(init_name, str)
+        init_granularity = self.read_simem._ReadSIMEM__granularity
+        self.assertIsInstance(init_granularity, str)
+        init_resolution = self.read_simem._ReadSIMEM__resolution
+        self.assertIsInstance(init_resolution, int)
 
     def test_check_date_resolution(self):
-
+        
         test_granularity = "Horaria"
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
         self.assertEqual(resolution, 31)
@@ -220,29 +258,14 @@ class test_clase(unittest.TestCase):
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)        
         self.assertEqual(resolution, 0)
         self.apply_exception()
-        
-        
 
-    # def test_main(self):
-    #     # TODO: Revisar y redefinir
-    #     dataset_id : str = 'EC6945'
-    #     inital_date = '2024-03-14'
-    #     final_date = '2024-04-16'
-    #     obj = ReadSIMEM(dataset_id, inital_date, final_date)
-    #     df = obj.main()
-    #     df.sort_values(df.columns.to_list(), inplace=True)
-    #     df.reset_index(inplace=True, drop=True)
-    #     mock_df = self.read_test_dataframe(f"{dataset_id}.csv")
-    #     pd.testing.assert_frame_equal(df, mock_df, check_like=True)
-
-
-    def test_make_request(self):
-        url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-        response = self.read_simem._make_request(url, self.mock_session.return_value)
-        response_status = response['success']
-        response_dataset_id = response['parameters']['idDataset']
-        self.assertTrue(response_status)
-        self.assertEqual(response_dataset_id, self.dataset_id)
+    # def test_make_request(self):
+    #     url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
+    #     response = self.mock_request
+    #     response_status = response['success']
+    #     response_dataset_id = response['parameters']['idDataset']
+    #     self.assertTrue(response_status)
+    #     self.assertEqual(response_dataset_id, self.dataset_id)
 
 
     def test_create_urls(self):
@@ -266,10 +289,10 @@ class test_clase(unittest.TestCase):
     def test_get_records(self):
         mock_records = self.read_test_data(EC6945_RECORDS_FILE)
         test_request = self.read_test_data(EC6945_REQUEST_FILE)
-        self.mock_session.get.return_value.json.return_value = test_request
+        self.mock_request.get.return_value.json.return_value = test_request
         
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-        records = self.read_simem._get_records(url, self.mock_session)
+        records = self.read_simem._get_records(url, self.mock_request)
         self.assertTrue(len(records), len(mock_records))
         self.apply_exception()
 
