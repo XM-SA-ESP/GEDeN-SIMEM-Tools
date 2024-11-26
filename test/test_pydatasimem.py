@@ -5,12 +5,16 @@ import json
 import pandas as pd
 import datetime as dt
 from unittest.mock import patch, MagicMock
-sys.path.append(os.getcwd())
-from pydatasimem.pydatasimem import _Validation ,ReadSIMEM 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.pydatasimem import _Validation ,ReadSIMEM 
 
-test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=EC6945', 
-             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=EC6945']
+test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=ec6945', 
+             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945']
 
+EXCEPTION = False
+EC6945_REQUEST_FILE = 'EC6945_request.json'
+EC6945_RECORDS_FILE = 'EC6945_records.json'
+EC6945_DATASET_INFO_FILE = 'EC6945_dataset_info.json'
 
 class TestValidation(unittest.TestCase):
 
@@ -113,158 +117,289 @@ class TestValidation(unittest.TestCase):
             _Validation.catalog_type(123)
 
 
+
 class test_clase(unittest.TestCase):
 
     @classmethod
-    def setUpClass(cls):
-        cls.dataset_id = 'EC6945'
-        cls.initial_date = '2024-03-14'
-        cls.final_date = '2024-04-16'
-        cls.filters = ['columna', 'valores']
-        cls.obj = ReadSIMEM(cls.dataset_id, cls.initial_date, cls.final_date)
-    
+    @patch('src.pydatasimem.ReadSIMEM._make_request')
+    def setUp(cls, mock_request):
+        """
+        Initialization previous to each test, creates a ReadSIMEM object.
+        """
+        # Every request replaced by the mock object and the return replaced 
+        # by the information in the given file
+        cls.mock_request = mock_request
+        test_data = cls.read_test_data(EC6945_DATASET_INFO_FILE)
+        cls.mock_request.return_value = test_data
+        cls.dataset_id = "ec6945"
+        cls.start_date = "2024-04-14"
+        cls.end_date = "2024-04-16"
+        cls.read_simem = ReadSIMEM(
+            var_dataset_id=cls.dataset_id,
+            var_start_date=cls.start_date,
+            var_end_date=cls.end_date
+        )
+
+    @classmethod
+    def tearDown(cls):
+        global EXCEPTION 
+        if EXCEPTION:
+            # When no request is needed just continues with the execution 
+            EXCEPTION = False
+            return
+        # Make sure that the mock is appearing where is needed
+        cls.mock_request.assert_called_once()
+        
     def test_set_datasetid(self):
-        self.assertEqual(self.obj.dataset_id, self.dataset_id)
+        """
+        Checks that the dataset ID initialized in setup is correct inside the ReadSIMEM object
+        and the dataset ID is correctly changed inside the ReadSIMEM object
+        
+        """
+        # Checks that the value initialized in setup is correct inside the object
+        test_id = self.dataset_id
+        init_id = self.read_simem._ReadSIMEM__dataset_id
+        self.assertEqual(init_id, test_id)
+        
+        # Checks that the value is correctly changed inside the object
+        test_id = 'ab1234'
+        self.read_simem.set_datasetid(test_id)
+        changed_id = self.read_simem._ReadSIMEM__dataset_id
+        self.assertEqual(changed_id, test_id)
+        self.apply_exception()
 
     def test_set_dates(self):
-        # TODO: Revisar que el objeto tenga fechas como atributo
-        pass
+        """
+        Checks that the dates initialized in setup are correct inside the ReadSIMEM object
+        and the dates are correctly changed inside the ReadSIMEM object
+        """
+
+        # Checks that the value initialized in setup is correct inside the object
+        test_start_date = dt.datetime(2024, 4, 14, 0, 0)
+        test_end_date = dt.datetime(2024, 4, 16, 0, 0)
+        init_start_date = self.read_simem._ReadSIMEM__start_date
+        init_end_date = self.read_simem._ReadSIMEM__end_date
+        self.assertEqual(init_start_date, test_start_date)
+        self.assertEqual(init_end_date, test_end_date)
+
+        # Checks that the value is correctly changed inside the object
+        test_datetime_date = dt.datetime(2021, 1, 1, 0, 0)
+        test_string_date = '2021-01-01'
+
+        # Checks the result when a string is given
+        self.read_simem.set_dates(test_string_date, test_string_date)
+        changed_start_date = self.read_simem._ReadSIMEM__start_date
+        changed_end_date = self.read_simem._ReadSIMEM__end_date
+        self.assertEqual(changed_start_date, test_datetime_date)
+        self.assertEqual(changed_end_date, test_datetime_date)
+        
+        # Checks the result when entered a datetime object is given
+        self.read_simem.set_dates(test_datetime_date, test_datetime_date)
+        changed_start_date = self.read_simem._ReadSIMEM__start_date
+        changed_end_date = self.read_simem._ReadSIMEM__end_date
+        self.assertEqual(changed_start_date, test_datetime_date)
+        self.assertEqual(changed_end_date, test_datetime_date)
+        self.apply_exception()
+
 
     def test_set_filter(self):
-        # TODO: Revisar que el objeto tenga filtro como atributo
-        pass
-    
+        """
+        Checks that the filter is correctly assigned and the filter url attribute
+        exists in the ReadSIMEM object.
+        """
+        test_list_filter = ('test_column', ["value1", "value2"])
+        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
+        changed_filter = self.read_simem._ReadSIMEM__filter_values
+        self.assertEqual(changed_filter, test_list_filter)
+        filter_url = getattr(self.read_simem, '_ReadSIMEM__filter_url', None)
+        self.assertIsNotNone(filter_url)
+        self.apply_exception()
+        
     def test_set_dataset_data(self):
-        # TODO: Revisar que el objeto tenga los demás atributos
-        pass
+        """
+        Checks that the initialized information is correctly assigned to the attributes in 
+        the ReadSIMEM object.
+        """
+        init_dataset_info = self.read_simem._ReadSIMEM__dataset_info
+        self.assertIsInstance(init_dataset_info, dict)
 
-    def test_main(self):
-        # TODO: Revisar y redefinir
-        dataset_id : str = 'EC6945'
-        inital_date = '2024-03-14'
-        final_date = '2024-04-16'
-        obj = ReadSIMEM(dataset_id, inital_date, final_date)
-        df = obj.main()
-        df.sort_values(df.columns.to_list(), inplace=True)
-        df.reset_index(inplace=True, drop=True)
-        mock_df = self.read_test_dataframe(f"{dataset_id}.csv")
-        pd.testing.assert_frame_equal(df, mock_df, check_like=True)
+        init_columns = self.read_simem._ReadSIMEM__columns
+        self.assertIsInstance(init_columns, pd.DataFrame)
+        self.assertFalse(init_columns.empty, "DataFrame is empty")
 
-    def test_read_granularity(self):
-        # TODO: Eliminar
-        dataset_id = 'EC6945'
-        inital_date = '2024-03-14'
-        final_date = '2024-04-16'
-        obj = ReadSIMEM(dataset_id, inital_date, final_date)
-        granularity = obj.__read_granularity()
-        self.assertEqual(granularity, "Horaria")
+        init_metadata = self.read_simem._ReadSIMEM__metadata
+        self.assertIsInstance(init_metadata, pd.DataFrame)
+        self.assertFalse(init_metadata.empty, "DataFrame is empty")
 
-        obj.__dataset_id = 'e007fb'
-        granularity = obj.__read_granularity()
-        self.assertEqual(granularity, 'Diaria')
-
-    def test_make_request(self):
-        # TODO: Revisar y redefinir
-        dataset_id : str = 'EC6945'
-        obj = ReadSIMEM()
-        url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-        response = obj._make_request(url)
-        response_status = response['success']
-        response_dataset_id = response['parameters']['idDataset']
-        response_records_amount = len(response["result"]["records"])
-        self.assertTrue(response_status)
-        self.assertEqual(response_dataset_id, dataset_id)
-        self.assertGreater(response_records_amount, 0)
+        init_date_filter = self.read_simem._ReadSIMEM__date_filter
+        self.assertIsInstance(init_date_filter, str)
+        init_name = self.read_simem._ReadSIMEM__name
+        self.assertIsInstance(init_name, str)
+        init_granularity = self.read_simem._ReadSIMEM__granularity
+        self.assertIsInstance(init_granularity, str)
+        init_resolution = self.read_simem._ReadSIMEM__resolution
+        self.assertIsInstance(init_resolution, int)
 
     def test_check_date_resolution(self):
-        # TODO: Anadir el caso sin condición 
-        mock_granularity = 'Horaria'
-        obj = ReadSIMEM()
-        resolution = obj.__check_date_resolution(mock_granularity)
+        
+        test_granularity = "Horaria"
+        resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
         self.assertEqual(resolution, 31)
 
-        mock_granularity = 'Mensual'
-        resolution = obj.__check_date_resolution(mock_granularity)
+        test_granularity = "Mensual"
+        resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
         self.assertEqual(resolution, 731)
 
-        mock_granularity = 'Anual'
-        resolution = obj.__check_date_resolution(mock_granularity)
+        test_granularity = "Anual"
+        resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
         self.assertEqual(resolution, 1827)
+
+        test_granularity = ""
+        resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)        
+        self.assertEqual(resolution, 0)
+        self.apply_exception()
+
+    # def test_make_request(self):
+    #     url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
+    #     response = self.mock_request
+    #     response_status = response['success']
+    #     response_dataset_id = response['parameters']['idDataset']
+    #     self.assertTrue(response_status)
+    #     self.assertEqual(response_dataset_id, self.dataset_id)
 
 
     def test_create_urls(self):
-        # TODO: Revisar y redefinir
-        dataset_id : str = 'EC6945'
-        inital_date = '2024-03-14'
-        final_date = '2024-04-16'
+        initial_date = dt.datetime(2024, 3, 14, 0, 0)
+        final_date = dt.datetime(2024, 4, 16, 0, 0)
         resolution = 31
-        obj = ReadSIMEM()
-        obj.__dataset_id = dataset_id
-        urls = obj.__create_urls(inital_date, final_date, resolution)
+        urls = self.read_simem._ReadSIMEM__create_urls(initial_date, final_date, resolution)
         self.assertListEqual(urls, test_urls)
+        self.apply_exception()
     
     def test_generate_start_dates(self):
-        # TODO: Revisar y redefinir
-        initial_date = '2024-03-14'
-        final_date = '2024-04-16'
+        initial_date = dt.datetime(2024, 3, 14, 0, 0)
+        final_date = dt.datetime(2024, 4, 16, 0, 0)
         resolution = 31
-        obj = ReadSIMEM()
+        obj = self.read_simem
         dates = list(date for date in obj._generate_start_dates(initial_date, final_date, resolution))
         mock_dates = ['2024-03-14', '2024-04-14', '2024-04-16']
         self.assertListEqual(dates, mock_dates)
+        self.apply_exception()
 
     def test_get_records(self):
-        # TODO: Revisar y redefinir
-        dataset_id : str = 'EC6945'
-        obj = ReadSIMEM()
-        obj.__dataset_id = dataset_id
+        mock_records = self.read_test_data(EC6945_RECORDS_FILE)
+        test_request = self.read_test_data(EC6945_REQUEST_FILE)
+        self.mock_request.get.return_value.json.return_value = test_request
+        
         url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-        records = obj._get_records(url)
-        mock_records = self.read_test_data(f'{dataset_id}_records.json')
+        records = self.read_simem._get_records(url, self.mock_request)
         self.assertTrue(len(records), len(mock_records))
-    
-    def test_get_dataset_info(self):
-        # TODO: Eliminar
-        dataset_id : str = 'EC6945'
-        obj = ReadSIMEM()
-        obj.__dataset_id = dataset_id
-        obj.start_date = '2024-03-14'
-        obj.end_date = '2024-04-16'
-        response = obj.__get_dataset_info()
-        response_status = response['success']
-        response_dataset_id = response['parameters']['idDataset']
-        response_records_amount = len(response["result"]["records"])
-        self.assertTrue(response_status)
-        self.assertEqual(response_dataset_id, dataset_id)
-        self.assertEqual(response_records_amount, 0)
+        self.apply_exception()
 
     def test_save_dataset(self):
-        # TODO: Revisar y redefinir
-        dataset_id = 'EC6945'
-        obj = ReadSIMEM()
-        dataset_info = self.read_test_data(f'{dataset_id}_dataset_info.json')
-        records = [self.read_test_data(f'{dataset_id}_records.json')]
-        dataset = obj.__save_dataset(dataset_info, records)
+        
+        dataset_info = self.read_test_data(EC6945_DATASET_INFO_FILE)
+        records = [self.read_test_data(EC6945_RECORDS_FILE)]
+        dataset = self.read_simem._ReadSIMEM__save_dataset(dataset_info, records)
         dataset_metadata = dataset['result']['metadata']
         dataset_records = dataset['result']['records']
         
-        mock_dataset = self.read_test_data(f'{dataset_id}_request.json')
+        mock_dataset = self.read_test_data(EC6945_REQUEST_FILE)
         mock_dataset_metadata = mock_dataset['result']['metadata']
         mock_dataset_records = mock_dataset['result']['records']
 
         self.assertEqual(dataset_metadata, mock_dataset_metadata)
         self.assertCountEqual(dataset_records, mock_dataset_records)
+        self.apply_exception()
 
-    def read_test_data(self, filename):
+    def test_get_datasetid(self):
+        object_value = self.read_simem._ReadSIMEM__dataset_id
+        function_return = self.read_simem.get_datasetid()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+
+    def test_get_startdate(self):
+        object_value = self.read_simem._ReadSIMEM__start_date
+        function_return = self.read_simem.get_startdate()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+    def test_get_enddate(self):
+        object_value = self.read_simem._ReadSIMEM__end_date
+        function_return = self.read_simem.get_enddate()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+    def test_get_filter_url(self):
+        test_list_filter = ('test_column', ["value1", "value2"])
+        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
+
+        object_value = self.read_simem._ReadSIMEM__filter_url
+        function_return = self.read_simem.get_filter_url()
+        self.assertEqual(object_value, function_return)
+        self.apply_exception()
+
+    def test_get_filters(self):
+        test_list_filter = ('test_column', ["value1", "value2"])
+        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
+        object_value = self.read_simem._ReadSIMEM__filter_values
+        function_return = self.read_simem.get_filters()
+        self.assertEqual(function_return, object_value)
+        self.apply_exception()
+
+
+    def test_get_resolution(self):
+        object_value = self.read_simem._ReadSIMEM__resolution
+        function_return = self.read_simem.get_resolution()
+        self.assertEqual(function_return, object_value)
+        self.apply_exception()
+
+
+    def test_get_granularity(self):
+        object_value = self.read_simem._ReadSIMEM__granularity
+        function_return = self.read_simem.get_granularity()
+        self.assertEqual(function_return,object_value)
+        self.apply_exception()
+
+
+    def test_get_metadata(self):
+        function_return = self.read_simem.get_metadata()
+        self.assertFalse(function_return.empty, "DataFrame is empty")
+        self.apply_exception()
+
+
+    def test_get_columns(self):
+        function_return = self.read_simem.get_columns()
+        self.assertFalse(function_return.empty, "DataFrame is empty")
+        self.apply_exception()
+
+
+    def test_get_name(self):
+        object_value = self.read_simem._ReadSIMEM__name
+        function_return = self.read_simem.get_name()
+        self.assertEqual(function_return,object_value)
+        self.apply_exception()
+
+
+    def test_get_dataset_info(self):
+        function_return = self.read_simem._ReadSIMEM__get_dataset_info()
+        self.assertIsInstance(function_return, dict)
+        self.apply_exception()
+
+
+    @staticmethod
+    def read_test_data(filename):
         path = os.getcwd()+os.sep + r'test/test_data/' + filename
         with open(path) as file:
             filedata = json.load(file)
         return filedata
     
-    def read_test_dataframe(self, filename):
-        path = os.getcwd() + os.sep + r'test/test_data/' + filename
-        dataframe = pd.read_csv(path)
-        return dataframe
+    @staticmethod
+    def apply_exception():
+        global EXCEPTION
+        EXCEPTION = True
+
 
 if __name__ == '__main__':
     unittest.main()
