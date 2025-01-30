@@ -511,7 +511,7 @@ class ReadSIMEM:
         tuple | str
             The filter values.
         """
-        var_filter_values = getattr(self, "_ReadSIMEM__filter_values", None)
+        var_filter_values = getattr(self, "_filter_values", None)
         if var_filter_values is None:
             logging.info("No filter assigned.")  
         return var_filter_values  
