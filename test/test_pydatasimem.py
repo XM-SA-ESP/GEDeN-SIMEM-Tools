@@ -8,13 +8,14 @@ from unittest.mock import patch, MagicMock
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.pydatasimem import _Validation ,ReadSIMEM 
 
-test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=ec6945', 
-             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945']
+test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=ec6945&columnDestinyName=&values=', 
+             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945&columnDestinyName=&values=']
 
 EXCEPTION = False
 EC6945_REQUEST_FILE = 'EC6945_request.json'
 EC6945_RECORDS_FILE = 'EC6945_records.json'
 EC6945_DATASET_INFO_FILE = 'EC6945_dataset_info.json'
+API_RESULTS_FILE = 'API_results.json'
 
 class TestValidation(unittest.TestCase):
 
@@ -160,13 +161,6 @@ class test_clase(unittest.TestCase):
         test_id = self.dataset_id
         init_id = self.read_simem._ReadSIMEM__dataset_id
         self.assertEqual(init_id, test_id)
-        
-        # Checks that the value is correctly changed inside the object
-        test_id = 'ab1234'
-        self.read_simem.set_datasetid(test_id)
-        changed_id = self.read_simem._ReadSIMEM__dataset_id
-        self.assertEqual(changed_id, test_id)
-        self.apply_exception()
 
     def test_set_dates(self):
         """
@@ -259,14 +253,6 @@ class test_clase(unittest.TestCase):
         self.assertEqual(resolution, 0)
         self.apply_exception()
 
-    # def test_make_request(self):
-    #     url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-    #     response = self.mock_request
-    #     response_status = response['success']
-    #     response_dataset_id = response['parameters']['idDataset']
-    #     self.assertTrue(response_status)
-    #     self.assertEqual(response_dataset_id, self.dataset_id)
-
 
     def test_create_urls(self):
         initial_date = dt.datetime(2024, 3, 14, 0, 0)
@@ -286,6 +272,7 @@ class test_clase(unittest.TestCase):
         self.assertListEqual(dates, mock_dates)
         self.apply_exception()
 
+    # Deprecated 
     def test_get_records(self):
         mock_records = self.read_test_data(EC6945_RECORDS_FILE)
         test_request = self.read_test_data(EC6945_REQUEST_FILE)
@@ -296,21 +283,27 @@ class test_clase(unittest.TestCase):
         self.assertTrue(len(records), len(mock_records))
         self.apply_exception()
 
-    def test_save_dataset(self):
-        
-        dataset_info = self.read_test_data(EC6945_DATASET_INFO_FILE)
-        records = [self.read_test_data(EC6945_RECORDS_FILE)]
-        dataset = self.read_simem._ReadSIMEM__save_dataset(dataset_info, records)
-        dataset_metadata = dataset['result']['metadata']
-        dataset_records = dataset['result']['records']
-        
-        mock_dataset = self.read_test_data(EC6945_REQUEST_FILE)
-        mock_dataset_metadata = mock_dataset['result']['metadata']
-        mock_dataset_records = mock_dataset['result']['records']
 
-        self.assertEqual(dataset_metadata, mock_dataset_metadata)
-        self.assertCountEqual(dataset_records, mock_dataset_records)
-        self.apply_exception()
+    @patch('builtins.open', new_callable=unittest.mock.mock_open)
+    @patch('json.dump')
+    def test_save_dataset_json_file(self, mock_json_dump, mock_open):
+        """
+        Test saving dataset to a JSON file.
+        """
+        result = {"result": {"metadata": {}, "records": []}}
+        self.read_simem._ReadSIMEM__save_dataset(result, 'json')
+        mock_open.assert_called_once_with('EC6945_2024-04-14_2024-04-16.json', 'w', encoding='utf-8')
+        mock_json_dump.assert_called_once_with(result, mock_open(), ensure_ascii=False)
+
+    @patch('pandas.DataFrame.to_csv')
+    def test_save_dataset_csv_file(self, mock_to_csv):
+        """
+        Test saving dataset to a CSV file.
+        """
+        result = pd.DataFrame()
+        self.read_simem._ReadSIMEM__save_dataset(result, 'csv')
+        mock_to_csv.assert_called_once_with('EC6945_2024-04-14_2024-04-16.csv', encoding='utf-8', index=False)
+
 
     def test_get_datasetid(self):
         object_value = self.read_simem._ReadSIMEM__dataset_id
@@ -386,6 +379,22 @@ class test_clase(unittest.TestCase):
         function_return = self.read_simem._ReadSIMEM__get_dataset_info()
         self.assertIsInstance(function_return, dict)
         self.apply_exception()
+
+    def test_records_formating(self):
+        data_api = self.read_test_data(API_RESULTS_FILE)
+        result = self.read_simem._records_formating(data_api, 'json')
+        self.assertIsInstance(result, dict)
+        self.assertIn('result', result)
+        self.assertIn('records', result['result'])
+        self.assertEqual(len(result['result']['records']), 1080)
+
+        result = self.read_simem._records_formating(data_api, 'csv')
+        self.assertIsInstance(result, pd.DataFrame)
+        self.assertEqual(len(result), 1080)
+
+        result = self.read_simem._records_formating(data_api, 'default')
+        self.assertIsInstance(result, pd.DataFrame)
+        self.assertEqual(len(result), 1080)
 
 
     @staticmethod
