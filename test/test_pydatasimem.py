@@ -203,7 +203,7 @@ class test_clase(unittest.TestCase):
         """
         test_list_filter = ('test_column', ["value1", "value2"])
         self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
-        changed_filter = self.read_simem._ReadSIMEM__filter_values
+        changed_filter = self.read_simem._filter_values
         self.assertEqual(changed_filter, test_list_filter)
         filter_url = getattr(self.read_simem, '_ReadSIMEM__filter_url', None)
         self.assertIsNotNone(filter_url)
@@ -336,7 +336,7 @@ class test_clase(unittest.TestCase):
     def test_get_filters(self):
         test_list_filter = ('test_column', ["value1", "value2"])
         self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
-        object_value = self.read_simem._ReadSIMEM__filter_values
+        object_value = self.read_simem._filter_values
         function_return = self.read_simem.get_filters()
         self.assertEqual(function_return, object_value)
         self.apply_exception()

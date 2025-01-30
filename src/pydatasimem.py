@@ -374,6 +374,7 @@ class ReadSIMEM:
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers={'Connection':'close'}) as response:
                 load = await response.json()
+
         return load
 
     async def run_async(self, urls):
@@ -631,7 +632,7 @@ if __name__ == '__main__':
 
     dataset_id = 'ec6945'
     fecha_inicio = '2024-04-14'
-    fecha_fin = '2024-04-16'
+    fecha_fin = '2024-08-16'
 
     simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'cosa', 'val')
     df = simem.main(data_format='json',save_file=True)
