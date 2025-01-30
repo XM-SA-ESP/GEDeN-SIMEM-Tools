@@ -205,7 +205,7 @@ class test_clase(unittest.TestCase):
         self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
         changed_filter = self.read_simem._filter_values
         self.assertEqual(changed_filter, test_list_filter)
-        filter_url = getattr(self.read_simem, '_ReadSIMEM__filter_url', None)
+        filter_url = getattr(self.read_simem, '_filter_url', None)
         self.assertIsNotNone(filter_url)
         self.apply_exception()
         
