@@ -152,7 +152,7 @@ class ReadSIMEM:
             var_filter = ''
             self.__filter_url: str = "&columnDestinyName=&values="
             return
-        self.__filter_values: tuple[str, list] =  var_filter
+        self._filter_values: tuple[str, list] =  var_filter
         self.__filter_url: str = f"&columnDestinyName={var_column}&values={','.join(var_filter[1])}"
         logging.info("Filter defined")
 
@@ -222,35 +222,6 @@ class ReadSIMEM:
             self.__resolution: int = self.__check_date_resolution(self.__granularity)
             session.close()
         
-    def __old_main(self, filter:bool= False) -> pd.DataFrame:
-        """
-        Creates a dataframe with the information about the required dataset 
-        in the given dates.
-        
-        Parameters:
-        filter : bool
-            Whether to apply the filter to the dataset request.
-        
-        Returns:
-        pd.DataFrame
-            A DataFrame containing the dataset records.
-        """
-        print('Inicio consulta sincronica')
-        t0 = time.time()
-        with requests.Session() as session:
-            resolution: int = self.get_resolution()
-            urls: list[str] = self.__create_urls(self.get_startdate(), self.get_enddate(), resolution, filter)
-            t1 = time.time()
-            print(f'Creacion url: {t1 - t0}')
-
-            records: list[list] = list(map(self._get_records, urls, repeat(session)))
-            t2 = time.time()
-            print(f'Extraccion de registros: {t2 - t1}')
-        
-        t3 = time.time()
-        print(f'Finalizacion sincronica: {t3 -t0}')
-        print('*' * 100)
-        return pd.DataFrame.from_records([item for sublist in records for item in sublist])
 
     def main(self, data_format: str = 'csv', save_file : bool = False, filter: bool = False):
         """
@@ -277,8 +248,7 @@ class ReadSIMEM:
         api_data = asyncio.run(self.run_async(urls))
         t1 = time.time()
         logging.info(f'Data asynchronic extraction took: {t1 - t0} seconds')    
-        with open('file_name' + '.json', 'w', encoding='utf-8') as f:
-                json.dump(api_data, f, ensure_ascii=False)
+        
         data_format = data_format.lower().strip()
         result = self._records_formating(api_data, data_format)
 
@@ -663,6 +633,6 @@ if __name__ == '__main__':
     fecha_inicio = '2024-04-14'
     fecha_fin = '2024-04-16'
 
-    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin)
+    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'cosa', 'val')
     df = simem.main(data_format='json',save_file=True)
 

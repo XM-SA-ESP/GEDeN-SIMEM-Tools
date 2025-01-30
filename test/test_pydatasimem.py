@@ -305,7 +305,6 @@ class test_clase(unittest.TestCase):
         mock_to_csv.assert_called_once_with('EC6945_2024-04-14_2024-04-16.csv', encoding='utf-8', index=False)
 
 
-
     def test_get_datasetid(self):
         object_value = self.read_simem._ReadSIMEM__dataset_id
         function_return = self.read_simem.get_datasetid()
