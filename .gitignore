@@ -166,3 +166,4 @@ log/
 coverage-reports/
 
 *.code-workspace
+.tmp

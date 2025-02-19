@@ -3,7 +3,8 @@ Module built to simplify the integration of python with the SIMEM open data API
 
 Author: Sebastian Montoya
 """
-
+import sys
+import os
 import requests
 import logging
 import pandas as pd
@@ -17,6 +18,9 @@ import json
 import nest_asyncio
 nest_asyncio.apply()
 
+if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 DATASETID = ""
 VARIABLE_INVENTORY_ID = "a5a6c4"
 CATALOG_ID =  "e007fb"
@@ -25,6 +29,27 @@ DATE_FORMAT = "%Y-%m-%d"
 TODAY = dt.datetime.strftime(dt.datetime.now(), DATE_FORMAT)
 BASE_API_URL = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}"
 
+
+
+def get_size(obj, seen=None):
+    """Recursively finds size of objects"""
+    size = sys.getsizeof(obj)
+    if seen is None:
+        seen = set()
+    obj_id = id(obj)
+    if obj_id in seen:
+        return 0
+    # Important mark as seen *before* entering recursion to gracefully handle
+    # self-referential objects
+    seen.add(obj_id)
+    if isinstance(obj, dict):
+        size += sum([get_size(v, seen) for v in obj.values()])
+        size += sum([get_size(k, seen) for k in obj.keys()])
+    elif hasattr(obj, '__dict__'):
+        size += get_size(obj.__dict__, seen)
+    elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):
+        size += sum([get_size(i, seen) for i in obj])
+    return size
 
 
 class _Validation:
@@ -85,7 +110,36 @@ class _Validation:
             raise ValueError("Wrong parameter registered. Write 'Datasets' or 'Variables'.")
         _Validation.log_approve(cat_type)
         return cat_type
+    
+    @staticmethod
+    def api_response(response: dict):
+        llave1 = 'success'
+        llave2 = 'status'
+        datasetid =  response['parameters']['idDataset']
+        if llave1 in response.keys():
+            if response[llave1] is True or datasetid in [CATALOG_ID, VARIABLE_INVENTORY_ID]:
+                return True
+        elif llave2 in response.keys():
+            if response[llave2] is False: 
+                return False
+        else:
+            return False
+    
+    @staticmethod
+    def delete_files_in_directory(directory_path):
+        try:
+            files = os.listdir(directory_path)
+            for file in files:
+                file_path = os.path.join(directory_path, file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+            print("All files deleted successfully.")
+        except OSError:
+            print("Error occurred while deleting files.")
+        except UnboundLocalError:
+            print("The folder is empty")
 
+                
         
 @dataclass
 class ReadSIMEM:
@@ -118,22 +172,22 @@ class ReadSIMEM:
         Creates a .csv file with the dataset records for the given dates.
     """
 
-    def __init__(self, var_dataset_id: str, var_start_date: str | dt.datetime, var_end_date: str| dt.datetime,
-                 var_column_destiny: str = None, var_values: str | list = None):
+    def __init__(self, dataset_id: str, start_date: str | dt.datetime, end_date: str| dt.datetime,
+                 filter_column: str = None, filter_values: str | list = None):
         t0 = time.time()
         print('*' * 100)
         print('Initializing object')
         self.url_api: str = BASE_API_URL
-        self._set_datasetid(var_dataset_id)
-        self.set_dates(var_start_date, var_end_date)
-        self.set_filter(var_column_destiny, var_values)
+        self._set_datasetid(dataset_id)
+        self.set_dates(start_date, end_date)
+        self.set_filter(filter_column, filter_values)
         self._set_dataset_data()
         t1 = time.time()
         logging.info(f'Initiallization complete in: {t1 - t0 : .2f} seconds.')
         print(f'The object has been initialized with the dataset: "{self.__name}"')
 
 
-    def set_filter(self, var_column, var_values) -> None:
+    def set_filter(self, column, values) -> None:
         """
         Sets the filter for the dataset request and the complement for the URL.
         If one of the 2 arguments are not given the filter won't set.
@@ -147,16 +201,16 @@ class ReadSIMEM:
         Returns:
         None
         """
-        var_filter = _Validation.filter(var_column, var_values)
+        var_filter = _Validation.filter(column, values)
         if var_filter is None:
             var_filter = ''
             self.__filter_url: str = "&columnDestinyName=&values="
             return
         self._filter_values: tuple[str, list] =  var_filter
-        self.__filter_url: str = f"&columnDestinyName={var_column}&values={','.join(var_filter[1])}"
+        self.__filter_url: str = f"&columnDestinyName={column}&values={','.join(var_filter[1])}"
         logging.info("Filter defined")
 
-    def _set_datasetid(self, var_dataset_id) -> None:
+    def _set_datasetid(self, dataset_id) -> None:
         """
         Sets the dataset ID for the request and complement the basic url for the defined dataset.
         
@@ -167,13 +221,13 @@ class ReadSIMEM:
         Returns:
         None
         """
-        var_dataset_id = _Validation.datasetid(var_dataset_id)
-        self.__dataset_id: str = var_dataset_id.lower()
-        self.url_api = self.url_api + f"&datasetId={var_dataset_id}"
+        dataset_id = _Validation.datasetid(dataset_id)
+        self.__dataset_id: str = dataset_id.lower()
+        self.url_api = self.url_api + f"&datasetId={dataset_id}"
         logging.info("ID defined")
 
-    def set_dates(self, var_start_date: str | dt.datetime, 
-                  var_end_date: str | dt.datetime) -> None:
+    def set_dates(self, start_date: str | dt.datetime, 
+                  end_date: str | dt.datetime) -> None:
         """
         Sets the start and end dates for the dataset request.
         
@@ -186,15 +240,15 @@ class ReadSIMEM:
         Returns:
         None
         """
-        var_start_date = _Validation.date(var_start_date)
-        var_end_date = _Validation.date(var_end_date)
-        if var_start_date > var_end_date:
+        start_date = _Validation.date(start_date)
+        end_date = _Validation.date(end_date)
+        if start_date > end_date:
             logging.info("Dataset will be empty - Start date is bigger than end date")
-        self.__start_date: dt.datetime = var_start_date
-        self.__end_date: dt.datetime = var_end_date
+        self.__start_date: dt.datetime = start_date
+        self.__end_date: dt.datetime = end_date
         if hasattr(self, '__dataset_info'):
-            self.__dataset_info["parameters"]["startDate"] =  dt.datetime.strftime(var_start_date)
-            self.__dataset_info["parameters"]["endDate"] =  dt.datetime.strftime(var_end_date)
+            self.__dataset_info["parameters"]["startDate"] =  dt.datetime.strftime(start_date)
+            self.__dataset_info["parameters"]["endDate"] =  dt.datetime.strftime(end_date)
         logging.info("Dates defined")
         
     def _set_dataset_data(self) -> None:
@@ -222,6 +276,56 @@ class ReadSIMEM:
             self.__resolution: int = self.__check_date_resolution(self.__granularity)
             session.close()
         
+    def old_main(self, output_folder : str = None, filter: bool = False) -> pd.DataFrame:
+        """
+        Creates a dataframe with the information about the required dataset 
+        in the given dates.
+        
+        Parameters:
+        filter : bool
+            Whether to apply the filter to the dataset request.
+        
+        Returns:
+        pd.DataFrame
+            A DataFrame containing the dataset records.
+        """
+        self.__temp_path = os.path.join(os.path.dirname(os.path.abspath(__name__)), '.tmp')
+        if not os.path.exists(self.__temp_path):
+            os.makedirs(self.__temp_path)
+            print('Temporal folder created')
+        _Validation.delete_files_in_directory(self.__temp_path)
+        
+        self.__temp_file = os.path.join(self.__temp_path, f'{self.get_datasetid()}.csv')
+        open(self.__temp_file, mode='w').close()
+    
+
+
+        print('Inicio consulta sincronica') 
+        
+        t0 = time.time()
+        resolution: int = self.get_resolution()
+        urls: list[str] = self.__create_urls(self.get_startdate(), self.get_enddate(), resolution, filter)
+        t1 = time.time()
+        print(f'Creacion url: {t1 - t0}')
+
+        with requests.Session() as session:
+            for url in urls:
+                self._get_records(url, session)
+        
+        t2 = time.time()
+        print(f'Extraccion de registros: {t2 - t1}')
+
+        
+        if os.path.exists(output_folder):
+           new_file = self.__save_dataset(output_folder)
+           result = pd.read_csv(new_file)
+        else:
+            result = pd.read_csv(self.__temp_file)
+        print('End of data extracting process')
+        print('*' * 100)
+        
+        return result
+
 
     def main(self, data_format: str = 'csv', save_file : bool = False, filter: bool = False):
         """
@@ -253,14 +357,16 @@ class ReadSIMEM:
         result = self._records_formating(api_data, data_format)
 
         if save_file:
-            self.__save_dataset(result, data_format)
-
+            new_file = self.__save_dataset(result, data_format)
+            result = pd.read_csv(new_file)
+        else:
+            result = pd.read_csv(self.__temp_file)
         print('End of data extracting process')
         print('*' * 100)
-
+        
         return result
     
-    def _records_formating(self, data_api: list, data_format: str):
+    def _records_formating(self, records: list, data_format: str):
         """
         Formats the data retrieved from the API into jason or csv format.
         
@@ -278,25 +384,27 @@ class ReadSIMEM:
                   Otherwise, returns a pandas DataFrame with the records.
         """
         logging.info('Start of data formating')
-        df_api = pd.DataFrame.from_records(data_api)
-        df_api = pd.json_normalize(df_api['result'])
-        df_api = df_api['records']
-        records = df_api.explode()
-        records = records.to_list()
+        # df_api = pd.DataFrame.from_records(data_api)
+        # df_api = pd.json_normalize(df_api['result'])
+        # records = df_api['records']
+        # records = records.explode()
+        # records = records.to_list()
 
         if data_format == 'json':
             result: dict = self.__get_dataset_info()
-            result['result']['records'] = records
+            result['result']['records'].append(records)
         elif data_format == 'csv': 
             result = pd.DataFrame.from_records(records)
+            result.to_csv(self.__temp_file, mode='a')
         else:
             print('Format type not implemented yet, will return a tabular formatting')
             result = pd.DataFrame.from_records(records)
+            result.to_csv(self.__temp_file, mode='a')
 
         logging.info('Data formatting completed.')
         return result
 
-    def _get_records(self, var_url: str, session) -> list:
+    def _get_records(self, var_url: str, session: requests.Session) -> list:
         """
         Makes the request and returns a list of records from the dataset.
         
@@ -311,12 +419,20 @@ class ReadSIMEM:
             A list of records from the dataset.
         """
         response = self._make_request(var_url, session)
-        records = response["result"]["records"]
+        result = response.get('result', {}) 
+        records = result.get('records', [])
+        if len(records) == 0:
+           print(f'For the URL: {var_url}') 
+           print('There are 0 records') 
         logging.info("Records saved: %d rows registered.", len(records))
+        
+        result = pd.DataFrame.from_records(records)
+        result.to_csv(self.__temp_file, mode='a', encoding='utf-8', index=False)
+        
         return records
 
 
-    def __save_dataset(self, result: pd.DataFrame | dict, data_format: str) -> None:
+    def __save_dataset(self, output_folder: str) -> str:
         """
         Saves the dataset to a file in the specified format.
         This method saves the dataset to a file with a default name that includes the dataset ID and the date range.
@@ -339,15 +455,14 @@ class ReadSIMEM:
         dataid = f'{self.get_datasetid().upper()}'
         fechas = f'{self.get_startdate().date()}_{self.get_enddate().date()}'
         file_name = '_'.join([dataid, fechas])
+        file_name = os.path.join(output_folder, file_name + '.csv')
 
-        if data_format == 'json':
-            with open(file_name + '.json', 'w', encoding='utf-8') as f:
-                json.dump(result, f, ensure_ascii=False)
-        else:
-            result.to_csv(file_name + '.csv', encoding='utf-8', index=False)
-        
+        os.remove(file_name)
+        os.rename(self.__temp_file, file_name)
+        print(f'{file_name} saved into {output_folder}')
         logging.info("%s from %s to %s dataset saved.", self.get_datasetid(), self.get_startdate(), self.get_enddate())
-        
+       
+        return file_name 
     
     @staticmethod
     def _make_request(url: str, session: requests.Session) -> dict:
@@ -367,13 +482,27 @@ class ReadSIMEM:
         """
         response = session.get(url)
         logging.info("Response with status: %s", response.status_code)
-        return response.json()
+        response.raise_for_status()
+        data = response.json()
+
+        status : str = data.get('success', False)
+        api_params = data.get('parameters', None)
+        datasetid = api_params.get('idDataset', None)
+        if status is not True and datasetid not in [CATALOG_ID, VARIABLE_INVENTORY_ID]: 
+            message : str = data.get('message', None)
+            print(f'For the URL: {url}')
+            print(f'The next message was returned: {message}')
+
+        return data
+
+            
+
     
     @staticmethod
     async def async_request(url: str):
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers={'Connection':'close'}) as response:
-                load = await response.json()
+            async with session.get(url, headers = {'Connection' : 'close'}) as response:
+                load = await response.json(content_type=None)
 
         return load
 
@@ -628,12 +757,14 @@ class CatalogSIMEM(ReadSIMEM):
         """
         return self.__data
 
+
 if __name__ == '__main__':
 
-    dataset_id = 'ec6945'
-    fecha_inicio = '2024-04-14'
-    fecha_fin = '2024-08-16'
+    logging.getLogger()
+    dataset_id = 'c41fe8'  
+    fecha_inicio = '2024-09-06'
+    fecha_fin = '2024-11-06'
 
-    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'cosa', 'val')
-    df = simem.main(data_format='json',save_file=True)
-
+    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin)
+    df = simem.old_main(output_folder='D:\Repositories\RP-GEDeN-SIMEM-Tools')
+    print('printing')
