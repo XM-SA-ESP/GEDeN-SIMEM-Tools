@@ -10,16 +10,11 @@ import logging
 import pandas as pd
 from dataclasses import dataclass
 import datetime as dt
-from itertools import repeat
 import time 
 import asyncio
 import aiohttp
-import json
-import nest_asyncio
-nest_asyncio.apply()
 
-if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 
 DATASETID = ""
 VARIABLE_INVENTORY_ID = "a5a6c4"
@@ -28,28 +23,6 @@ REFERENCE_DATE = '1990-01-01'
 DATE_FORMAT = "%Y-%m-%d"
 TODAY = dt.datetime.strftime(dt.datetime.now(), DATE_FORMAT)
 BASE_API_URL = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}"
-
-
-
-def get_size(obj, seen=None):
-    """Recursively finds size of objects"""
-    size = sys.getsizeof(obj)
-    if seen is None:
-        seen = set()
-    obj_id = id(obj)
-    if obj_id in seen:
-        return 0
-    # Important mark as seen *before* entering recursion to gracefully handle
-    # self-referential objects
-    seen.add(obj_id)
-    if isinstance(obj, dict):
-        size += sum([get_size(v, seen) for v in obj.values()])
-        size += sum([get_size(k, seen) for k in obj.keys()])
-    elif hasattr(obj, '__dict__'):
-        size += get_size(obj.__dict__, seen)
-    elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):
-        size += sum([get_size(i, seen) for i in obj])
-    return size
 
 
 class _Validation:
@@ -110,34 +83,6 @@ class _Validation:
             raise ValueError("Wrong parameter registered. Write 'Datasets' or 'Variables'.")
         _Validation.log_approve(cat_type)
         return cat_type
-    
-    @staticmethod
-    def api_response(response: dict):
-        llave1 = 'success'
-        llave2 = 'status'
-        datasetid =  response['parameters']['idDataset']
-        if llave1 in response.keys():
-            if response[llave1] is True or datasetid in [CATALOG_ID, VARIABLE_INVENTORY_ID]:
-                return True
-        elif llave2 in response.keys():
-            if response[llave2] is False: 
-                return False
-        else:
-            return False
-    
-    @staticmethod
-    def delete_files_in_directory(directory_path):
-        try:
-            files = os.listdir(directory_path)
-            for file in files:
-                file_path = os.path.join(directory_path, file)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-            print("All files deleted successfully.")
-        except OSError:
-            print("Error occurred while deleting files.")
-        except UnboundLocalError:
-            print("The folder is empty")
 
                 
         
@@ -146,30 +91,58 @@ class ReadSIMEM:
     """
     Class to request dataset information and data to SIMEM using API
 
-    Args: 
-    var_dataset_id : str
+    Parameters: 
+    dataset_id : str
         ID of the dataset to request data.
-    var_start_date : str | dt.datetime 
+    start_date : str | dt.datetime 
         The starting date for the data slicing.
-    var_end_date : str | dt.datetime 
+    end_date : str | dt.datetime 
         The ending date for the data slicing.
-    var_column_destiny (Optional): str 
+    filter_column (Optional): str 
         The column name to apply the filter on.
-    var_values (Optional): str | list 
+    filter_values (Optional): str | list 
         The values to filter the column by.
     
+    Attributes:
+    url_api : str
+        The base URL for the SIMEM API.
+    session : requests.Session
+        The session for making requests to the API.
+    __filter_values : tuple[str, list]
+        The filter values for the dataset request.
+    __filter_url : str
+        The filter URL for the dataset request.
+    __dataset_info : dict
+        The dataset information.
+    __metadata : pd.DataFrame
+        The metadata of the dataset.
+    __columns : pd.DataFrame
+        The columns of the dataset.
+    __name : str
+        The name of the dataset.
+    __granularity : str
+        The granularity of the dataset.
+    __resolution : int
+        The resolution of the dataset.
+    __date_filter : str
+        The date filter column.
+
     Methods:
-    set_datasetid(self, var_dataset_id) -> None:
-        Sets the dataset ID for the request.
 
-    set_dates(self, var_start_date: str | dt.datetime, var_end_date: str | dt.datetime) -> None:
+    __init__(self, dataset_id: str, start_date: str | dt.datetime, end_date: str | dt.datetime,
+             filter_column: str = None, filter_values: str | list = None):
+        Initializes the ReadSIMEM instance with the given parameters making a request to the API to extract
+        the dataset metadata for further use.
+
+    set_filter(self, column, values) -> None:
+        Sets the filter for the dataset request and the complement for the URL.
+        If one of the 2 arguments are not given the filter won't set.
+    
+    set_dates(self, start_date: str | dt.datetime, end_date: str | dt.datetime) -> None:
         Sets the start and end dates for the dataset request.
-
-    set_filter(self, var_column, var_values) -> None:
-        Sets the filter for the dataset request.
-        
-    main(self, filter: bool = False) -> pd.DataFrame:
-        Creates a .csv file with the dataset records for the given dates.
+    
+    main(self, data_format: str = 'csv', save_file: bool = False, filter: bool = False) -> pd.DataFrame | dict:
+        Retrieves the dataset data for the given dates.
     """
 
     def __init__(self, dataset_id: str, start_date: str | dt.datetime, end_date: str| dt.datetime,
@@ -185,6 +158,7 @@ class ReadSIMEM:
         t1 = time.time()
         logging.info(f'Initiallization complete in: {t1 - t0 : .2f} seconds.')
         print(f'The object has been initialized with the dataset: "{self.__name}"')
+        print('*' * 100)
 
 
     def set_filter(self, column, values) -> None:
@@ -192,10 +166,10 @@ class ReadSIMEM:
         Sets the filter for the dataset request and the complement for the URL.
         If one of the 2 arguments are not given the filter won't set.
         
-        Args:
-        var_column : str
+        Parameters:
+        column : str
             The column name to apply the filter on.
-        var_values : str | list
+        values : str | list
             The values to filter the column by.
         
         Returns:
@@ -215,7 +189,7 @@ class ReadSIMEM:
         Sets the dataset ID for the request and complement the basic url for the defined dataset.
         
         Parameters:
-        var_dataset_id : str
+        dataset_id : str
             The dataset ID to be set.
         
         Returns:
@@ -232,9 +206,9 @@ class ReadSIMEM:
         Sets the start and end dates for the dataset request.
         
         Parameters:
-        var_start_date : str | dt.datetime
+        start_date : str | dt.datetime
             The start date for the dataset request.
-        var_end_date : str | dt.datetime
+        end_date : str | dt.datetime
             The end date for the dataset request.
         
         Returns:
@@ -253,8 +227,8 @@ class ReadSIMEM:
         
     def _set_dataset_data(self) -> None:
         """
-        Internal method to set dataset information.
-        Make a initial request to the API to extract and organize all the information 
+        Internal method to set dataset information and metadata.
+        Makes a initial request to the API to extract and organize all the information 
         related to the required dataset inside the object.
         
         Returns:
@@ -276,15 +250,18 @@ class ReadSIMEM:
             self.__resolution: int = self.__check_date_resolution(self.__granularity)
             session.close()
         
-    def old_main(self, output_folder : str = None, filter: bool = False) -> pd.DataFrame:
+    def main(self, output_folder : str = "", filter: bool = False) -> pd.DataFrame:
         """
         Creates a dataframe with the information about the required dataset 
         in the given dates.
         
         Parameters:
-        filter : bool
-            Whether to apply the filter to the dataset request.
-        
+        output_folder : str, optional
+            The folder where the output file will be saved. If not provided, the current directory is used.
+        filter : bool, optional
+            Whether to apply the filter to the dataset request, the filter has to be setted in 
+            the object (default is False).
+    
         Returns:
         pd.DataFrame
             A DataFrame containing the dataset records.
@@ -292,13 +269,11 @@ class ReadSIMEM:
         self.__temp_path = os.path.join(os.path.dirname(os.path.abspath(__name__)), '.tmp')
         if not os.path.exists(self.__temp_path):
             os.makedirs(self.__temp_path)
-            print('Temporal folder created')
-        _Validation.delete_files_in_directory(self.__temp_path)
-        
+            print(f'Temporal folder created in {self.__temp_path}')
+    
         self.__temp_file = os.path.join(self.__temp_path, f'{self.get_datasetid()}.csv')
         open(self.__temp_file, mode='w').close()
     
-
 
         print('Inicio consulta sincronica') 
         
@@ -316,100 +291,23 @@ class ReadSIMEM:
         print(f'Extraccion de registros: {t2 - t1}')
 
         
-        if os.path.exists(output_folder):
-           new_file = self.__save_dataset(output_folder)
-           result = pd.read_csv(new_file)
-        else:
+        if not os.path.exists(output_folder):
             result = pd.read_csv(self.__temp_file)
-        print('End of data extracting process')
-        print('*' * 100)
-        
-        return result
-
-
-    def main(self, data_format: str = 'csv', save_file : bool = False, filter: bool = False):
-        """
-        Asynchronously extracts the dataset data, formats it, and optionally saves it to a file.
-        
-        Parameters:
-        data_format : str 
-            The format in which to return the data. Default is 'csv'.
-        save_file : bool
-            If True, the extracted data will be saved to a file. Default is False.
-        filter : bool
-            If True, applies a filter to the data extraction process. Default is False.
-        
-        Returns:
-        result: 
-            The extracted and formatted data.
-        """
-        print('Start of asynchronous data extraction')
-        resolution: int = self.get_resolution()
-        urls: list[str] = self.__create_urls(self.get_startdate(), self.get_enddate(), resolution, filter)
-        
-        logging.info('Extracting data.')
-        t0 = time.time()
-        api_data = asyncio.run(self.run_async(urls))
-        t1 = time.time()
-        logging.info(f'Data asynchronic extraction took: {t1 - t0} seconds')    
-        
-        data_format = data_format.lower().strip()
-        result = self._records_formating(api_data, data_format)
-
-        if save_file:
-            new_file = self.__save_dataset(result, data_format)
+        else:
+            new_file = self.__save_dataset(output_folder)
             result = pd.read_csv(new_file)
-        else:
-            result = pd.read_csv(self.__temp_file)
         print('End of data extracting process')
         print('*' * 100)
         
         return result
-    
-    def _records_formating(self, records: list, data_format: str):
-        """
-        Formats the data retrieved from the API into jason or csv format.
-        
-        Parameters:
-        data_api : list 
-            The raw data retrieved from the API.
-        data_format : str
-            The desired format of the output data. 
-            Can be 'json' or 'csv'.
-        
-        Returns:
-            dict or pd.DataFrame: 
-                The formatted data. If 'json' is specified,
-                  returns a dictionary with dataset information and records.
-                  Otherwise, returns a pandas DataFrame with the records.
-        """
-        logging.info('Start of data formating')
-        # df_api = pd.DataFrame.from_records(data_api)
-        # df_api = pd.json_normalize(df_api['result'])
-        # records = df_api['records']
-        # records = records.explode()
-        # records = records.to_list()
 
-        if data_format == 'json':
-            result: dict = self.__get_dataset_info()
-            result['result']['records'].append(records)
-        elif data_format == 'csv': 
-            result = pd.DataFrame.from_records(records)
-            result.to_csv(self.__temp_file, mode='a')
-        else:
-            print('Format type not implemented yet, will return a tabular formatting')
-            result = pd.DataFrame.from_records(records)
-            result.to_csv(self.__temp_file, mode='a')
 
-        logging.info('Data formatting completed.')
-        return result
-
-    def _get_records(self, var_url: str, session: requests.Session) -> list:
+    def _get_records(self, url: str, session: requests.Session) -> list:
         """
         Makes the request and returns a list of records from the dataset.
         
         Parameters:
-        var_url : str
+        url : str
             The URL for the dataset request.
         session : requests.Session
             The session for making the request.
@@ -418,37 +316,34 @@ class ReadSIMEM:
         list
             A list of records from the dataset.
         """
-        response = self._make_request(var_url, session)
+        response = self._make_request(url, session)
         result = response.get('result', {}) 
         records = result.get('records', [])
         if len(records) == 0:
-           print(f'For the URL: {var_url}') 
+           print(f'For the URL: {url}') 
            print('There are 0 records') 
         logging.info("Records saved: %d rows registered.", len(records))
         
         result = pd.DataFrame.from_records(records)
-        result.to_csv(self.__temp_file, mode='a', encoding='utf-8', index=False)
+        if hasattr(self, '_ReadSIMEM__temp_file') and len(records) != 0:
+            result.to_csv(self.__temp_file, mode='a', encoding='utf-8', index=False)
         
         return records
 
 
     def __save_dataset(self, output_folder: str) -> str:
         """
-        Saves the dataset to a file in the specified format.
         This method saves the dataset to a file with a default name that includes the dataset ID and the date range.
-        The file can be saved in either JSON or CSV format.
+        The file is saved in CSV format.
         
         Parameters:
-            result : pd.DataFrame | dict 
-                The dataset to be saved. It can be a pandas DataFrame or a dictionary.
-            data_format : str
-                The format in which to save the dataset. Supported formats are 'json' and 'csv'.
-        
+            output_folder : str
+            The folder where the output file will be saved.
+
         Returns:
-            None
+            str
+            The path to the saved file.
         
-        Raises:
-            ValueError: If the specified data_format is not supported.
         """
         
         print('The file will be saved with a default name.')
@@ -495,22 +390,6 @@ class ReadSIMEM:
 
         return data
 
-            
-
-    
-    @staticmethod
-    async def async_request(url: str):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers = {'Connection' : 'close'}) as response:
-                load = await response.json(content_type=None)
-
-        return load
-
-    async def run_async(self, urls):
-        tasks = [self.async_request(url) for url in urls]
-        result =  await asyncio.gather(*tasks)
-
-        return result
 
     @staticmethod
     def __check_date_resolution(granularity: str) -> int:
@@ -526,7 +405,7 @@ class ReadSIMEM:
             The maximum allowed date range in days.
         """
         if granularity in ['Diaria','Horaria']:
-            resolution = 31
+            resolution = 50
         elif granularity in ['Mensual','Semanal']:
             resolution = 731
         elif granularity == 'Anual':
@@ -745,7 +624,7 @@ class CatalogSIMEM(ReadSIMEM):
         self.url_api = self.url_api.format(self.get_startdate(), self.get_enddate())
         with requests.Session() as session:
             datasets = super()._get_records(self.url_api, session)
-            self.__data = pd.DataFrame.from_dict(datasets)
+            self.__data = pd.DataFrame.from_records(datasets)
         logging.info("Catalog retrieved correctly.")
 
     def get_data(self) -> pd.DataFrame:
@@ -766,5 +645,5 @@ if __name__ == '__main__':
     fecha_fin = '2024-11-06'
 
     simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin)
-    df = simem.old_main(output_folder='D:\Repositories\RP-GEDeN-SIMEM-Tools')
+    df = simem.main(output_folder='D:\Repositories\RP-GEDeN-SIMEM-Tools')
     print('printing')
