@@ -405,7 +405,7 @@ class ReadSIMEM:
             The maximum allowed date range in days.
         """
         if granularity in ['Diaria','Horaria']:
-            resolution = 50
+            resolution = 31
         elif granularity in ['Mensual','Semanal']:
             resolution = 731
         elif granularity == 'Anual':
