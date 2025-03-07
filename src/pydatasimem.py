@@ -11,9 +11,7 @@ import pandas as pd
 from dataclasses import dataclass
 import datetime as dt
 import time 
-import asyncio
-import aiohttp
-
+from itertools import repeat
 
 
 DATASETID = ""
@@ -52,15 +50,14 @@ class _Validation:
     
     @staticmethod
     def date(var_date) -> dt.datetime:
-        if isinstance(var_date, dt.datetime):
-            return var_date
-        try:
+        try:  
+            if isinstance(var_date, dt.datetime):
+                return var_date
             var_date = dt.datetime.strptime(var_date, DATE_FORMAT)
+            return var_date
         except ValueError:
             raise ValueError("Incorrect date format, use YYYY-MM-DD")
-        except TypeError:
-            raise TypeError("Incorrect data, date must be a string, datetime.date or datetime.datetime type.")
-        return var_date
+
 
     @staticmethod
     def datasetid(var_dataset_id: str):
@@ -256,25 +253,17 @@ class ReadSIMEM:
         in the given dates.
         
         Parameters:
-        output_folder : str, optional
-            The folder where the output file will be saved. If not provided, the current directory is used.
-        filter : bool, optional
-            Whether to apply the filter to the dataset request, the filter has to be setted in 
-            the object (default is False).
-    
+        data_format : str 
+            The format in which to return the data. Default is 'csv'.
+        save_file : bool
+            If True, the extracted data will be saved to a file. Default is False.
+        filter : bool
+            If True, applies a filter to the data extraction process. Default is False.
+        
         Returns:
-        pd.DataFrame
-            A DataFrame containing the dataset records.
+        result: 
+            The extracted and formatted data.
         """
-        self.__temp_path = os.path.join(os.path.dirname(os.path.abspath(__name__)), '.tmp')
-        if not os.path.exists(self.__temp_path):
-            os.makedirs(self.__temp_path)
-            print(f'Temporal folder created in {self.__temp_path}')
-    
-        self.__temp_file = os.path.join(self.__temp_path, f'{self.get_datasetid()}.csv')
-        open(self.__temp_file, mode='w').close()
-    
-
         print('Inicio consulta sincronica') 
         
         t0 = time.time()
@@ -284,17 +273,16 @@ class ReadSIMEM:
         print(f'Creacion url: {t1 - t0}')
 
         with requests.Session() as session:
-            for url in urls:
-                self._get_records(url, session)
+            records = list(map(self._get_records, urls, repeat(session)))
         
+        records = [item for sublist in records for item in sublist if len(sublist) != 0]
+
         t2 = time.time()
         print(f'Extraccion de registros: {t2 - t1}')
 
-        
-        if not os.path.exists(output_folder):
-            result = pd.read_csv(self.__temp_file)
-        else:
-            new_file = self.__save_dataset(output_folder)
+        result = pd.DataFrame.from_records(records)
+        if os.path.exists(output_folder):
+            new_file = self.__save_dataset(output_folder, result)
             result = pd.read_csv(new_file)
         print('End of data extracting process')
         print('*' * 100)
@@ -324,14 +312,12 @@ class ReadSIMEM:
            print('There are 0 records') 
         logging.info("Records saved: %d rows registered.", len(records))
         
-        result = pd.DataFrame.from_records(records)
-        if hasattr(self, '_ReadSIMEM__temp_file') and len(records) != 0:
-            result.to_csv(self.__temp_file, mode='a', encoding='utf-8', index=False)
+        # result = pd.DataFrame.from_records(records)
         
         return records
 
 
-    def __save_dataset(self, output_folder: str) -> str:
+    def __save_dataset(self, output_folder: str, result : pd.DataFrame = None) -> str:
         """
         This method saves the dataset to a file with a default name that includes the dataset ID and the date range.
         The file is saved in CSV format.
@@ -347,13 +333,12 @@ class ReadSIMEM:
         """
         
         print('The file will be saved with a default name.')
-        dataid = f'{self.get_datasetid().upper()}'
+        datasetid = f'{self.get_datasetid().upper()}'
         fechas = f'{self.get_startdate().date()}_{self.get_enddate().date()}'
-        file_name = '_'.join([dataid, fechas])
+        file_name = '_'.join([datasetid, fechas])
         file_name = os.path.join(output_folder, file_name + '.csv')
 
-        os.remove(file_name)
-        os.rename(self.__temp_file, file_name)
+        result.to_csv(file_name, index=False)
         print(f'{file_name} saved into {output_folder}')
         logging.info("%s from %s to %s dataset saved.", self.get_datasetid(), self.get_startdate(), self.get_enddate())
        
@@ -462,7 +447,10 @@ class ReadSIMEM:
         end_dates[-1] = start_dates[-1]
         start_dates.pop(-1)
         end_dates.pop(0)
-        base_url = self.url_api + self.get_filter_url()
+        if filter:
+            base_url = self.url_api + self.get_filter_url()
+        else:
+            base_url = self.url_api
         urls: list[str] = list(map(base_url.format, start_dates, end_dates))
             
         logging.info("Urls created between %s and %s for %s", self.get_startdate(), self.get_enddate(), self.get_datasetid())
@@ -642,8 +630,9 @@ if __name__ == '__main__':
     logging.getLogger()
     dataset_id = 'c41fe8'  
     fecha_inicio = '2024-09-06'
-    fecha_fin = '2024-11-06'
+    fecha_fin = '2024-12-06'
 
-    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin)
-    df = simem.main(output_folder='D:\Repositories\RP-GEDeN-SIMEM-Tools')
+    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
+    df = simem.main(output_folder='D:\Repositories\RP-GEDeN-SIMEM-Tools', filter=True)
+
     print('printing')
