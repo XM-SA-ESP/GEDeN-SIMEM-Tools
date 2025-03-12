@@ -2,8 +2,10 @@
 Module built to simplify the integration of python with the SIMEM open data API 
 
 Author: Sebastian Montoya
+
 """
 
+import os
 import requests
 import logging
 import pandas as pd
@@ -11,15 +13,10 @@ from dataclasses import dataclass
 import datetime as dt
 from itertools import repeat
 import time 
-import asyncio
-import aiohttp
 import json
-import os
 from pprint import pprint
 import plotly.graph_objects as go
-import nest_asyncio
 import webbrowser
-nest_asyncio.apply()
 
 DATASETID = ""
 VARIABLE_INVENTORY_ID = "a5a6c4"
@@ -31,7 +28,6 @@ BASE_API_URL = "https://www.simem.co/backend-files/api/PublicData?startdate={}&e
 PATH = '..\list_var.json'
 VERSION_DATASET_ID = '24914F'
 VERSION_COLUMN_DF_VER = 'Version'
-
 
 class _Validation:
     
@@ -60,15 +56,14 @@ class _Validation:
     
     @staticmethod
     def date(var_date) -> dt.datetime:
-        if isinstance(var_date, dt.datetime):
-            return var_date
-        try:
+        try:  
+            if isinstance(var_date, dt.datetime):
+                return var_date
             var_date = dt.datetime.strptime(var_date, DATE_FORMAT)
+            return var_date
         except ValueError:
             raise ValueError("Incorrect date format, use YYYY-MM-DD")
-        except TypeError:
-            raise TypeError("Incorrect data, date must be a string, datetime.date or datetime.datetime type.")
-        return var_date
+
 
     @staticmethod
     def datasetid(var_dataset_id: str):
@@ -92,121 +87,151 @@ class _Validation:
         _Validation.log_approve(cat_type)
         return cat_type
 
+                
         
 @dataclass
 class ReadSIMEM:
     """
     Class to request dataset information and data to SIMEM using API
 
-    Args: 
-    var_dataset_id : str
+    Parameters: 
+    dataset_id : str
         ID of the dataset to request data.
-    var_start_date : str | dt.datetime 
+    start_date : str | dt.datetime 
         The starting date for the data slicing.
-    var_end_date : str | dt.datetime 
+    end_date : str | dt.datetime 
         The ending date for the data slicing.
-    var_column_destiny (Optional): str 
+    filter_column (Optional): str 
         The column name to apply the filter on.
-    var_values (Optional): str | list 
+    filter_values (Optional): str | list 
         The values to filter the column by.
     
+    Attributes:
+    url_api : str
+        The base URL for the SIMEM API.
+    session : requests.Session
+        The session for making requests to the API.
+    __filter_values : tuple[str, list]
+        The filter values for the dataset request.
+    __filter_url : str
+        The filter URL for the dataset request.
+    __dataset_info : dict
+        The dataset information.
+    __metadata : pd.DataFrame
+        The metadata of the dataset.
+    __columns : pd.DataFrame
+        The columns of the dataset.
+    __name : str
+        The name of the dataset.
+    __granularity : str
+        The granularity of the dataset.
+    __resolution : int
+        The resolution of the dataset.
+    __date_filter : str
+        The date filter column.
+
     Methods:
-    set_datasetid(self, var_dataset_id) -> None:
-        Sets the dataset ID for the request.
 
-    set_dates(self, var_start_date: str | dt.datetime, var_end_date: str | dt.datetime) -> None:
+    __init__(self, dataset_id: str, start_date: str | dt.datetime, end_date: str | dt.datetime,
+             filter_column: str = None, filter_values: str | list = None):
+        Initializes the ReadSIMEM instance with the given parameters making a request to the API to extract
+        the dataset metadata for further use.
+
+    set_filter(self, column, values) -> None:
+        Sets the filter for the dataset request and the complement for the URL.
+        If one of the 2 arguments are not given the filter won't set.
+    
+    set_dates(self, start_date: str | dt.datetime, end_date: str | dt.datetime) -> None:
         Sets the start and end dates for the dataset request.
-
-    set_filter(self, var_column, var_values) -> None:
-        Sets the filter for the dataset request.
-        
-    main(self, filter: bool = False) -> pd.DataFrame:
-        Creates a .csv file with the dataset records for the given dates.
+    
+    main(self, data_format: str = 'csv', save_file: bool = False, filter: bool = False) -> pd.DataFrame | dict:
+        Retrieves the dataset data for the given dates.
     """
 
-    def __init__(self, var_dataset_id: str, var_start_date: str | dt.datetime, var_end_date: str| dt.datetime,
-                 var_column_destiny: str = None, var_values: str | list = None):
+    def __init__(self, dataset_id: str, start_date: str | dt.datetime, end_date: str| dt.datetime,
+                 filter_column: str = None, filter_values: str | list = None):
         t0 = time.time()
         print('*' * 100)
         print('Initializing object')
         self.url_api: str = BASE_API_URL
-        self._set_datasetid(var_dataset_id)
-        self.set_dates(var_start_date, var_end_date)
-        self.set_filter(var_column_destiny, var_values)
+        self._set_datasetid(dataset_id)
+        self.set_dates(start_date, end_date)
+        self.set_filter(filter_column, filter_values)
         self._set_dataset_data()
         t1 = time.time()
         logging.info(f'Initiallization complete in: {t1 - t0 : .2f} seconds.')
         print(f'The object has been initialized with the dataset: "{self.__name}"')
+        print('*' * 100)
 
 
-    def set_filter(self, var_column, var_values) -> None:
+    def set_filter(self, column, values) -> None:
         """
         Sets the filter for the dataset request and the complement for the URL.
         If one of the 2 arguments are not given the filter won't set.
         
-        Args:
-        var_column : str
+        Parameters:
+        column : str
             The column name to apply the filter on.
-        var_values : str | list
+        values : str | list
             The values to filter the column by.
         
         Returns:
         None
         """
-        var_filter = _Validation.filter(var_column, var_values)
+        var_filter = _Validation.filter(column, values)
         if var_filter is None:
             var_filter = ''
             self.__filter_url: str = "&columnDestinyName=&values="
             return
         self._filter_values: tuple[str, list] =  var_filter
-        self.__filter_url: str = f"&columnDestinyName={var_column}&values={','.join(var_filter[1])}"
+        self.__filter_url: str = f"&columnDestinyName={column}&values={','.join(var_filter[1])}"
         logging.info("Filter defined")
 
-    def _set_datasetid(self, var_dataset_id) -> None:
+    def _set_datasetid(self, dataset_id) -> None:
         """
         Sets the dataset ID for the request and complement the basic url for the defined dataset.
         
         Parameters:
-        var_dataset_id : str
+        dataset_id : str
             The dataset ID to be set.
         
         Returns:
         None
         """
-        var_dataset_id = _Validation.datasetid(var_dataset_id)
-        self.__dataset_id: str = var_dataset_id.lower()
-        self.url_api = self.url_api + f"&datasetId={var_dataset_id}"
+        dataset_id = _Validation.datasetid(dataset_id)
+        self.__dataset_id: str = dataset_id.lower()
+        self.url_api = self.url_api + f"&datasetId={dataset_id}"
         logging.info("ID defined")
 
-    def set_dates(self, var_start_date: str | dt.datetime, 
-                  var_end_date: str | dt.datetime) -> None:
+    def set_dates(self, start_date: str | dt.datetime, 
+                  end_date: str | dt.datetime) -> None:
         """
         Sets the start and end dates for the dataset request.
         
         Parameters:
-        var_start_date : str | dt.datetime
+        start_date : str | dt.datetime
             The start date for the dataset request.
-        var_end_date : str | dt.datetime
+        end_date : str | dt.datetime
             The end date for the dataset request.
         
         Returns:
         None
         """
-        var_start_date = _Validation.date(var_start_date)
-        var_end_date = _Validation.date(var_end_date)
-        if var_start_date > var_end_date:
+        start_date = _Validation.date(start_date)
+        end_date = _Validation.date(end_date)
+        if start_date > end_date:
             logging.info("Dataset will be empty - Start date is bigger than end date")
-        self.__start_date: dt.datetime = var_start_date
-        self.__end_date: dt.datetime = var_end_date
+        self.__start_date: dt.datetime = start_date
+        self.__end_date: dt.datetime = end_date
         if hasattr(self, '__dataset_info'):
-            self.__dataset_info["parameters"]["startDate"] =  dt.datetime.strftime(var_start_date)
-            self.__dataset_info["parameters"]["endDate"] =  dt.datetime.strftime(var_end_date)
+            self.__dataset_info["parameters"]["startDate"] =  dt.datetime.strftime(start_date)
+            self.__dataset_info["parameters"]["endDate"] =  dt.datetime.strftime(end_date)
         logging.info("Dates defined")
         
     def _set_dataset_data(self) -> None:
         """
-        Internal method to set dataset information.
-        Make a initial request to the API to extract and organize all the information 
+        Internal method to set dataset information and metadata.
+        Makes a initial request to the API to extract and organize all the information 
         related to the required dataset inside the object.
         
         Returns:
@@ -228,10 +253,10 @@ class ReadSIMEM:
             self.__resolution: int = self.__check_date_resolution(self.__granularity)
             session.close()
         
-
-    def main(self, data_format: str = 'csv', save_file : bool = False, filter: bool = False):
+    def main(self, output_folder : str = "", filter: bool = False) -> pd.DataFrame:
         """
-        Asynchronously extracts the dataset data, formats it, and optionally saves it to a file.
+        Creates a dataframe with the information about the required dataset 
+        in the given dates.
         
         Parameters:
         data_format : str 
@@ -245,69 +270,39 @@ class ReadSIMEM:
         result: 
             The extracted and formatted data.
         """
-        print('Start of asynchronous data extraction')
+        print('Inicio consulta sincronica') 
+        
+       
+        t0 = time.time()
         resolution: int = self.get_resolution()
         urls: list[str] = self.__create_urls(self.get_startdate(), self.get_enddate(), resolution, filter)
-        
-        logging.info('Extracting data.')
-        t0 = time.time()
-        api_data = asyncio.run(self.run_async(urls))
         t1 = time.time()
-        logging.info(f'Data asynchronic extraction took: {t1 - t0} seconds')    
+        print(f'Creacion url: {t1 - t0}')
+
+        with requests.Session() as session:
+            records = list(map(self._get_records, urls, repeat(session)))
         
-        data_format = data_format.lower().strip()
-        result = self._records_formating(api_data, data_format)
+        records = [item for sublist in records for item in sublist if len(sublist) != 0]
 
-        if save_file:
-            self.__save_dataset(result, data_format)
+        t2 = time.time()
+        print(f'Extraccion de registros: {t2 - t1}')
 
+        result = pd.DataFrame.from_records(records)
+        if os.path.exists(output_folder):
+            new_file = self.__save_dataset(output_folder, result)
+            result = pd.read_csv(new_file)
         print('End of data extracting process')
         print('*' * 100)
-
-        return result
-    
-    def _records_formating(self, data_api: list, data_format: str):
-        """
-        Formats the data retrieved from the API into jason or csv format.
         
-        Parameters:
-        data_api : list 
-            The raw data retrieved from the API.
-        data_format : str
-            The desired format of the output data. 
-            Can be 'json' or 'csv'.
-        
-        Returns:
-            dict or pd.DataFrame: 
-                The formatted data. If 'json' is specified,
-                  returns a dictionary with dataset information and records.
-                  Otherwise, returns a pandas DataFrame with the records.
-        """
-        logging.info('Start of data formating')
-        df_api = pd.DataFrame.from_records(data_api)
-        df_api = pd.json_normalize(df_api['result'])
-        df_api = df_api['records']
-        records = df_api.explode()
-        records = records.to_list()
-
-        if data_format == 'json':
-            result: dict = self.__get_dataset_info()
-            result['result']['records'] = records
-        elif data_format == 'csv': 
-            result = pd.DataFrame.from_records(records)
-        else:
-            print('Format type not implemented yet, will return a tabular formatting')
-            result = pd.DataFrame.from_records(records)
-
-        logging.info('Data formatting completed.')
         return result
 
-    def _get_records(self, var_url: str, session) -> list:
+
+    def _get_records(self, url: str, session: requests.Session) -> list:
         """
         Makes the request and returns a list of records from the dataset.
         
         Parameters:
-        var_url : str
+        url : str
             The URL for the dataset request.
         session : requests.Session
             The session for making the request.
@@ -316,44 +311,45 @@ class ReadSIMEM:
         list
             A list of records from the dataset.
         """
-        response = self._make_request(var_url, session)
-        records = response["result"]["records"]
+        response = self._make_request(url, session)
+        result = response.get('result', {}) 
+        records = result.get('records', [])
+        if len(records) == 0:
+           print(f'For the URL: {url}') 
+           print('There are 0 records') 
         logging.info("Records saved: %d rows registered.", len(records))
+        
+        # result = pd.DataFrame.from_records(records)
+        
         return records
 
 
-    def __save_dataset(self, result: pd.DataFrame | dict, data_format: str) -> None:
+    def __save_dataset(self, output_folder: str, result : pd.DataFrame = None) -> str:
         """
-        Saves the dataset to a file in the specified format.
         This method saves the dataset to a file with a default name that includes the dataset ID and the date range.
-        The file can be saved in either JSON or CSV format.
+        The file is saved in CSV format.
         
         Parameters:
-            result : pd.DataFrame | dict 
-                The dataset to be saved. It can be a pandas DataFrame or a dictionary.
-            data_format : str
-                The format in which to save the dataset. Supported formats are 'json' and 'csv'.
-        
+            output_folder : str
+            The folder where the output file will be saved.
+
         Returns:
-            None
+            str
+            The path to the saved file.
         
-        Raises:
-            ValueError: If the specified data_format is not supported.
         """
         
         print('The file will be saved with a default name.')
-        dataid = f'{self.get_datasetid().upper()}'
+        datasetid = f'{self.get_datasetid().upper()}'
         fechas = f'{self.get_startdate().date()}_{self.get_enddate().date()}'
-        file_name = '_'.join([dataid, fechas])
+        file_name = '_'.join([datasetid, fechas])
+        file_name = os.path.join(output_folder, file_name + '.csv')
 
-        if data_format == 'json':
-            with open(file_name + '.json', 'w', encoding='utf-8') as f:
-                json.dump(result, f, ensure_ascii=False)
-        else:
-            result.to_csv(file_name + '.csv', encoding='utf-8', index=False)
-        
+        result.to_csv(file_name, index=False)
+        print(f'{file_name} saved into {output_folder}')
         logging.info("%s from %s to %s dataset saved.", self.get_datasetid(), self.get_startdate(), self.get_enddate())
-        
+       
+        return file_name 
     
     @staticmethod
     def _make_request(url: str, session: requests.Session) -> dict:
@@ -373,21 +369,19 @@ class ReadSIMEM:
         """
         response = session.get(url)
         logging.info("Response with status: %s", response.status_code)
-        return response.json()
-    
-    @staticmethod
-    async def async_request(url: str):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers={'Connection':'close'}) as response:
-                load = await response.json()
+        response.raise_for_status()
+        data = response.json()
 
-        return load
+        status : str = data.get('success', False)
+        api_params = data.get('parameters', None)
+        datasetid = api_params.get('idDataset', None)
+        if status is not True and datasetid not in [CATALOG_ID, VARIABLE_INVENTORY_ID]: 
+            message : str = data.get('message', None)
+            print(f'For the URL: {url}')
+            print(f'The next message was returned: {message}')
 
-    async def run_async(self, urls):
-        tasks = [self.async_request(url) for url in urls]
-        result =  await asyncio.gather(*tasks)
+        return data
 
-        return result
 
     @staticmethod
     def __check_date_resolution(granularity: str) -> int:
@@ -460,7 +454,10 @@ class ReadSIMEM:
         end_dates[-1] = start_dates[-1]
         start_dates.pop(-1)
         end_dates.pop(0)
-        base_url = self.url_api + self.get_filter_url()
+        if filter:
+            base_url = self.url_api + self.get_filter_url()
+        else:
+            base_url = self.url_api
         urls: list[str] = list(map(base_url.format, start_dates, end_dates))
             
         logging.info("Urls created between %s and %s for %s", self.get_startdate(), self.get_enddate(), self.get_datasetid())
@@ -622,7 +619,7 @@ class CatalogSIMEM(ReadSIMEM):
         self.url_api = self.url_api.format(self.get_startdate(), self.get_enddate())
         with requests.Session() as session:
             datasets = super()._get_records(self.url_api, session)
-            self.__data = pd.DataFrame.from_dict(datasets)
+            self.__data = pd.DataFrame.from_records(datasets)
         logging.info("Catalog retrieved correctly.")
 
     def get_data(self) -> pd.DataFrame:
@@ -666,18 +663,19 @@ class VariableSIMEM:
 
     def __init__(self, cod_variable, start_date, end_date, version = None, esCalidad = False):
         self.__json_file = VariableSIMEM._read_vars(PATH)
-        self.__var = cod_variable
-        self.__version = version
-        self.__dataset_id = self.__json_file[self.__var]["dataset_id"]
-        self.__start_date = start_date
-        self.__end_date = end_date
-        self.__esCalidad = esCalidad
+        self.__var = cod_variable # Externo
+        self.__version = version # Externo - Seria version solicitada o de usuario
+        self.__dataset_id = self.__json_file[self.__var]["dataset_id"] # Externo
+        self.__start_date = start_date # Externo
+        self.__end_date = end_date # Externo
+        self.__esCalidad = esCalidad # Nombre
         self.__data = None
         self.__versions_df = None
         
 
-    @classmethod
-    def _read_vars(self, file_path):
+    # @classmethod
+    @staticmethod
+    def _read_vars(file_path): # read json
         """
         Read the json configuration file with the features and list of variables in SIMEM.
         
@@ -707,11 +705,10 @@ class VariableSIMEM:
         
         Returns:
             None
-        """
-
+        """ 
         self.__granularity = dataset.get_granularity()
-        self.__start_date = dataset.get_startdate()
-        self.__end_date = dataset.get_enddate()
+        
+
 
     def _read(self, dataset_id, start_date, end_date):
         """
@@ -729,11 +726,20 @@ class VariableSIMEM:
             pd.DataFrame
                 The variable dataset.
         """
-
+    
         var_column = self.__json_file[self.__var]['var_column']
-        if self.__json_file[self.__var]['esRegistro'] == 1:
+
+        # Ya estás definiendo en el archivo Json la columna de variable, si no hay nada escrito ya sabes que la variable es columna
+        # No es necesario un booleano extra
+        # if len(var_column) == 0:
+        if self.__json_file[self.__var]['esRegistro'] == 1:  
+            # La inicialización del objeto es indiferente a la lectura, se puede inicializar fuera del IF
             dataset = ReadSIMEM(dataset_id, start_date, end_date, var_column, self.__var)
+            
+            # No es necesario una función para extraer esos registros, 
+            # además no veo sentido en volver a sacar las fechas si ya se entregaron al inicio
             self.__set_info_dataset(dataset)
+            
             return dataset.main(filter = True)
         else:
             dataset = ReadSIMEM(dataset_id, start_date, end_date)
@@ -754,7 +760,8 @@ class VariableSIMEM:
             pd.DataFrame
                 The dataset.
         """
-
+        # Esta validación se puede hacer de forma implicita en la lectura, 
+        # si no hay datos lee, de lo contrario saltar el proceso.
         if(self.__data is None):
             self.__data = self._read(self.__dataset_id, start_date, end_date)
         else:
@@ -773,8 +780,16 @@ class VariableSIMEM:
                 The variable dataset indexed.
         """
 
+        # Si la columna de fecha es la misma definida en el dataset como slicer 
+        # se puede sacar de la metadata de ReadSIMEM
+        # Se usa 4 veces en diferentes lugares, es mejor definir un atributo
         date_column = self.__json_file[self.__var]['date_column']
         version_column = self.__json_file[self.__var]['version_column']
+
+        # lo mismo que sucede con codigo variable, si la columna versionado no existe
+        # ya se sabe que no hay version en ese dataset
+        # tambien se puede crear un atributo para usar en todos los if
+        # if len(version_column) == 0:
         if(self.__json_file[self.__var]['esVersionado'] == 1):
             self.__index_data = dataset.set_index([date_column, version_column])
             return self.__index_data
@@ -793,7 +808,8 @@ class VariableSIMEM:
 
         self.__read_validation(self.__start_date, self.__end_date)
         data = self._index_df(self.__data)
-
+        # el atributo __version se puede definir desde el inicio como 0 y solo revisar si el dataset tiene versiones
+        # con 1 solo if
         if(self.__json_file[self.__var]['esVersionado'] == 1 and self.__version is None):
             data = self._calculate_version(data, 0)
         elif(self.__json_file[self.__var]['esVersionado'] == 1 and self.__version is not None):
@@ -824,10 +840,12 @@ class VariableSIMEM:
                 Contains the data of the variable.
         """
 
+        data = self._get_index_data()
+
         if(self.__esCalidad):
-            return self._get_structure_data()
-        else:
-            return self._get_index_data()
+            data = data.reset_index()
+            return self.__set_structure(data) # format for qualitycheck
+        return data
     
     def __set_structure(self, data):
         """
@@ -840,7 +858,6 @@ class VariableSIMEM:
 
         maestra = self.__json_file[self.__var]['maestra_column']
         cod_maestra = self.__json_file[self.__var]['codMaestra_column']
-        var_column = self.__json_file[self.__var]['var_column']
         value_column = self.__json_file[self.__var]['value_column']
         var_column = self.__json_file[self.__var]['var_column']
         date_column = self.__json_file[self.__var]['date_column']
@@ -862,8 +879,9 @@ class VariableSIMEM:
             
         return data
 
-    @classmethod
-    def __order_date(cls, dataset, date_column):
+
+    @staticmethod
+    def __order_date(dataset, date_column):
         """
         Adds a month column, then sorts the DataFrame by a date and month column, 
         assigns a negative incremental number within each month, and returns the DataFrame sorted by its original index.
@@ -886,8 +904,8 @@ class VariableSIMEM:
     
         return df_sorted.sort_index()
     
-    @classmethod
-    def __filter_by_order(cls, dataset, order_value):
+    @staticmethod
+    def __filter_by_order(dataset, order_value):
         """
         Filters a DataFrame by a specific value in the 'order' column, returning the rows that match 
         that value within each 'month' group, or the rows with the maximum or minimum value of 'order' 
@@ -1026,11 +1044,11 @@ class VariableSIMEM:
         df = dataset.copy()
         version_column = self.__json_file[self.__var]['version_column']
         date_column = self.__json_file[self.__var]['date_column']
+        
         if self.__versions_df is None:
-            filtered_df = VariableSIMEM.__versions(self.__start_date, self.__end_date, VERSION_DATASET_ID, version)
-            self.__versions_df = filtered_df
-        else:
-            filtered_df = self.__versions_df
+            self.__versions_df = VariableSIMEM.__versions(self.__start_date, self.__end_date, VERSION_DATASET_ID, version)
+             
+        filtered_df = self.__versions_df
 
         return VariableSIMEM._filter_date(df, filtered_df, date_column, version_column)
     
@@ -1170,15 +1188,15 @@ class VariableSIMEM:
 
 if __name__ == '__main__':
 
-    dataset_id = 'ec6945'
+    dataset_id = 'c41fe8'
     fecha_inicio = '2024-04-14'
     fecha_fin = '2024-05-16'
 
-    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'cosa', 'val')
-    df = simem.main(data_format='json',save_file=True)
 
     var = VariableSIMEM("PB_Nal", "2024-12-01", "2025-01-31", version='TX3')
     print(var.get_data())
+    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
+    df = simem.main(output_folder="", filter=False)
     # var.show_info()
     # var.describe_data()
     # var.time_series_data()

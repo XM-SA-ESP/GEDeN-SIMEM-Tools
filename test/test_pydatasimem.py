@@ -284,27 +284,6 @@ class test_clase(unittest.TestCase):
         self.apply_exception()
 
 
-    @patch('builtins.open', new_callable=unittest.mock.mock_open)
-    @patch('json.dump')
-    def test_save_dataset_json_file(self, mock_json_dump, mock_open):
-        """
-        Test saving dataset to a JSON file.
-        """
-        result = {"result": {"metadata": {}, "records": []}}
-        self.read_simem._ReadSIMEM__save_dataset(result, 'json')
-        mock_open.assert_called_once_with('EC6945_2024-04-14_2024-04-16.json', 'w', encoding='utf-8')
-        mock_json_dump.assert_called_once_with(result, mock_open(), ensure_ascii=False)
-
-    @patch('pandas.DataFrame.to_csv')
-    def test_save_dataset_csv_file(self, mock_to_csv):
-        """
-        Test saving dataset to a CSV file.
-        """
-        result = pd.DataFrame()
-        self.read_simem._ReadSIMEM__save_dataset(result, 'csv')
-        mock_to_csv.assert_called_once_with('EC6945_2024-04-14_2024-04-16.csv', encoding='utf-8', index=False)
-
-
     def test_get_datasetid(self):
         object_value = self.read_simem._ReadSIMEM__dataset_id
         function_return = self.read_simem.get_datasetid()
