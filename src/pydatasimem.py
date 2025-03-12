@@ -704,11 +704,9 @@ class VariableSIMEM:
         
         Returns:
             None
-        """
-
+        """ 
         self.__granularity = dataset.get_granularity()
-        self.__start_date = dataset.get_startdate()
-        self.__end_date = dataset.get_enddate()
+        
 
 
     def _read(self, dataset_id, start_date, end_date):
@@ -727,8 +725,9 @@ class VariableSIMEM:
             pd.DataFrame
                 The variable dataset.
         """
-
+    
         var_column = self.__json_file[self.__var]['var_column']
+
         # Ya estás definiendo en el archivo Json la columna de variable, si no hay nada escrito ya sabes que la variable es columna
         # No es necesario un booleano extra
         # if len(var_column) == 0:
@@ -739,6 +738,7 @@ class VariableSIMEM:
             # No es necesario una función para extraer esos registros, 
             # además no veo sentido en volver a sacar las fechas si ya se entregaron al inicio
             self.__set_info_dataset(dataset)
+            
             return dataset.main(filter = True)
         else:
             dataset = ReadSIMEM(dataset_id, start_date, end_date)
@@ -1043,11 +1043,11 @@ class VariableSIMEM:
         df = dataset.copy()
         version_column = self.__json_file[self.__var]['version_column']
         date_column = self.__json_file[self.__var]['date_column']
+        
         if self.__versions_df is None:
-            filtered_df = VariableSIMEM.__versions(self.__start_date, self.__end_date, VERSION_DATASET_ID, version)
-            self.__versions_df = filtered_df
-        else:
-            filtered_df = self.__versions_df
+            self.__versions_df = VariableSIMEM.__versions(self.__start_date, self.__end_date, VERSION_DATASET_ID, version)
+             
+        filtered_df = self.__versions_df
 
         return VariableSIMEM._filter_date(df, filtered_df, date_column, version_column)
     
