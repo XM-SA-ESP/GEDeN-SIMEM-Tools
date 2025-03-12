@@ -807,7 +807,8 @@ class VariableSIMEM:
 
         self.__read_validation(self.__start_date, self.__end_date)
         data = self._index_df(self.__data)
-
+        # el atributo __version se puede definir desde el inicio como 0 y solo revisar si el dataset tiene versiones
+        # con 1 solo if
         if(self.__json_file[self.__var]['esVersionado'] == 1 and self.__version is None):
             data = self._calculate_version(data, 0)
         elif(self.__json_file[self.__var]['esVersionado'] == 1 and self.__version is not None):
@@ -856,7 +857,6 @@ class VariableSIMEM:
 
         maestra = self.__json_file[self.__var]['maestra_column']
         cod_maestra = self.__json_file[self.__var]['codMaestra_column']
-        var_column = self.__json_file[self.__var]['var_column']
         value_column = self.__json_file[self.__var]['value_column']
         var_column = self.__json_file[self.__var]['var_column']
         date_column = self.__json_file[self.__var]['date_column']
