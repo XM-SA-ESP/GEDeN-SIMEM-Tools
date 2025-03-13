@@ -318,7 +318,6 @@ class ReadSIMEM:
            print('There are 0 records') 
         logging.info("Records saved: %d rows registered.", len(records))
         
-        # result = pd.DataFrame.from_records(records)
         
         return records
 
@@ -967,6 +966,11 @@ class VariableSIMEM:
         date_temp = 'Fecha'
         dataset.reset_index(inplace=True)
         dataset = dataset.rename(columns={date_column: date_temp})
+        print('Dentro de filter date')
+        print(version_column)
+        print(dataset)
+        print(dates_df)
+        print('+'* 100)
         dataset = dataset.merge(dates_df, left_on = version_column, right_on = 'Version')
         dataset['FechaFin'] = pd.to_datetime(dataset['FechaFin'])
         dataset = dataset[(dataset[date_temp] >= dataset['FechaInicio']) & (dataset[date_temp] <= dataset['FechaFin']+pd.Timedelta(days=1))]
@@ -1138,10 +1142,10 @@ class VariableSIMEM:
 
 if __name__ == '__main__':
 
-    dataset_id = 'c41fe8'
-    fecha_inicio = '2024-04-14'
-    fecha_fin = '2024-05-16'
+    dataset_id = '6e0197'
+    fecha_inicio = '2023-07-28'
+    fecha_fin = '2023-08-02'
 
 
-    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
+    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin)
     df = simem.main(output_folder=".", filter=False)

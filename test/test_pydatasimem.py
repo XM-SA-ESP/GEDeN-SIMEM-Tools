@@ -604,6 +604,8 @@ class TestVariableSIMEM(unittest.TestCase):
         pd.testing.assert_frame_equal(result, expected)
 
     def test_calculate_version(self):
+        print('Calculate version')
+        
         dummy_json = {
             "PrecioEscasez": {
             "name": "Precio de escasez",
@@ -630,7 +632,7 @@ class TestVariableSIMEM(unittest.TestCase):
             "CodigoVariable": ["PrecioEscasez"] * 3,
             "Version": ["v1", "v1", "v1"]
         })
- 
+        
         dummy_versions_df = pd.DataFrame({
             "Version": ["v1"],
             "FechaInicio": [pd.to_datetime("2024-01-01")],
