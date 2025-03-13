@@ -27,7 +27,7 @@ REFERENCE_DATE = '1990-01-01'
 DATE_FORMAT = "%Y-%m-%d"
 TODAY = dt.datetime.strftime(dt.datetime.now(), DATE_FORMAT)
 BASE_API_URL = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}"
-PATH = '..\listado_variables.json'
+URL_JSON_VARIABLES = 'https://raw.githubusercontent.com/XM-SA-ESP/GEDeN-SIMEM-Tools/refs/heads/master/listado_variables.json'
 VERSION_DATASET_ID = '24914F'
 VERSION_COLUMN_DF_VER = 'Version'
 
@@ -691,11 +691,15 @@ class VariableSIMEM:
                 The json configuration to get the variable information.
         """
 
-        path = os.path.join(os.path.dirname(__file__), PATH)
-
-        with open(path, 'r', encoding='utf-8') as archivo:
-            json_file = json.load(archivo)
-        
+        response = requests.get(URL_JSON_VARIABLES)
+        response.raise_for_status()
+    
+        try:
+            json_file = response.json()
+        except json.JSONDecodeError:
+            print("Error decoding JSON. The response might be empty or not in JSON format.")
+            return None
+    
         return json_file
 
     def __set_info_dataset(self, dataset):
