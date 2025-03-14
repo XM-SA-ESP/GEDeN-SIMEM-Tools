@@ -29,6 +29,7 @@ TODAY = dt.datetime.strftime(dt.datetime.now(), DATE_FORMAT)
 BASE_API_URL = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}"
 URL_JSON_VARIABLES = 'https://raw.githubusercontent.com/XM-SA-ESP/GEDeN-SIMEM-Tools/refs/heads/master/listado_variables.json'
 VERSION_DATASET_ID = '24914F'
+DAILY_DATASET_ID = '7a30a3'
 VERSION_COLUMN_DF_VER = 'Version'
 
 class _Validation:
@@ -666,7 +667,7 @@ class VariableSIMEM:
     def __init__(self, cod_variable, start_date, end_date, version = 0, esCalidad = False):
         self.__json_file = self._read_vars()
         self.__var = cod_variable
-        self.__version_usuario = version
+        self.__user_version = version
         self.__dataset_id = self.__json_file[self.__var]["dataset_id"]
         self.__start_date = start_date
         self.__end_date = end_date
@@ -778,7 +779,7 @@ class VariableSIMEM:
         data = self._index_df(self.__data)
 
         if self.__version_column is not None:
-            data = self._calculate_version(data, self.__version_usuario)
+            data = self._calculate_version(data, self.__user_version)
 
         return data
 
@@ -837,7 +838,7 @@ class VariableSIMEM:
             dataset : pd.DataFrame
                 The dataset to order.
             date_column : str
-                The name of the dataset date column.
+                The name of the dataset date column to order.
         
         Returns:
             pd.DataFrame
@@ -847,7 +848,7 @@ class VariableSIMEM:
         dataset['month'] = dataset.apply(lambda x:pd.to_datetime(x['FechaInicio']).month,axis=1)
         df_sorted = dataset.sort_values(by=[date_column, 'month'], ascending=[False, True])
     
-        df_sorted['order'] = -df_sorted.groupby('month').cumcount(ascending=True)
+        df_sorted['order'] = -df_sorted.groupby('FechaInicio').cumcount(ascending=True)
     
         return df_sorted.sort_index()
     
@@ -971,129 +972,11 @@ class VariableSIMEM:
         filtered_df = dataset.groupby('month', group_keys=False).apply(filter_group, include_groups=False).reset_index(drop=True)
     
         return filtered_df
-    
-    @staticmethod
-    def __set_registry(version, str_start_date, str_end_date, pub_date, esMax, order, month):
-        """
-        Return a dictionary with the values of a new registry.
-        
-        Parameters:
-            version : str
-                Version value.
-            str_start_date: dt.datetime
-                Start date value.
-            str_end_date : dt.datetime
-                End date value.
-            pub_date: dt.datetime
-                Publication date value.
-            esMax : int
-                Set 1 if the registry is maximum version, 0 if it is not.
-            order: int
-                Order value.
-            month: int
-                Month value.
-        
-        Returns:
-            dic
-             Dictionary with the values of a new registry to concatenate in the dataset.
-        """
-
-        row = {
-            'Version' : version,
-            'FechaInicio' : str_start_date,
-            'FechaFin' : str_end_date,
-            'FechaPublicacion' : pub_date,
-            'EsMaximaVersion' : esMax,
-            'order' : order,
-            'month' : month
-        }
-        return row
-
-    @staticmethod
-    def __calculate_dates(today, start_date, end_date, last_day, date_tx1, date_tx2, str_start_date, str_end_date):
-        """
-        Calculates the logic for the data that do not have TXR version, to set the TX1 and TX2 versions.
-        
-        Parameters:
-            today : dt.datetime
-                Current date.
-            start_date: dt.datetime
-                Start date value.
-            end_date : dt.datetime
-                End date value.
-            last_day: dt.datetime
-                Last day of a month.
-            date_tx1 : dt.datetime
-                Date of TX1 version publication.
-            date_tx2: dt.datetime
-                Date of TX2 version publication.
-            str_start_date : dt.datetime
-                Start date string value.
-            str_end_date: dt.datetime
-                End date string value.
-        
-        Returns:
-            array
-             The records with new version registries, both TX1 and TX2.
-        """
-        
-        new_registry = []
-        str_date_tx2 = (datetime.strptime(date_tx2, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
-        if today.month != start_date.month and today < (datetime.strptime(last_day, '%Y-%m-%d') + timedelta(days=7)): 
-            if last_day ==  date_tx2:
-                new_registry.append(VariableSIMEM.__set_registry('TX1', str_start_date, last_day, 
-                                                                 str_start_date, 0, -1, start_date.month))
-                new_registry.append(VariableSIMEM.__set_registry('TX2', str_start_date, last_day, 
-                                                                 (start_date + timedelta(days=1)).strftime('%Y-%m-%d'), 1, 0, start_date.month))
-            else:
-                new_registry.append(VariableSIMEM.__set_registry('TX1', str_start_date, date_tx2 if date_tx2 <= last_day else last_day, 
-                                                                 str_start_date, 0, -1, start_date.month))
-                new_registry.append(VariableSIMEM.__set_registry('TX2', str_start_date, date_tx2 if date_tx2 <= last_day else last_day, 
-                                                                 (start_date + timedelta(days=1)).strftime('%Y-%m-%d'), 1, 0, start_date.month))
-                new_registry.append(VariableSIMEM.__set_registry('TX1', str_date_tx2 if date_tx2 >= str_start_date else str_start_date, 
-                                                                 date_tx1 if date_tx1 <= last_day else last_day, str_start_date, 1, 0, start_date.month))
-        elif end_date <= today and today.month == start_date.month:
-            if date_tx1 >= str_start_date and str_end_date > date_tx2:
-                new_registry.append(VariableSIMEM.__set_registry('TX1', str_date_tx2 if date_tx2 >= str_start_date else str_start_date, 
-                                                                 str_end_date if str_end_date <= date_tx1 else date_tx1, str_start_date, 1, 0, start_date.month))
-            if date_tx2 >= str_start_date:
-                new_registry.append(VariableSIMEM.__set_registry('TX2', str_start_date, date_tx2 if date_tx2 <= str_end_date else str_end_date, 
-                                                                 (start_date + timedelta(days=1)).strftime('%Y-%m-%d'), 1, 0, start_date.month))
-                new_registry.append(VariableSIMEM.__set_registry('TX1', str_start_date, date_tx2 if date_tx2 <= str_end_date else str_end_date, 
-                                                                 str_start_date, 0, -1, start_date.month))
-        return new_registry
-
-    @staticmethod
-    def __calculate_missing_data(start_date, end_date):
-        """
-        Configure the required date formats for the missing months.
-        
-        Parameters:
-            start_date: dt.datetime
-                Start date of the dataset.
-            end_date : dt.datetime
-                End date of the dataset.
-        
-        Returns:
-            pd.DataFrame
-             A dataset containing records for missing months.
-        """
-
-        today = datetime.today()
-        start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        last_day = datetime(start_date.year, start_date.month, 
-                            calendar.monthrange(start_date.year, start_date.month)[1]).strftime('%Y-%m-%d')
-        date_tx2 = (today - timedelta(days=6)).strftime('%Y-%m-%d')
-        date_tx1 = (today - timedelta(days=3)).strftime('%Y-%m-%d')
-        str_start_date = start_date.strftime('%Y-%m-%d')
-        str_end_date = end_date.strftime('%Y-%m-%d')
-
-        return VariableSIMEM.__calculate_dates(today, start_date, end_date, last_day, date_tx1, date_tx2, str_start_date, str_end_date)
 
     @staticmethod
     def _generate_missing_months(dataset, start_date, end_date):
         """
-        Calculate the missing months within the version dataset.
+        Calculate the missing data for the months within the version dataset.
         
         Parameters:
             dataset : pd.DataFrame
@@ -1107,19 +990,17 @@ class VariableSIMEM:
             pd.DataFrame
              The full version dataset with missing data.
         """
- 
+
         all_months = set(pd.date_range(start=start_date, end=end_date, freq='MS').strftime("%Y-%m-%d"))
         existing_months = set(dataset['FechaInicio'])
         missing_months = list(all_months - existing_months)
- 
-        df_missing_months = pd.DataFrame({'FechaInicio': missing_months})
-        df_missing_months['Data'] = df_missing_months['FechaInicio'].apply(lambda x: VariableSIMEM.__calculate_missing_data(x, end_date))
- 
-        df_missing = df_missing_months.explode('Data').dropna(subset=['Data']).reset_index(drop=True)
- 
-        df_missing = pd.json_normalize(df_missing['Data'])
- 
-        return pd.concat([dataset, df_missing], ignore_index=True)
+
+        if missing_months:
+            first_missing_month = min(missing_months)
+            daily_df = ReadSIMEM(DAILY_DATASET_ID, first_missing_month, end_date).main()
+            daily_df = VariableSIMEM.__order_date(daily_df, 'FechaPublicacion')
+            dataset = pd.concat([dataset, daily_df], ignore_index=True)
+        return dataset
     
     @staticmethod
     def __versions(start_date, end_date, dataset_id, version):
@@ -1253,7 +1134,7 @@ class VariableSIMEM:
         data[column] = data[column].astype(float)
 
         if self.__version_column is not None:
-            data = self._calculate_version(data, self.__version_usuario)
+            data = self._calculate_version(data, self.__user_version)
             statistics[name] = self.__calculate_stats(data, column)
         else:
             statistics[name] = self.__calculate_stats(data, column)
@@ -1311,7 +1192,7 @@ class VariableSIMEM:
         name = self.__json_file[self.__var]['name']
 
         if self.__version_column is not None:
-            data = self._calculate_version(df, self.__version_usuario)
+            data = self._calculate_version(df, self.__user_version)
             self.__plot_time_series(data, f'Serie de Tiempo {name}')
         else:
             self.__plot_time_series(df, f'Serie de Tiempo {name}')
@@ -1335,10 +1216,10 @@ if __name__ == '__main__':
     fecha_fin = '2024-05-16'
 
 
-    var = VariableSIMEM("PB_Nal", "2025-02-01", "2025-03-10")
+    var = VariableSIMEM("PB_Nal", "2025-02-01", "2025-03-12")
     print(var.get_data())
-    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
-    df = simem.main(output_folder="", filter=False)
+    # simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
+    # df = simem.main(output_folder="", filter=False)
     # var.show_info()
     # var.describe_data()
     # var.time_series_data()
