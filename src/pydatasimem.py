@@ -663,7 +663,7 @@ class VariableSIMEM:
         Return the static information and the time series of the data.
     """
 
-    def __init__(self, cod_variable, start_date, end_date, version = 0, esCalidad = False):
+    def __init__(self, cod_variable, start_date, end_date, version = 0, quality_check = False):
         self.__json_file = VariableSIMEM._read_json()
         self.__var = cod_variable 
         self.__user_version = version 
@@ -673,7 +673,7 @@ class VariableSIMEM:
         self.__version_column = self.__json_file[self.__var]['version_column']
         self.__start_date = _Validation.date(start_date)
         self.__end_date = _Validation.date(end_date)
-        self.__esCalidad = esCalidad 
+        self.__quality_check = quality_check 
         self.__data = None
         self.__versions_df = None
         
@@ -781,7 +781,7 @@ class VariableSIMEM:
 
         data = self._get_index_data()
 
-        if(self.__esCalidad):
+        if(self.__quality_check):
             data = data.reset_index()
             return self.__set_format_for_qualitycheck(data)
         return data

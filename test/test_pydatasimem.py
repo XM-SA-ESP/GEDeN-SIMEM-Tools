@@ -421,7 +421,7 @@ class TestVariableSIMEM(unittest.TestCase):
         self.addCleanup(patcher2.stop)
         patcher2.start()
  
-        self.var_simem = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31", esCalidad=False)
+        self.var_simem = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31", quality_check=False)
  
     def test_get_data(self):
         data = self.var_simem.get_data()
@@ -455,7 +455,7 @@ class TestVariableSIMEM(unittest.TestCase):
             mock_web_open.assert_called_with("time_series_plot.html")
  
     def test_get_structure_data(self):
-        var_simem_calidad = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31", esCalidad=True)
+        var_simem_calidad = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31", quality_check=True)
         data = var_simem_calidad.get_data()
         expected_columns = ['fecha', 'codigoMaestra', 'codigoVariable', 'maestra', 'valor']
         self.assertListEqual(list(data.columns), expected_columns)
