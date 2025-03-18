@@ -647,11 +647,14 @@ class VariableSIMEM:
         The ending date for the data slicing.
     version (Optional): int | str
         The version of the variable.
-    esCalidad (Optional): bool 
+    quality_check (Optional): bool 
         Is the object is for Calidad functions.
     
     Methods:
-    get_index_data(self) -> pd.DataFrame:
+    get_collection() -> pd.DataFrame:
+        Return a dataframe with the list of available variables.
+
+    get_data(self) -> pd.DataFrame:
         Return the data of the variable with indexes.
     
     describe_data(self) -> json:
@@ -664,22 +667,23 @@ class VariableSIMEM:
         Return the static information and the time series of the data.
     """
 
-    def __init__(self, cod_variable, start_date, end_date, version = 0, esCalidad = False):
-        self.__json_file = self._read_vars()
+    def __init__(self, cod_variable, start_date, end_date, version = 0, quality_check = False):
+        self.__json_file = VariableSIMEM._read_vars()
         self.__var = cod_variable
         self.__user_version = version
         self.__dataset_id = self.__json_file[self.__var]["dataset_id"]
-        self.__start_date = start_date
-        self.__end_date = end_date
-        self.__esCalidad = esCalidad
         self.__variable_column = self.__json_file[self.__var]['var_column']
         self.__date_column = self.__json_file[self.__var]['date_column']
         self.__version_column = self.__json_file[self.__var]['version_column']
         self.__value_column = self.__json_file[self.__var]['value_column']
+        self.__start_date = _Validation.date(start_date)
+        self.__end_date = _Validation.date(end_date)
+        self.__quality_check = quality_check
         self.__data = None
         self.__versions_df = None
         
-    def _read_vars(self):
+    @staticmethod
+    def _read_vars():
         """
         Read the json configuration file with the features and list of variables in SIMEM.
         
@@ -694,38 +698,28 @@ class VariableSIMEM:
 
         response = requests.get(URL_JSON_VARIABLES)
         response.raise_for_status()
-    
-        try:
-            json_file = response.json()
-        except json.JSONDecodeError:
-            print("Error decoding JSON. The response might be empty or not in JSON format.")
-            return None
+        json_file = response.json()
     
         return json_file
 
-    def __set_info_dataset(self, dataset):
+    @staticmethod
+    def get_collection():
         """
-        Sets the granularity, start and end dates of the data.
-        
-        Parameters:
-            dataset : pd.DataFrame
-                The dataset with the variable information.
+        Return a dataframe with the list of available variables.
         
         Returns:
-            None
+            pd.DataFrame
+                Contains the list of available variables.
         """
 
-        self.__granularity = dataset.get_granularity()
-        self.__start_date = dataset.get_startdate()
-        self.__end_date = dataset.get_enddate()
+        json_file = VariableSIMEM._read_vars()
+        return pd.DataFrame.from_dict(json_file, orient='index', columns=['name']).reset_index().rename(columns={'index': 'CodigoVariable', 'name': 'Nombre'})
 
-    def _read(self, dataset_id, start_date, end_date):
+    def _read_dataset_data(self, start_date, end_date):
         """
         Use the ReadSIMEM class to get the dataset with the information of the variable.
         
         Parameters:
-            dataset_id : str
-                The id of the dataset.
             start_date : str | dt.datetime 
                 The starting date for the data slicing.
             end_date : str | dt.datetime 
@@ -735,16 +729,20 @@ class VariableSIMEM:
             pd.DataFrame
                 The variable dataset.
         """
-
-        if(self.__data is None):
-            dataset = ReadSIMEM(dataset_id, start_date, end_date, self.__variable_column, self.__var)
-            self.__set_info_dataset(dataset)
-            if self.__variable_column is not None:
-                self.__data = dataset.main(filter = True)
-            else:
-                self.__data = dataset.main()
-        else:
+        if self.__data is not None:
             return
+    
+        var_column = self.__variable_column
+
+        dataset = ReadSIMEM(self.__dataset_id, start_date, end_date, var_column, self.__var)
+        check_filter = False
+        if var_column is not None:
+            self.__granularity = dataset.get_granularity()
+            check_filter = True
+
+        self.__data = dataset.main(filter = check_filter)
+        return self.__data
+
 
     def _index_df(self, dataset):
         """
@@ -759,12 +757,15 @@ class VariableSIMEM:
                 The variable dataset indexed.
         """
 
-        if self.__version_column is not None:
-            self.__index_data = dataset.set_index([self.__date_column, self.__version_column])
-            return self.__index_data
+        date_column = self.__date_column
+        version_column = self.__version_column
+
+        if version_column is not None:
+            self.__index_data = dataset.set_index([date_column, version_column])
         else:
-            self.__index_data = dataset.set_index([self.__date_column])
-            return self.__index_data
+            self.__index_data = dataset.set_index([date_column])
+
+        return self.__index_data
         
     def _get_index_data(self):
         """
@@ -775,7 +776,7 @@ class VariableSIMEM:
                 The indexed data.
         """
 
-        self._read(self.__dataset_id, self.__start_date, self.__end_date)
+        self._read_dataset_data(self.__start_date, self.__end_date)
         data = self._index_df(self.__data)
 
         if self.__version_column is not None:
@@ -794,7 +795,7 @@ class VariableSIMEM:
 
         data = self._get_index_data()
 
-        if(self.__esCalidad):
+        if(self.__quality_check):
             data = data.reset_index()
             return self.__set_format_for_qualitycheck(data)
         return data
@@ -878,11 +879,11 @@ class VariableSIMEM:
                 return x[x[order_column] == order_value]
             elif order_value > x[order_column].max():
                 return x[x[order_column] == x[order_column].max()]
-            elif order_value == x[order_column].min()-1 and ['TX1','TX2'] not in x[version_column].values:
+            elif order_value == x[order_column].min()-1 and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
                 x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX2')
                 return x[x[order_column] == order_value]
-            elif order_value < x[order_column].min()-1 and ['TX1','TX2'] not in x[version_column].values:
+            elif order_value < x[order_column].min()-1 and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
                 x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX1')
                 return x[x[order_column] == x[order_column].min()]
@@ -960,11 +961,11 @@ class VariableSIMEM:
         def filter_group(x):
             if version_value in x[version_column].values:
                 return x[x[version_column] == version_value]
-            elif version_value == 'TX2' and ['TX1','TX2'] not in x[version_column].values:
+            elif version_value == 'TX2' and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
                 x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX2')
                 return x[x[version_column] == version_value]
-            elif version_value == 'TX1' and ['TX1','TX2'] not in x[version_column].values:
+            elif version_value == 'TX1' and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
                 x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX1')
                 return x[x[version_column] == version_value]
@@ -1127,7 +1128,7 @@ class VariableSIMEM:
         """
 
         statistics = {}
-        self._read(self.__dataset_id, self.__start_date, self.__end_date)
+        self._read_dataset_data(self.__start_date, self.__end_date)
         data = self._index_df(self.__data)
         column = self.__value_column
         name = self.__json_file[self.__var]['name']
@@ -1187,7 +1188,7 @@ class VariableSIMEM:
              Html file with the time series graph of the variable.
         """
 
-        self._read(self.__dataset_id, self.__start_date, self.__end_date)
+        self._read_dataset_data(self.__start_date, self.__end_date)
         df = self._index_df(self.__data)
         name = self.__json_file[self.__var]['name']
 
@@ -1218,8 +1219,8 @@ if __name__ == '__main__':
 
     var = VariableSIMEM("PB_Nal", "2025-02-01", "2025-03-12")
     print(var.get_data())
-    # simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
-    # df = simem.main(output_folder="", filter=False)
+    simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
+    df = simem.main(output_folder="", filter=False)
     # var.show_info()
     # var.describe_data()
     # var.time_series_data()
