@@ -10,7 +10,7 @@ Primero le asignamos un valor a los parámetros:
 - FechaInicio
 - FechaFin
 - Version
-- esCalidad
+- quality_check
 
 Luego ejecutamos la función como si fuera otra función común y corriente de excel: `=get_data(......)`
 
@@ -18,8 +18,8 @@ Luego ejecutamos la función como si fuera otra función común y corriente de e
 
 Las celdas deben quedar de la siguiente forma:
 
-![Configuración celdas](../images/excel_vars_conf.png)
+![Configuración celdas](../../images/excel_vars_conf.png)
 
 El resultado será el siguiente:
 
-![Resultado excel](../images/excel_result.png)
+![Resultado excel](../../images/excel_result.png)

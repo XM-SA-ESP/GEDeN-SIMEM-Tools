@@ -21,6 +21,8 @@ Para obtener la descripción estadística se debe ejecutar la siguiente instrucc
 
 ```bash
 
+from pydataxm.pydatasimem import VariableSIMEM
+
 CodigoVariable = "PrecioEscasez"
 Fecha_Inicio = "2024-01-01"
 Fecha_Fin = "2024-12-31"
