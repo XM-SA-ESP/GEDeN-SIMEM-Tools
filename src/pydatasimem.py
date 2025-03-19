@@ -27,7 +27,7 @@ REFERENCE_DATE = '1990-01-01'
 DATE_FORMAT = "%Y-%m-%d"
 TODAY = dt.datetime.strftime(dt.datetime.now(), DATE_FORMAT)
 BASE_API_URL = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}"
-URL_JSON_VARIABLES = 'https://raw.githubusercontent.com/XM-SA-ESP/GEDeN-SIMEM-Tools/refs/heads/master/listado_variables.json'
+URL_JSON_VARIABLES = 'https://www.simem.co/backend-datos/vars/listado_variables.json'
 VERSION_DATASET_ID = '24914F'
 DAILY_DATASET_ID = '7a30a3'
 VERSION_COLUMN_DF_VER = 'Version'
