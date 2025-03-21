@@ -1025,6 +1025,7 @@ class VariableSIMEM:
 
         first_day = start_date.replace(day=1)
         version_df = ReadSIMEM(dataset_id, first_day, end_date).main()
+        version_df = VariableSIMEM.__validate_version_df(version_df, first_day)
         df_sorted = VariableSIMEM.__order_date(version_df, 'FechaPublicacion')
         
         if isinstance(version, str):
@@ -1034,6 +1035,35 @@ class VariableSIMEM:
 
         return df_filtered
 
+    @staticmethod
+    def __validate_version_df(version_df, first_date):
+        """
+        Validates if the version dataset is empty.
+        
+        Parameters:
+            version_df : pd.DateFrame
+                Version dataset.
+            first_date : str | dt.datetime
+                First day of the month sought.
+        
+        Returns:
+            pd.DataFrame
+             Returns the original dataset if it is not empty, otherwise it returns a dummy record from the previous month.
+        """
+
+        if len(version_df) == 0:
+            last_month = (first_date.replace(day=1) - timedelta(days=1)).replace(day=1)
+            new_registry = {
+                'Version' : '0',
+                'FechaInicio' : last_month.strftime("%Y-%m-%d"),
+                'FechaFin' : last_month.strftime("%Y-%m-%d"),
+                'FechaPublicacion' : last_month.strftime("%Y-%m-%d"),
+                'EsMaximaVersion' : 0
+            }
+            new_registry_df = pd.DataFrame([new_registry])
+            version_df = pd.concat([version_df, new_registry_df], ignore_index=True)
+        return version_df
+    
     @staticmethod
     def _filter_date(dataset, dates_df, date_column, version_column):
         """
@@ -1136,9 +1166,9 @@ class VariableSIMEM:
 
         if self.__version_column is not None:
             data = self._calculate_version(data, self.__user_version)
-            statistics[name] = self.__calculate_stats(data, column)
-        else:
-            statistics[name] = self.__calculate_stats(data, column)
+            data = data[[column]]
+            data = data.groupby([self.__date_column, self.__version_column]).sum()
+        statistics[name] = self.__calculate_stats(data, column)
 
         return statistics
 
@@ -1155,8 +1185,6 @@ class VariableSIMEM:
         Returns:
             The time series of the variable.
         """
-
-        dataset[self.__value_column] = dataset[self.__value_column].astype(float)
 
         df_reset = dataset.reset_index()
         df_reset[self.__date_column] = pd.to_datetime(df_reset[self.__date_column])
@@ -1189,14 +1217,15 @@ class VariableSIMEM:
         """
 
         self._read_dataset_data(self.__start_date, self.__end_date)
-        df = self._index_df(self.__data)
+        data = self._index_df(self.__data)
+        data[self.__value_column] = data[self.__value_column].astype(float)
         name = self.__json_file[self.__var]['name']
 
         if self.__version_column is not None:
-            data = self._calculate_version(df, self.__user_version)
-            self.__plot_time_series(data, f'Serie de Tiempo {name}')
-        else:
-            self.__plot_time_series(df, f'Serie de Tiempo {name}')
+            data = self._calculate_version(data, self.__user_version)
+            data = data[[self.__value_column]]
+            data = data.groupby([self.__date_column, self.__version_column]).sum()
+        self.__plot_time_series(data, f'Serie de Tiempo {name}')
 
     def show_info(self):
         """
@@ -1217,7 +1246,7 @@ if __name__ == '__main__':
     fecha_fin = '2024-05-16'
 
 
-    var = VariableSIMEM("PB_Nal", "2025-02-01", "2025-03-12")
+    var = VariableSIMEM(cod_variable="PB_Nal", start_date="2024-12-01", end_date="2025-01-31", version=0)
     print(var.get_data())
     simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
     df = simem.main(output_folder="", filter=False)
