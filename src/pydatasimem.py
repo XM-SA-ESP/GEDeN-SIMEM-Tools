@@ -27,7 +27,7 @@ REFERENCE_DATE = '1990-01-01'
 DATE_FORMAT = "%Y-%m-%d"
 TODAY = dt.datetime.strftime(dt.datetime.now(), DATE_FORMAT)
 BASE_API_URL = "https://www.simem.co/backend-files/api/PublicData?startdate={}&enddate={}"
-URL_JSON_VARIABLES = 'https://raw.githubusercontent.com/XM-SA-ESP/GEDeN-SIMEM-Tools/refs/heads/master/listado_variables.json'
+URL_JSON_VARIABLES = 'https://www.simem.co/backend-datos/vars/listado_variables.json'
 VERSION_DATASET_ID = '24914F'
 DAILY_DATASET_ID = '7a30a3'
 VERSION_COLUMN_DF_VER = 'Version'
@@ -646,11 +646,14 @@ class VariableSIMEM:
         The ending date for the data slicing.
     version (Optional): int | str
         The version of the variable.
-    esCalidad (Optional): bool 
+    quality_check (Optional): bool 
         Is the object is for Calidad functions.
     
     Methods:
-    get_index_data(self) -> pd.DataFrame:
+    get_collection() -> pd.DataFrame:
+        Return a dataframe with the list of available variables.
+
+    get_data(self) -> pd.DataFrame:
         Return the data of the variable with indexes.
     
     describe_data(self) -> json:
@@ -671,9 +674,10 @@ class VariableSIMEM:
         self.__variable_column = self.__json_file[self.__var]['var_column']
         self.__date_column = self.__json_file[self.__var]['date_column']
         self.__version_column = self.__json_file[self.__var]['version_column']
+        self.__value_column = self.__json_file[self.__var]['value_column']
         self.__start_date = _Validation.date(start_date)
         self.__end_date = _Validation.date(end_date)
-        self.__esCalidad = esCalidad 
+        self.__quality_check = quality_check
         self.__data = None
         self.__versions_df = None
         
@@ -695,17 +699,28 @@ class VariableSIMEM:
         response = requests.get(URL_JSON_VARIABLES)
         response.raise_for_status()
         json_file = response.json()
+        json_file = response.json()
     
         return json_file
 
+    @staticmethod
+    def get_collection():
+        """
+        Return a dataframe with the list of available variables.
+        
+        Returns:
+            pd.DataFrame
+                Contains the list of available variables.
+        """
+        
+        json_file = VariableSIMEM._read_vars()
+        return pd.DataFrame.from_dict(json_file, orient='index', columns=['name']).reset_index().rename(columns={'index': 'CodigoVariable', 'name': 'Nombre'})
 
     def _read_dataset_data(self, start_date, end_date):
         """
         Use the ReadSIMEM class to get the dataset with the information of the variable.
         
         Parameters:
-            dataset_id : str
-                The id of the dataset.
             start_date : str | dt.datetime 
                 The starting date for the data slicing.
             end_date : str | dt.datetime 
@@ -762,11 +777,11 @@ class VariableSIMEM:
                 The indexed data.
         """
 
-        self._read_dataset_data(self.__start_date, self.__end_date)
-        data = self._index_df(self.__data)
+        self._read_dataset_data(start_date=self.__start_date, end_date=self.__end_date)
+        data = self._index_df(dataset=self.__data)
 
         if self.__version_column is not None:
-            data = self._calculate_version(data, self.__user_version)
+            data = self._calculate_version(dataset=data, version=self.__user_version)
 
         return data
 
@@ -781,12 +796,12 @@ class VariableSIMEM:
 
         data = self._get_index_data()
 
-        if(self.__esCalidad):
+        if(self.__quality_check):
             data = data.reset_index()
-            return self.__set_format_for_qualitycheck(data)
+            return self.__set_format_for_qualitycheck(dataset=data)
         return data
     
-    def __set_format_for_qualitycheck(self, data):
+    def __set_format_for_qualitycheck(self, dataset):
         """
         Sets an specific structure to the columns of the dataframe.
         
@@ -805,7 +820,7 @@ class VariableSIMEM:
         date = 'fecha'
         value = 'valor'
         var = 'codigoVariable'
-        data[maestra_column] = maestra
+        dataset[maestra_column] = maestra
 
         if cod_maestra is not None:
             data = data.rename(columns = {cod_maestra: cod_maestra_column, date_column: date, value_column: value, var_column: var})
@@ -816,7 +831,7 @@ class VariableSIMEM:
         
         data = data[[date, cod_maestra_column, var, maestra_column, value]]
             
-        return data
+        return dataset
 
     @staticmethod
     def __order_date(dataset, date_column):
@@ -860,7 +875,7 @@ class VariableSIMEM:
              The dataset filtered by the order value.
         """
 
-        dataset = VariableSIMEM._generate_missing_months(dataset, start_date, end_date)
+        dataset = VariableSIMEM._generate_missing_months(dataset=dataset, start_date=start_date, end_date=end_date)
         version_column = VERSION_COLUMN_DF_VER
         order_column = 'order'
         def filter_group(x):
@@ -868,13 +883,13 @@ class VariableSIMEM:
                 return x[x[order_column] == order_value]
             elif order_value > x[order_column].max():
                 return x[x[order_column] == x[order_column].max()]
-            elif order_value == x[order_column].min()-1 and ['TX1','TX2'] not in x[version_column].values:
+            elif order_value == x[order_column].min()-1 and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
-                x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX2')
+                x = VariableSIMEM.__set_order_version(dataset=x, registry=last, orders=x[order_column], version='TX2')
                 return x[x[order_column] == order_value]
-            elif order_value < x[order_column].min()-1 and ['TX1','TX2'] not in x[version_column].values:
+            elif order_value < x[order_column].min()-1 and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
-                x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX1')
+                x = VariableSIMEM.__set_order_version(dataset=x, registry=last, orders=x[order_column], version='TX1')
                 return x[x[order_column] == x[order_column].min()]
             else:
                 return x[x[order_column] == x[order_column].min()]
@@ -944,19 +959,19 @@ class VariableSIMEM:
              The dataset filtered by the version value.
         """
 
-        dataset = VariableSIMEM._generate_missing_months(dataset, start_date, end_date)
+        dataset = VariableSIMEM._generate_missing_months(dataset=dataset, start_date=start_date, end_date=end_date)
         version_column = VERSION_COLUMN_DF_VER
         order_column = 'order'
         def filter_group(x):
             if version_value in x[version_column].values:
                 return x[x[version_column] == version_value]
-            elif version_value == 'TX2' and ['TX1','TX2'] not in x[version_column].values:
+            elif version_value == 'TX2' and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
-                x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX2')
+                x = VariableSIMEM.__set_order_version(dataset=x, registry=last, orders=x[order_column], version='TX2')
                 return x[x[version_column] == version_value]
-            elif version_value == 'TX1' and ['TX1','TX2'] not in x[version_column].values:
+            elif version_value == 'TX1' and not {'TX1', 'TX2'}.intersection(x[version_column].values):
                 last = x.iloc[-1]
-                x = VariableSIMEM.__set_order_version(x, last, x[order_column], 'TX1')
+                x = VariableSIMEM.__set_order_version(dataset=x, registry=last, orders=x[order_column], version='TX1')
                 return x[x[version_column] == version_value]
 
         filtered_df = dataset.groupby('month', group_keys=False).apply(filter_group, include_groups=False).reset_index(drop=True)
@@ -988,7 +1003,7 @@ class VariableSIMEM:
         if missing_months:
             first_missing_month = min(missing_months)
             daily_df = ReadSIMEM(DAILY_DATASET_ID, first_missing_month, end_date).main()
-            daily_df = VariableSIMEM.__order_date(daily_df, 'FechaPublicacion')
+            daily_df = VariableSIMEM.__order_date(dataset=daily_df, date_column='FechaPublicacion')
             dataset = pd.concat([dataset, daily_df], ignore_index=True)
         return dataset
     
@@ -1014,15 +1029,45 @@ class VariableSIMEM:
 
         first_day = start_date.replace(day=1)
         version_df = ReadSIMEM(dataset_id, first_day, end_date).main()
-        df_sorted = VariableSIMEM.__order_date(version_df, 'FechaPublicacion')
+        version_df = VariableSIMEM.__validate_version_df(version_df=version_df, first_date=first_day)
+        df_sorted = VariableSIMEM.__order_date(dataset=version_df, date_column='FechaPublicacion')
         
         if isinstance(version, str):
-            df_filtered = VariableSIMEM.__filter_by_version(df_sorted, version, first_day, end_date)
+            df_filtered = VariableSIMEM.__filter_by_version(dataset=df_sorted, version_value=version, start_date=first_day, end_date=end_date)
         elif isinstance(version, int):
-            df_filtered = VariableSIMEM.__filter_by_order(df_sorted, version, first_day, end_date)
+            df_filtered = VariableSIMEM.__filter_by_order(dataset=df_sorted, order_value=version, start_date=first_day, end_date=end_date)
 
         return df_filtered
 
+    @staticmethod
+    def __validate_version_df(version_df, first_date):
+        """
+        Validates if the version dataset is empty.
+        
+        Parameters:
+            version_df : pd.DateFrame
+                Version dataset.
+            first_date : str | dt.datetime
+                First day of the month sought.
+        
+        Returns:
+            pd.DataFrame
+             Returns the original dataset if it is not empty, otherwise it returns a dummy record from the previous month.
+        """
+
+        if len(version_df) == 0:
+            last_month = (first_date.replace(day=1) - timedelta(days=1)).replace(day=1)
+            new_registry = {
+                'Version' : '0',
+                'FechaInicio' : last_month.strftime("%Y-%m-%d"),
+                'FechaFin' : last_month.strftime("%Y-%m-%d"),
+                'FechaPublicacion' : last_month.strftime("%Y-%m-%d"),
+                'EsMaximaVersion' : 0
+            }
+            new_registry_df = pd.DataFrame([new_registry])
+            version_df = pd.concat([version_df, new_registry_df], ignore_index=True)
+        return version_df
+    
     @staticmethod
     def _filter_date(dataset, dates_df, date_column, version_column):
         """
@@ -1075,7 +1120,7 @@ class VariableSIMEM:
         date_column = self.__date_column
         
         if self.__versions_df is None:
-            self.__versions_df = VariableSIMEM.__versions(self.__start_date, self.__end_date, VERSION_DATASET_ID, version)
+            self.__versions_df = VariableSIMEM.__versions(start_date=self.__start_date, end_date=self.__end_date, dataset_id=VERSION_DATASET_ID, version=version)
         filtered_df = self.__versions_df
 
         return VariableSIMEM._filter_date(df, filtered_df, date_column, version_column)
@@ -1120,17 +1165,17 @@ class VariableSIMEM:
         """
 
         statistics = {}
-        self._read_dataset_data(self.__start_date, self.__end_date)
-        data = self._index_df(self.__data)
+        self._read_dataset_data(start_date=self.__start_date, end_date=self.__end_date)
+        data = self._index_df(dataset=self.__data)
         column = self.__value_column
         name = self.__json_file[self.__var]['name']
         data[column] = data[column].astype(float)
 
         if self.__version_column is not None:
-            data = self._calculate_version(data, self.__user_version)
-            statistics[name] = self.__calculate_stats(data, column)
-        else:
-            statistics[name] = self.__calculate_stats(data, column)
+            data = self._calculate_version(dataset=data, version=self.__user_version)
+            data = data[[column]]
+            data = data.groupby([self.__date_column, self.__version_column]).sum()
+        statistics[name] = self.__calculate_stats(dataset=data, column=column)
 
         return statistics
 
@@ -1147,8 +1192,6 @@ class VariableSIMEM:
         Returns:
             The time series of the variable.
         """
-
-        dataset[self.__value_column] = dataset[self.__value_column].astype(float)
 
         df_reset = dataset.reset_index()
         df_reset[self.__date_column] = pd.to_datetime(df_reset[self.__date_column])
@@ -1180,15 +1223,16 @@ class VariableSIMEM:
              Html file with the time series graph of the variable.
         """
 
-        self._read_dataset_data(self.__start_date, self.__end_date)
-        df = self._index_df(self.__data)
+        self._read_dataset_data(start_date=self.__start_date, end_date=self.__end_date)
+        data = self._index_df(dataset=self.__data)
+        data[self.__value_column] = data[self.__value_column].astype(float)
         name = self.__json_file[self.__var]['name']
 
         if self.__version_column is not None:
-            data = self._calculate_version(df, self.__user_version)
-            self.__plot_time_series(data, f'Serie de Tiempo {name}')
-        else:
-            self.__plot_time_series(df, f'Serie de Tiempo {name}')
+            data = self._calculate_version(dataset=data, version=self.__user_version)
+            data = data[[self.__value_column]]
+            data = data.groupby([self.__date_column, self.__version_column]).sum()
+        self.__plot_time_series(dataset=data, title=f'Serie de Tiempo {name}')
 
     def show_info(self):
         """
@@ -1209,7 +1253,7 @@ if __name__ == '__main__':
     fecha_fin = '2024-05-16'
 
 
-    var = VariableSIMEM("PB_Nal", "2025-02-01", "2025-03-12")
+    var = VariableSIMEM(cod_variable="PB_Nal", start_date="2024-12-01", end_date="2025-01-31", version='TX2')
     print(var.get_data())
     # simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, 'CodigoVariable', 'GReal')
     # df = simem.main(output_folder="", filter=False)

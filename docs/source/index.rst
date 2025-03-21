@@ -1,39 +1,34 @@
-Documentación VariableSIMEM
+Documentación pydatasimem
 =========================================================
 
-Esta es la documentación de la clase VariableSIMEM que hace parte de la librería pydatasimem. Incluye información detallada de la clase, como ¿Qué es VariableSIMEM?, ¿Para qué sirve VariableSIMEM? y sus Funcionalidades.
+Este repositorio se crea con el fin de compartir una herramienta de consulta open source para extraer información relevante del Mercado de Energía Mayorista colombiano usando la api SIMEM. Dentro de la librería se podrán encontrar 3 clases cada una con una funcionalidad y un objetivo en específico; son las siguientes:
 
-¿Qué es y para qué sirve VariableSIMEM?
-==========================================
-Esta sección incluye toda la inforamación necesaria para obtener un contexto inicial acerca de la clase
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Información general VariableSIMEM:
-
-   info/what_is.md
-   info/why.md
-   info/how.md
-
-Funcionalidades
-===================
-Esta sección incluye toda la inforamación necesaria para entender cada una de las funcionalidades de la clase
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Funcionalidades VariableSIMEM:
-
-   func/get_data.md
-   func/describe.md
-   func/time_series.md
-
-Obtener datos en Excel
+Clase CatalogSIMEM
 ========================
-Esta sección incluye toda la información necesaria entender la configuración y el uso mediante excel, dentro del proyecto ya hay un archivo excel configurado, pero si es necesario diríjase al apartado de ocnfiguración para ver el paso a paso
+En este apartado se encuentra toda la información relacionada a la clase CatalogSIMEM y sus diferentes funcionalidades. Esta clase está enfocada a la lectura y exploración del catálogo tanto de variables como de conjuntos de datos que hay en SIMEM.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Obtener datos en excel:
+   :maxdepth: 1
+   :caption: Documentación clase CatalogSIMEM:
 
-   excel/configuration.md
-   excel/get_data.md
+   catalogSIMEM/index.rst
+
+Clase ReadSIMEM
+========================
+En este apartado se encuentra toda la información relacionada a la clase ReadSIMEM y sus diferentes funcionalidades. Esta clase está enfocada a la obtención, filtrado y exploración de los conjuntos de datos de SIMEM.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentación clase ReadSIMEM:
+
+   readSIMEM/index.rst
+
+Clase VariableSIMEM
+========================
+En este apartado se encuentra toda la información relacionada a la clase VariableSIMEM y sus diferentes funcionalidades. Al igual que la clase ReadSIMEM, VariableSIMEM también está enfocada en la obtener y explorar datos pero en lugar de buscar a través de los conjuntos de datos, se busca a través de las variables.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentación clase VariableSIMEM:
+
+   variableSIMEM/index.rst
