@@ -89,6 +89,15 @@ class _Validation:
             raise ValueError("Wrong parameter registered. Write 'Datasets' or 'Variables'.")
         _Validation.log_approve(cat_type)
         return cat_type
+    
+    @staticmethod
+    def cod_variable(cod_variable: str, list_variables: dict):
+        if not isinstance(cod_variable, str):
+            raise TypeError("Incorrect data type for cod_variable, must be a string")
+        if cod_variable in list_variables.keys():
+            return cod_variable
+        else:
+            raise ValueError(f"The variable code '{cod_variable}' is not available, use the function get_collection() to get all the available variables.")
 
                 
         
@@ -322,7 +331,6 @@ class ReadSIMEM:
            print('There are 0 records') 
         logging.info("Records saved: %d rows registered.", len(records))
         
-        # result = pd.DataFrame.from_records(records)
         
         return records
 
@@ -668,9 +676,9 @@ class VariableSIMEM:
     """
 
     def __init__(self, cod_variable, start_date, end_date, version = 0, quality_check = False):
-        self.__json_file = VariableSIMEM._read_vars()
-        self.__var = cod_variable
-        self.__user_version = version
+        self.__json_file = VariableSIMEM._read_json()
+        self.__var = _Validation.cod_variable(cod_variable=cod_variable, list_variables=self.__json_file)
+        self.__user_version = version 
         self.__dataset_id = self.__json_file[self.__var]["dataset_id"]
         self.__variable_column = self.__json_file[self.__var]['var_column']
         self.__date_column = self.__json_file[self.__var]['date_column']
@@ -682,8 +690,9 @@ class VariableSIMEM:
         self.__data = None
         self.__versions_df = None
         
+
     @staticmethod
-    def _read_vars():
+    def _read_json():
         """
         Read the json configuration file with the features and list of variables in SIMEM.
         
@@ -811,21 +820,24 @@ class VariableSIMEM:
 
         maestra = self.__json_file[self.__var]['maestra_column']
         cod_maestra = self.__json_file[self.__var]['codMaestra_column']
+        value_column = self.__json_file[self.__var]['value_column']
+        var_column = self.__json_file[self.__var]['var_column']
+        date_column = self.__date_column
         maestra_column = 'maestra'
-        codMaestra_column = 'codigoMaestra'
+        cod_maestra_column = 'codigoMaestra'
         date = 'fecha'
         value = 'valor'
         var = 'codigoVariable'
         dataset[maestra_column] = maestra
 
         if cod_maestra is not None:
-            dataset = dataset.rename(columns = {cod_maestra: codMaestra_column, self.__date_column: date, self.__value_column: value, self.__variable_column: var})
+            data = data.rename(columns = {cod_maestra: cod_maestra_column, date_column: date, value_column: value, var_column: var})
             
         else:
-            dataset[codMaestra_column] = maestra
-            dataset = dataset.rename(columns = {self.__date_column: date, self.__value_column: value, self.__variable_column: var})
+            data[cod_maestra_column] = maestra
+            data = data.rename(columns = {date_column: date, value_column: value, var_column: var})
         
-        dataset = dataset[[date, codMaestra_column, var, maestra_column, value]]
+        data = data[[date, cod_maestra_column, var, maestra_column, value]]
             
         return dataset
 
@@ -1112,11 +1124,14 @@ class VariableSIMEM:
         """
 
         df = dataset.copy()
+        version_column = self.__version_column
+        date_column = self.__date_column
+        
         if self.__versions_df is None:
             self.__versions_df = VariableSIMEM.__versions(start_date=self.__start_date, end_date=self.__end_date, dataset_id=VERSION_DATASET_ID, version=version)
         filtered_df = self.__versions_df
 
-        return VariableSIMEM._filter_date(dataset=df, dates_df=filtered_df, date_column=self.__date_column, version_column=self.__version_column)
+        return VariableSIMEM._filter_date(df, filtered_df, date_column, version_column)
     
     def __calculate_stats(self, dataset, column):
         """
