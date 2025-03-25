@@ -89,6 +89,15 @@ class _Validation:
             raise ValueError("Wrong parameter registered. Write 'Datasets' or 'Variables'.")
         _Validation.log_approve(cat_type)
         return cat_type
+    
+    @staticmethod
+    def cod_variable(cod_variable: str, list_variables: dict):
+        if not isinstance(cod_variable, str):
+            raise TypeError("Incorrect data type for cod_variable, must be a string")
+        if cod_variable in list_variables.keys():
+            return cod_variable
+        else:
+            raise ValueError(f"The variable code '{cod_variable}' is not available, use the function get_collection() to get all the available variables.")
 
                 
         
@@ -668,7 +677,7 @@ class VariableSIMEM:
 
     def __init__(self, cod_variable, start_date, end_date, version = 0, quality_check = False):
         self.__json_file = VariableSIMEM._read_json()
-        self.__var = cod_variable 
+        self.__var = _Validation.cod_variable(cod_variable=cod_variable, list_variables=self.__json_file)
         self.__user_version = version 
         self.__dataset_id = self.__json_file[self.__var]["dataset_id"]
         self.__variable_column = self.__json_file[self.__var]['var_column']
