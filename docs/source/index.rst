@@ -1,0 +1,34 @@
+Documentación pydatasimem
+=========================================================
+
+Este repositorio se crea con el fin de compartir una herramienta de consulta open source para extraer información relevante del Mercado de Energía Mayorista colombiano usando la api SIMEM. Dentro de la librería se podrán encontrar 3 clases cada una con una funcionalidad y un objetivo en específico; son las siguientes:
+
+Clase CatalogSIMEM
+========================
+En este apartado se encuentra toda la información relacionada a la clase CatalogSIMEM y sus diferentes funcionalidades. Esta clase está enfocada a la lectura y exploración del catálogo tanto de variables como de conjuntos de datos que hay en SIMEM.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentación clase CatalogSIMEM:
+
+   catalogSIMEM/index.rst
+
+Clase ReadSIMEM
+========================
+En este apartado se encuentra toda la información relacionada a la clase ReadSIMEM y sus diferentes funcionalidades. Esta clase está enfocada a la obtención, filtrado y exploración de los conjuntos de datos de SIMEM.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentación clase ReadSIMEM:
+
+   readSIMEM/index.rst
+
+Clase VariableSIMEM
+========================
+En este apartado se encuentra toda la información relacionada a la clase VariableSIMEM y sus diferentes funcionalidades. Al igual que la clase ReadSIMEM, VariableSIMEM también está enfocada en la obtener y explorar datos pero en lugar de buscar a través de los conjuntos de datos, se busca a través de las variables.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentación clase VariableSIMEM:
+
+   variableSIMEM/index.rst
