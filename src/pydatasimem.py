@@ -831,13 +831,13 @@ class VariableSIMEM:
         dataset[maestra_column] = maestra
 
         if cod_maestra is not None:
-            data = data.rename(columns = {cod_maestra: cod_maestra_column, date_column: date, value_column: value, var_column: var})
+            dataset = dataset.rename(columns = {cod_maestra: cod_maestra_column, date_column: date, value_column: value, var_column: var})
             
         else:
-            data[cod_maestra_column] = maestra
-            data = data.rename(columns = {date_column: date, value_column: value, var_column: var})
+            dataset[cod_maestra_column] = maestra
+            dataset = dataset.rename(columns = {date_column: date, value_column: value, var_column: var})
         
-        data = data[[date, cod_maestra_column, var, maestra_column, value]]
+        dataset = dataset[[date, cod_maestra_column, var, maestra_column, value]]
             
         return dataset
 
