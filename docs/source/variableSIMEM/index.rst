@@ -28,7 +28,6 @@ Esta sección incluye toda la inforamación necesaria para entender cada una de 
    func/get_collection.md
    func/get_data.md
    func/describe.md
-   func/time_series.md
 
 Obtener datos en Excel
 -----------------------
