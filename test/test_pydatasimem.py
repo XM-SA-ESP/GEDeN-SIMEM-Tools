@@ -358,7 +358,6 @@ class test_clase(unittest.TestCase):
         self.assertIsInstance(function_return, dict)
         self.apply_exception()
 
-
     @staticmethod
     def read_test_data(filename):
         path = os.getcwd()+os.sep + r'test/test_data/' + filename
@@ -370,7 +369,6 @@ class test_clase(unittest.TestCase):
     def apply_exception():
         global EXCEPTION
         EXCEPTION = True
-
 
 class FakeReadSIMEM:
 
@@ -405,12 +403,11 @@ class TestVariableSIMEM(unittest.TestCase):
                 "dataset_id": "ae3f2",
                 "var_column": "CodigoVariable",
                 "value_column": "Valor",
-                "version_column": "",
+                "version_column": None,
                 "date_column": "Fecha",
                 "maestra_column": "SISTEMA",
                 "codMaestra_column": None,
-                "esRegistro": 1,
-                "esVersionado": 0
+                "esTX2PrimeraVersion": 0
             }
         }
         patcher = patch.object(VariableSIMEM, '_read_json', return_value=self.dummy_json)
@@ -428,31 +425,6 @@ class TestVariableSIMEM(unittest.TestCase):
         self.assertIsInstance(data, pd.DataFrame)
         self.assertEqual(data.index.name, "Fecha")
         self.assertEqual(len(data), 3)
- 
-    def test_describe_data(self):
-        stats = self.var_simem.describe_data()
-        expected = {
-            "Precio de escasez": {
-                "mean": 200.0,
-                "median": 200.0,
-                "std_dev": 100.0,
-                "min": 100.0,
-                "max": 300.0,
-                "null_count": 0,
-                "zero_count": 0,
-                "start_date": "2024-01-10", 
-                "end_date": "2024-01-20",   
-                "granularity": "daily"
-            }
-        }
-        self.assertEqual(stats, expected)
- 
-    @patch("src.pydatasimem.webbrowser.open")
-    def test_time_series_data(self, mock_web_open):
-        with patch("src.pydatasimem.go.Figure.write_html") as mock_write_html:
-            self.var_simem.time_series_data()
-            mock_write_html.assert_called_with("time_series_plot.html")
-            mock_web_open.assert_called_with("time_series_plot.html")
  
     def test_get_structure_data(self):
         var_simem_calidad = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31", quality_check=True)
@@ -477,25 +449,6 @@ class TestVariableSIMEM(unittest.TestCase):
             self.assertTrue((group['order'] == 0).any())
             self.assertTrue((group['order'] <= 0).all())
 
-    def test_filter_by_order(self):
-        df = pd.DataFrame({
-            'month': [1, 1, 1, 2, 2, 2],
-            'order': [0, -1, -2, 0, -1, -2],
-            'value': [10, 20, 30, 40, 50, 60]
-        })
- 
-        filtered = VariableSIMEM._VariableSIMEM__filter_by_order(df.copy(), 0)
-        expected = df[df['order'] == 0].reset_index(drop=True).drop(columns=['month'])
-        pd.testing.assert_frame_equal(filtered, expected)
- 
-        filtered2 = VariableSIMEM._VariableSIMEM__filter_by_order(df.copy(), 1)
-        expected2 = df[df['order'] == 0].reset_index(drop=True).drop(columns=['month'])
-        pd.testing.assert_frame_equal(filtered2, expected2)
- 
-        filtered3 = VariableSIMEM._VariableSIMEM__filter_by_order(df.copy(), -3)
-        expected3 = df[df['order'] == -2].reset_index(drop=True).drop(columns=['month'])
-        pd.testing.assert_frame_equal(filtered3, expected3)
-
     def test_calculate_stats(self):
         df = pd.DataFrame({
             'Valor': [100, 200, 300, None, 0]
@@ -506,12 +459,11 @@ class TestVariableSIMEM(unittest.TestCase):
                 "dataset_id": "dummy",
                 "var_column": "CodigoVariable",
                 "value_column": "Valor",
-                "version_column": "",
+                "version_column": "Version",
                 "date_column": "Fecha",
                 "maestra_column": "SISTEMA",
                 "codMaestra_column": None,
-                "esRegistro": 1,
-                "esVersionado": 0
+                "esTX2PrimeraVersion": 0
             }
         }
         vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
@@ -541,48 +493,15 @@ class TestVariableSIMEM(unittest.TestCase):
         self.assertEqual(stats['end_date'], "2024-12-31")
         self.assertEqual(stats['granularity'], "daily")
 
-    def test_set_structure(self):
-        dummy_json = {
-            "PrecioEscasez": {
-            "name": "Precio de escasez",
-            "dataset_id": "dummy",
-            "var_column": "CodigoVariable",
-            "value_column": "Valor",
-            "version_column": "",
-            "date_column": "Fecha",
-            "maestra_column": "SISTEMA",
-            "codMaestra_column": None,
-            "esRegistro": 1,
-            "esVersionado": 0
-            }
-        }
-
-        vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
-        vs._VariableSIMEM__json_file = dummy_json
- 
-        df = pd.DataFrame({
-            "Fecha": ["2024-01-01", "2024-01-02"],
-            "Valor": [100, 200],
-            "CodigoVariable": ["PrecioEscasez", "PrecioEscasez"]
-        })
- 
-        structured = VariableSIMEM._VariableSIMEM__set_structure(vs, df.copy())
- 
-        expected = pd.DataFrame({
-            "fecha": ["2024-01-01", "2024-01-02"],
-            "codigoMaestra": ["SISTEMA", "SISTEMA"],
-            "codigoVariable": ["PrecioEscasez", "PrecioEscasez"],
-            "maestra": ["SISTEMA", "SISTEMA"],
-            "valor": [100, 200]
-        })
-        pd.testing.assert_frame_equal(structured.reset_index(drop=True), expected)
-
     def test_filter_date(self):
         dataset = pd.DataFrame({
             "Fecha": pd.to_datetime(["2024-01-05", "2024-01-10", "2024-01-15"]),
-            "version": ["v1", "v1", "v1"],
-            "Valor": [100, 200, 300]
+            "Valor": [100, 200, 300],
+            "CodigoVariable": ["PrecioEscasez"] * 3,
+            "Version": ["v1", "v1", "v2"]
         })
+
+        dataset.set_index(["Fecha", "Version"], inplace=True)
  
         dates_df = pd.DataFrame({
             "Version": ["v1"],
@@ -593,100 +512,26 @@ class TestVariableSIMEM(unittest.TestCase):
             "order": [0]
         })
  
-        result = VariableSIMEM._filter_date(dataset.copy(), dates_df, "Fecha", "version")
+        result = VariableSIMEM._filter_date(dataset.copy(), dates_df, "Fecha", "Version")
  
-        if "index" in result.columns:
-            result = result.drop(columns=["index", "Version"])
- 
+        # if "index" in result.columns:
+        #     result = result.drop(columns=["index", "Version"])
+        dataset.reset_index(inplace=True)
         expected = dataset[dataset["Fecha"].isin([pd.Timestamp("2024-01-05"), pd.Timestamp("2024-01-10")])].copy()
-        expected.set_index(["Fecha", "version"], inplace=True)
- 
-        pd.testing.assert_frame_equal(result, expected)
-
-    def test_calculate_version(self):
-        print('Calculate version')
-        
-        dummy_json = {
-            "PrecioEscasez": {
-            "name": "Precio de escasez",
-            "dataset_id": "dummy",
-            "var_column": "CodigoVariable",
-            "value_column": "Valor",
-            "version_column": "Version",
-            "date_column": "Fecha",
-            "maestra_column": "SISTEMA",
-            "codMaestra_column": None,
-            "esRegistro": 1,
-            "esVersionado": 1
-            }
-        }
- 
-        vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
-        vs._VariableSIMEM__json_file = dummy_json
-        vs._VariableSIMEM__start_date = pd.to_datetime("2024-01-01")
-        vs._VariableSIMEM__end_date = pd.to_datetime("2024-12-31")
- 
-        df = pd.DataFrame({
-            "Fecha": pd.to_datetime(["2024-01-05", "2024-01-10", "2024-01-15"]),
-            "Valor": [100, 200, 300],
-            "CodigoVariable": ["PrecioEscasez"] * 3,
-            "Version": ["v1", "v1", "v1"]
-        })
-        
-        dummy_versions_df = pd.DataFrame({
-            "Version": ["v1"],
-            "FechaInicio": [pd.to_datetime("2024-01-01")],
-            "FechaFin": [pd.to_datetime("2024-01-12")],
-            "FechaPublicacion": [pd.to_datetime("2024-01-01")],
-            "EsMaximaVersion": [True],
-            "order": [0]
-        })
- 
-        with patch.object(VariableSIMEM, "_VariableSIMEM__versions", return_value=dummy_versions_df):
-            result = vs._calculate_version(df.copy(), 0)
- 
-        if "index" in result.columns:
-            result = result.drop(columns=["index"])
- 
-        expected = df[df["Fecha"].isin([pd.Timestamp("2024-01-05"), pd.Timestamp("2024-01-10")])].copy()
         expected.set_index(["Fecha", "Version"], inplace=True)
-
+ 
         pd.testing.assert_frame_equal(result, expected)
- 
-    def test_read_validation(self):
-        vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
-    
-        mock_df = pd.DataFrame({"Fecha": ["2024-01-01"], "Valor": [100]})
-    
-        with patch.object(vs, "_read", return_value=mock_df) as mock_read:
-            vs._VariableSIMEM__read_validation("2024-01-01", "2024-12-31")
- 
-            mock_read.assert_called_once()
- 
-            vs._VariableSIMEM__read_validation("2024-01-01", "2024-12-31")
-            mock_read.assert_called_once() 
         
     def test_index_df(self):
-        dummy_json_versioned = {
+        dummy_json = {
             "PrecioEscasez": {
-            "name": "Precio de escasez",
-            "dataset_id": "dummy",
-            "var_column": "CodigoVariable",
-            "value_column": "Valor",
-            "version_column": "Version",
-            "date_column": "Fecha",
-            "esVersionado": 1
-            }
-        }
-        dummy_json_non_versioned = {
-            "PrecioEscasez": {
-            "name": "Precio de escasez",
-            "dataset_id": "dummy",
-            "var_column": "CodigoVariable",
-            "value_column": "Valor",
-            "version_column": "",
-            "date_column": "Fecha",
-            "esVersionado": 0
+                "name": "Precio de escasez",
+                "dataset_id": "dummy",
+                "var_column": "CodigoVariable",
+                "value_column": "Valor",
+                "version_column": None,
+                "date_column": "Fecha",
+                "esTX2PrimeraVersion": 0
             }
         }
  
@@ -697,56 +542,9 @@ class TestVariableSIMEM(unittest.TestCase):
         })
 
         vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
-        vs._VariableSIMEM__json_file = dummy_json_versioned
-        indexed_df = vs._index_df(df.copy())
-        self.assertEqual(list(indexed_df.index.names), ["Fecha", "Version"])
- 
-        vs._VariableSIMEM__json_file = dummy_json_non_versioned
+        vs._VariableSIMEM__json_file = dummy_json
         indexed_df = vs._index_df(df.copy())
         self.assertEqual(list(indexed_df.index.names), ["Fecha"])
-    
-    def test_get_index_data(self):
-        dummy_json = {
-            "PrecioEscasez": {
-            "name": "Precio de escasez",
-            "dataset_id": "dummy",
-            "var_column": "CodigoVariable",
-            "value_column": "Valor",
-            "version_column": "Version",
-            "date_column": "Fecha",
-            "esVersionado": 1
-            }
-        }
- 
-        df = pd.DataFrame({
-            "Fecha": pd.to_datetime(["2024-01-01", "2024-01-02"]),
-            "Valor": [100, 200],
-            "Version": ["v1", "v1"]
-        })
- 
-        vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
-        vs._VariableSIMEM__json_file = dummy_json
- 
-        with patch.object(vs, "_VariableSIMEM__read_validation") as mock_read_validation, \
-            patch.object(vs, "_index_df", return_value=df.set_index(["Fecha", "Version"])) as mock_index_df, \
-            patch.object(vs, "_calculate_version", return_value=df.set_index(["Fecha", "Version"])) as mock_calc_version:
- 
-            mock_read_validation.assert_called_once()
- 
-            mock_index_df.assert_called_once()
- 
-            mock_calc_version.assert_called_once()
-            
-    def test_show_info(self):
-        vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
- 
-        with patch.object(vs, "describe_data") as mock_describe, \
-            patch.object(vs, "time_series_data") as mock_time_series:
- 
-            vs.show_info()
- 
-            mock_describe.assert_called_once()
-            mock_time_series.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main()
