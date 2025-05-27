@@ -15,7 +15,6 @@ from datetime import timedelta
 from itertools import repeat
 import time 
 from pprint import pprint
-import json
 
 global datasetid, variable_inventory_id, catalog_id, reference_date, base_api_url, url_json_variables, today, version_dataset_id, daily_dataset_id, version_column_df_ver, date_format
 datasetid = ""
@@ -684,30 +683,23 @@ class VariableSIMEM:
         self.__versions_df = None
 
     @staticmethod
-    def _read_json():
-        with open('listado_variables.json', 'r', encoding='utf-8') as file:
-            # Carga el contenido del archivo en una variable
-            data = json.load(file)
-        return data
-
-    # @staticmethod
-    # def _read_json() -> dict:
-    #     """
-    #     Read the json configuration file with the features and list of variables in SIMEM.
+    def _read_json() -> dict:
+        """
+        Read the json configuration file with the features and list of variables in SIMEM.
         
-    #     Parameters:
-    #         file_path : str
-    #             The address path of the json file.
+        Parameters:
+            file_path : str
+                The address path of the json file.
         
-    #     Returns:
-    #         json
-    #             The json configuration to get the variable information.
-    #     """
+        Returns:
+            json
+                The json configuration to get the variable information.
+        """
 
-    #     response = requests.get(url_json_variables)
-    #     response.raise_for_status()
-    #     json_file = response.json()
-    #     return json_file
+        response = requests.get(url_json_variables)
+        response.raise_for_status()
+        json_file = response.json()
+        return json_file
 
     @staticmethod
     def get_collection() -> pd.DataFrame:
