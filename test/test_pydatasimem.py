@@ -405,6 +405,7 @@ class TestVariableSIMEM(unittest.TestCase):
                 "value_column": "Valor",
                 "version_column": None,
                 "date_column": "Fecha",
+                "dimensions": [],
                 "maestra_column": "SISTEMA",
                 "codMaestra_column": None,
                 "esTX2PrimeraVersion": 0
@@ -440,7 +441,7 @@ class TestVariableSIMEM(unittest.TestCase):
         data['FechaInicio'] = pd.to_datetime(data['FechaInicio'])
         data['FechaPublicacion'] = pd.to_datetime(data['FechaPublicacion'])
         
-        ordered = VariableSIMEM._VariableSIMEM__order_date(data.copy(), 'FechaPublicacion')
+        ordered = VariableSIMEM._order_date(data.copy(), 'FechaPublicacion')
         
         self.assertIn('month', ordered.columns)
         self.assertIn('order', ordered.columns)
@@ -461,6 +462,7 @@ class TestVariableSIMEM(unittest.TestCase):
                 "value_column": "Valor",
                 "version_column": "Version",
                 "date_column": "Fecha",
+                "dimensions": [],
                 "maestra_column": "SISTEMA",
                 "codMaestra_column": None,
                 "esTX2PrimeraVersion": 0
@@ -531,6 +533,7 @@ class TestVariableSIMEM(unittest.TestCase):
                 "value_column": "Valor",
                 "version_column": None,
                 "date_column": "Fecha",
+                "dimensions": [],
                 "esTX2PrimeraVersion": 0
             }
         }
