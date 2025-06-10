@@ -712,7 +712,15 @@ class VariableSIMEM:
         """
         
         json_file = VariableSIMEM._read_json()
-        return pd.DataFrame.from_dict(json_file, orient='index', columns=['name']).reset_index().rename(columns={'index': 'CodigoVariable', 'name': 'Nombre'})
+        df =  pd.DataFrame.from_dict(json_file, orient='index', columns=['name', 'dimensions', 'version_column', 'date_column']).reset_index().rename(
+            columns={'index': 'CodigoVariable', 'name': 'Nombre', 'dimensions': 'Dimensiones'})
+        
+        dimensions = df[['version_column', 'date_column']].apply(lambda x: list(x.dropna()), axis=1)
+
+        df['Dimensiones'] = df['Dimensiones'] + dimensions
+        df = df.drop(['version_column', 'date_column'], axis=1)
+        
+        return df
 
     def _read_dataset_data(self, start_date: str, end_date: str) -> pd.DataFrame:
         """
@@ -793,10 +801,13 @@ class VariableSIMEM:
         """
 
         data = self._get_index_data()
+        value_column = self.__json_file[self.__var]['value_column']
+        var_column = self.__json_file[self.__var]['var_column']
 
         if self.__quality_check:
             data = data.reset_index()
             return self.__set_format_for_qualitycheck(dataset=data)
+        data = data.rename(columns = {value_column: "Valor"}) if var_column is not None else data
         return data
     
     def __set_format_for_qualitycheck(self, dataset: pd.DataFrame) -> pd.DataFrame:
