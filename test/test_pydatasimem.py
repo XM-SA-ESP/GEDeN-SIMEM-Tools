@@ -8,8 +8,8 @@ from unittest.mock import patch, MagicMock
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.pydatasimem import _Validation ,ReadSIMEM, VariableSIMEM
 
-test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-04-13&datasetId=ec6945', 
-             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945']
+test_urls = ['https://www.simem.co/backend-files/api/PublicData?startdate=2024-03-14&enddate=2024-03-31&datasetId=ec6945', 
+             'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-01&enddate=2024-04-16&datasetId=ec6945']
 
 EXCEPTION = False
 EC6945_REQUEST_FILE = 'EC6945_request.json'
@@ -238,15 +238,15 @@ class test_clase(unittest.TestCase):
         
         test_granularity = "Horaria"
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
-        self.assertEqual(resolution, 31)
+        self.assertEqual(resolution, 1)
 
         test_granularity = "Mensual"
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
-        self.assertEqual(resolution, 731)
+        self.assertEqual(resolution, 24)
 
         test_granularity = "Anual"
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)
-        self.assertEqual(resolution, 1827)
+        self.assertEqual(resolution, 60)
 
         test_granularity = ""
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)        
@@ -257,7 +257,7 @@ class test_clase(unittest.TestCase):
     def test_create_urls(self):
         initial_date = dt.datetime(2024, 3, 14, 0, 0)
         final_date = dt.datetime(2024, 4, 16, 0, 0)
-        resolution = 31
+        resolution = 1
         urls = self.read_simem._ReadSIMEM__create_urls(initial_date, final_date, resolution)
         self.assertListEqual(urls, test_urls)
         self.apply_exception()
@@ -265,10 +265,10 @@ class test_clase(unittest.TestCase):
     def test_generate_start_dates(self):
         initial_date = dt.datetime(2024, 3, 14, 0, 0)
         final_date = dt.datetime(2024, 4, 16, 0, 0)
-        resolution = 31
+        resolution = 1
         obj = self.read_simem
-        dates = list(date for date in obj._generate_start_dates(initial_date, final_date, resolution))
-        mock_dates = ['2024-03-14', '2024-04-14', '2024-04-16']
+        dates = list(date for date in obj._generate_dates(initial_date, final_date, resolution))
+        mock_dates = [['2024-03-14', '2024-04-01'], ['2024-03-31', '2024-04-16']]
         self.assertListEqual(dates, mock_dates)
         self.apply_exception()
 

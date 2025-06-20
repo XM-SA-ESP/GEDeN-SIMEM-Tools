@@ -404,18 +404,18 @@ class ReadSIMEM:
             The maximum allowed date range in days.
         """
         if granularity in ['Diaria','Horaria']:
-            resolution = 31
+            resolution = 1
         elif granularity in ['Mensual','Semanal']:
-            resolution = 731
+            resolution = 24
         elif granularity == 'Anual':
-            resolution = 1827
+            resolution = 60
         else:
             resolution = 0
         
         return resolution
 
     @staticmethod
-    def _generate_start_dates(start_date: dt.datetime, end_date: dt.datetime, resolution: int):
+    def _generate_dates(start_date: dt.datetime, end_date: dt.datetime, resolution: int):
         """
         Generator to deliver a list of date ranges.
         
@@ -431,11 +431,27 @@ class ReadSIMEM:
         str
             The start dates in the specified date range formatted as strings.
         """
-        intervals = (end_date - start_date)/resolution
 
-        for i in range(0, intervals.days + 1):
-            yield (start_date + dt.timedelta(days=resolution)*i).strftime(date_format)
-        yield (end_date.strftime(date_format))
+        start_dates = pd.date_range(start=start_date.replace(day=1), end=end_date, freq='MS').to_list()
+
+        if start_date not in start_dates:
+            start_dates.pop(0)
+            start_dates.insert(0, start_date)
+        else:
+            start_dates[0] = start_date
+        
+        start_dates = start_dates[::resolution]
+
+        end_dates = [
+            (start_dates[i + 1] - dt.timedelta(days=1))
+            for i in range(len(start_dates) - 1)
+        ]
+        end_dates.append(end_date)
+        
+        start_dates = [d.strftime(date_format) for d in start_dates]
+        end_dates = [d.strftime(date_format) for d in end_dates]
+
+        return start_dates, end_dates
 
     def __create_urls(self, start_date: str , end_date: str , resolution: int, filter: bool= False) -> list[str]:
         """
@@ -456,11 +472,8 @@ class ReadSIMEM:
         list[str]
             A list of URLs for the dataset requests.
         """
-        start_dates: list[str] = list(date for date in self._generate_start_dates(start_date, end_date, resolution))
-        end_dates: list[str] = [(dt.datetime.strptime(date,'%Y-%m-%d') - dt.timedelta(days=1)).strftime('%Y-%m-%d') for date in start_dates]
-        end_dates[-1] = start_dates[-1]
-        start_dates.pop(-1)
-        end_dates.pop(0)
+
+        start_dates, end_dates = self._generate_dates(start_date=start_date, end_date=end_date, resolution=resolution)
         if filter:
             base_url = self.url_api + self.get_filter_url()
         else:
