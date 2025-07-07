@@ -6,7 +6,7 @@ Esta es la documentación de la clase VariableSIMEM que hace parte de la librer�
 ¿Qué es y para qué sirve VariableSIMEM?
 ----------------------------------------
 
-Esta sección incluye toda la inforamación necesaria para obtener un contexto inicial acerca de la clase
+Esta sección incluye toda la inforamación necesaria para obtener un contexto inicial acerca de la clase.
 
 .. toctree::
    :maxdepth: 1
@@ -19,7 +19,7 @@ Esta sección incluye toda la inforamación necesaria para obtener un contexto i
 Funcionalidades
 ---------------
 
-Esta sección incluye toda la inforamación necesaria para entender cada una de las funcionalidades de la clase
+Esta sección incluye toda la inforamación necesaria para entender cada una de las funcionalidades de la clase.
 
 .. toctree::
    :maxdepth: 1
@@ -32,7 +32,7 @@ Esta sección incluye toda la inforamación necesaria para entender cada una de 
 Obtener datos en Excel
 -----------------------
 
-Esta sección incluye toda la información necesaria entender la configuración y el uso mediante excel, dentro del proyecto ya hay un archivo excel configurado, pero si es necesario diríjase al apartado de ocnfiguración para ver el paso a paso
+Esta sección incluye toda la información necesaria entender la configuración y el uso mediante excel, dentro del proyecto ya hay un archivo excel configurado, pero si es necesario diríjase al apartado de ocnfiguración para ver el paso a paso.
 
 .. toctree::
    :maxdepth: 1
