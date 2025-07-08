@@ -32,3 +32,13 @@ En este apartado se encuentra toda la información relacionada a la clase Variab
    :caption: Documentación clase VariableSIMEM:
 
    variableSIMEM/index.rst
+
+Generación del json de listado de variables
+========================
+En este apartado se encuentra toda la información relacionada a la implementación del mapeo de variables a través de un json de configuración.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentación json listado de variables:
+
+   json/index.rst

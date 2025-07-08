@@ -6,7 +6,7 @@ Esta es la documentación de la clase ReadSIMEM que hace parte de la librería p
 ¿Qué es y para qué sirve ReadSIMEM?
 ---------------------------------------
 
-Esta sección incluye toda la inforamación necesaria para obtener un contexto inicial acerca de la clase
+Esta sección incluye toda la inforamación necesaria para obtener un contexto inicial acerca de la clase.
 
 .. toctree::
    :maxdepth: 1
@@ -19,7 +19,7 @@ Esta sección incluye toda la inforamación necesaria para obtener un contexto i
 Funcionalidades
 ------------------
 
-Esta sección incluye toda la inforamación necesaria para entender cada una de las funcionalidades de la clase
+Esta sección incluye toda la inforamación necesaria para entender cada una de las funcionalidades de la clase.
 
 .. toctree::
    :maxdepth: 1

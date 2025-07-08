@@ -1,4 +1,5 @@
 {
+  "variable": {
     "AportesHidricosEnergia": {
       "name": "Aportes hídricos de las series hidrológicas expresados en energía",
       "dataset_id": "BA1C55",
@@ -1739,6 +1740,18 @@
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
     },
+    "VolumenPorcentaje": {
+      "name": "Volumen total del embalse expresado en porcentaje",
+      "dataset_id": "843497",
+      "var_column": null,
+      "value_column": "VolumenPorcentaje",
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": ["CodigoEmbalse","RegionHidrologica"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
     "VolumenTotalEnergia": {
       "name": "Volumen total del embalse expresado en energía",
       "dataset_id": "c51127",
@@ -1762,5 +1775,92 @@
       "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
+    },
+    "VolumenUtilPorcentaje": {
+      "name": "Volumen útil diario expresado en porcentaje",
+      "dataset_id": "843497",
+      "var_column": null,
+      "value_column": "VolumenUtilPorcentaje",
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": ["CodigoEmbalse","RegionHidrologica"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
     }
+  }, 
+  "maestra": {
+    "Agente": {
+      "name": "Contiene el listado de agentes registrados en el mercado por actividad y para cada día",
+      "dataset_id": "972263",
+      "var_column": null,
+      "value_column": null,
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "Area": {
+      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de las áreas operativas en las que está dividido el Sistema Interconectado Nacional y que se presentan en el SIMEM",
+      "dataset_id": "841808",
+      "var_column": null,
+      "value_column": null,
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "Embalse": {
+      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de los embalses que sirven al Sistema Interconectado Nacional y que se presentan en el SIMEM",
+      "dataset_id": "A0CF2A",
+      "var_column": null,
+      "value_column": null,
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "Planta_Prueba": {
+      "name": "Contiene el listado de las plantas de generación registradas que se encuentran en pruebas",
+      "dataset_id": "7F18B1",
+      "var_column": null,
+      "value_column": null,
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": ["CodigoSICAgente", "CodigoSubAreaOperativa", "CodigoAreaOperativa"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "Subarea": {
+      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de las subáreas operativas en las que está dividido el Sistema Interconectado Nacional y que se presentan en el SIMEM",
+      "dataset_id": "10F2C9",
+      "var_column": null,
+      "value_column": null,
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "Subestaciones": {
+      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de las subestaciones que se presentan en el SIMEM",
+      "dataset_id": "F99E13",
+      "var_column": null,
+      "value_column": null,
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    }
+  }
 }

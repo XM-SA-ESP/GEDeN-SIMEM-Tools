@@ -398,18 +398,20 @@ class TestVariableSIMEM(unittest.TestCase):
  
     def setUp(self):
         self.dummy_json = {
-            "PrecioEscasez": {
-                "name": "Precio de escasez",
-                "dataset_id": "ae3f2",
-                "var_column": "CodigoVariable",
-                "value_column": "Valor",
-                "version_column": None,
-                "date_column": "Fecha",
-                "dimensions": [],
-                "maestra_column": "SISTEMA",
-                "codMaestra_column": None,
-                "esTX2PrimeraVersion": 0
-            }
+            "variable": {
+                "PrecioEscasez": {
+                    "name": "Precio de escasez",
+                    "dataset_id": "ae3f2",
+                    "var_column": "CodigoVariable",
+                    "value_column": "Valor",
+                    "version_column": None,
+                    "date_column": "Fecha",
+                    "dimensions": [],
+                    "maestra_column": "SISTEMA",
+                    "codMaestra_column": None,
+                    "esTX2PrimeraVersion": 0
+                    }
+                }
         }
         patcher = patch.object(VariableSIMEM, '_read_json', return_value=self.dummy_json)
         self.addCleanup(patcher.stop)
@@ -455,18 +457,20 @@ class TestVariableSIMEM(unittest.TestCase):
             'Valor': [100, 200, 300, None, 0]
         })
         dummy_json = {
-            "PrecioEscasez": {
-                "name": "Precio de escasez",
-                "dataset_id": "dummy",
-                "var_column": "CodigoVariable",
-                "value_column": "Valor",
-                "version_column": "Version",
-                "date_column": "Fecha",
-                "dimensions": [],
-                "maestra_column": "SISTEMA",
-                "codMaestra_column": None,
-                "esTX2PrimeraVersion": 0
-            }
+            "variable": {
+                "PrecioEscasez": {
+                    "name": "Precio de escasez",
+                    "dataset_id": "ae3f2",
+                    "var_column": "CodigoVariable",
+                    "value_column": "Valor",
+                    "version_column": None,
+                    "date_column": "Fecha",
+                    "dimensions": [],
+                    "maestra_column": "SISTEMA",
+                    "codMaestra_column": None,
+                    "esTX2PrimeraVersion": 0
+                    }
+                }
         }
         vs = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-12-31")
         vs._VariableSIMEM__json_file = dummy_json
@@ -526,16 +530,20 @@ class TestVariableSIMEM(unittest.TestCase):
         
     def test_index_df(self):
         dummy_json = {
-            "PrecioEscasez": {
-                "name": "Precio de escasez",
-                "dataset_id": "dummy",
-                "var_column": "CodigoVariable",
-                "value_column": "Valor",
-                "version_column": None,
-                "date_column": "Fecha",
-                "dimensions": [],
-                "esTX2PrimeraVersion": 0
-            }
+            "variable": {
+                "PrecioEscasez": {
+                    "name": "Precio de escasez",
+                    "dataset_id": "ae3f2",
+                    "var_column": "CodigoVariable",
+                    "value_column": "Valor",
+                    "version_column": None,
+                    "date_column": "Fecha",
+                    "dimensions": [],
+                    "maestra_column": "SISTEMA",
+                    "codMaestra_column": None,
+                    "esTX2PrimeraVersion": 0
+                    }
+                }
         }
  
         df = pd.DataFrame({
