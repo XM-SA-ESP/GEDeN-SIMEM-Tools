@@ -1740,6 +1740,18 @@
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
     },
+    "VolumenPorcentaje": {
+      "name": "Volumen total del embalse expresado en porcentaje",
+      "dataset_id": "843497",
+      "var_column": null,
+      "value_column": "VolumenPorcentaje",
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": ["CodigoEmbalse","RegionHidrologica"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
     "VolumenTotalEnergia": {
       "name": "Volumen total del embalse expresado en energía",
       "dataset_id": "c51127",
@@ -1757,6 +1769,18 @@
       "dataset_id": "c51127",
       "var_column": null,
       "value_column": "VolumenUtilDiarioEnergia",
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": ["CodigoEmbalse","RegionHidrologica"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "VolumenUtilPorcentaje": {
+      "name": "Volumen útil diario expresado en porcentaje",
+      "dataset_id": "843497",
+      "var_column": null,
+      "value_column": "VolumenUtilPorcentaje",
       "version_column": null,
       "date_column": "Fecha",
       "dimensions": ["CodigoEmbalse","RegionHidrologica"],
