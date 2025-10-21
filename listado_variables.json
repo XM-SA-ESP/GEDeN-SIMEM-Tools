@@ -1,7 +1,7 @@
 {
   "variable": {
     "AportesHidricosEnergia": {
-      "name": "Aportes hídricos de las series hidrológicas expresados en energía",
+      "name": "Aportes hidricos de las series hidrologicas expresados en energia",
       "dataset_id": "BA1C55",
       "var_column": null,
       "value_column": "AportesHidricosEnergia",
@@ -13,7 +13,7 @@
       "esTX2PrimeraVersion": 0
     },
     "AportesHidricosMasa": {
-      "name": "Aportes hídricos de las series hidrológicas",
+      "name": "Aportes hidricos de las series hidrologicas",
       "dataset_id": "f138b6",
       "var_column": null,
       "value_column": "AportesHidricosMasa",
@@ -25,13 +25,97 @@
       "esTX2PrimeraVersion": 0
     },
     "AportesHidricosMasaPSS95": {
-      "name": "Aportes hídricos para un 95% de Probabilidad de Ser Superado (PSS)",
+      "name": "Aportes hidricos para un 95% de Probabilidad de Ser Superado (PSS)",
       "dataset_id": "f138b6",
       "var_column": null,
       "value_column": "AportesHidricosMasaPSS95",
       "version_column": null,
       "date_column": "Fecha",
       "dimensions": ["CodigoSerieHidrologica","RegionHidrologica"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "BanderaAutorizacionDesvFueraBanda": {
+      "name": "Banderas de autorizacion a desviarse",
+      "dataset_id": "B4D9FE",
+      "var_column": "CodigoVariable",
+      "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "BanderaArranqueGIdeal": {
+      "name": "Bandera de arranque de un recurso térmico",
+      "dataset_id": "379022",
+      "var_column": "CodigoVariable",
+      "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "BanderaArranqueGReal": {
+      "name": "Bandera de arranque del recurso",
+      "dataset_id": "1237df",
+      "var_column": "CodigoVariable",
+      "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "BanderaEstadoEventoDisponibilidad": {
+      "name": "Bandera de disponibilidad real",
+      "dataset_id": "F3A9B1",
+      "var_column": "CodigoVariable",
+      "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "BanderaGidealInflexibleNoGenSeguridad": {
+      "name": "Bandera inflexibilidades NO asociadas con generaciones de seguridad",
+      "dataset_id": "8FFA6D",
+      "var_column": "CodigoVariable",
+      "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "BanderaParadaRecurso": {
+      "name": "Bandera de parada del recurso",
+      "dataset_id": "39726d",
+      "var_column": "CodigoVariable",
+      "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "BanderaRGEnPruebas": {
+      "name": "Bandera de recurso en pruebas",
+      "dataset_id": "D387AB",
+      "var_column": "CodigoVariable",
+      "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
       "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
@@ -61,7 +145,7 @@
       "esTX2PrimeraVersion": 0
     },
     "CapacidadUtilMasa": {
-      "name": "Capacidad útil del embalse",
+      "name": "Capacidad util del embalse",
       "dataset_id": "138ED1",
       "var_column": null,
       "value_column": "CapacidadUtilMasa",
@@ -98,7 +182,7 @@
     },
     "CCMdoSec": {
       "name": "Compras en contratos de respaldo o en declaraciones de respaldo",
-      "dataset_id": "fa4671",
+      "dataset_id": "BE51B1",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -109,10 +193,10 @@
       "esTX2PrimeraVersion": 0
     },
     "CEE": {
-      "name": "Costo equivalente de energía",
-      "dataset_id": "ED7CAA",
-      "var_column": null,
-      "value_column": "CEE",
+      "name": "Costo equivalente de energia",
+      "dataset_id": "0d5da1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
       "version_column": null,
       "date_column": "Fecha",
       "dimensions": [],
@@ -121,14 +205,26 @@
       "esTX2PrimeraVersion": 0
     },
     "CERE": {
-      "name": "Costo equivalente real de energía",
-      "dataset_id": "ED7CAA",
-      "var_column": null,
-      "value_column": "CERE",
-      "version_column": null,
+      "name": "Costo equivalente real de energia",
+      "dataset_id": "aecac4",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
       "date_column": "Fecha",
       "dimensions": [],
       "maestra_column": "Submercado",
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "COM_PE": {
+      "name": "Costo de operacion y mantenimiento para el precio de escasez",
+      "dataset_id": "300D5C",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
     },
@@ -145,7 +241,7 @@
       "esTX2PrimeraVersion": 0
     },
     "ConsumoCombustibleFueraMerito": {
-      "name": "Consumo combustible proporcional a la reconciliación positiva",
+      "name": "Consumo combustible proporcional a la reconciliacion positiva",
       "dataset_id": "C41FE8",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -242,18 +338,18 @@
     },
     "CU_ResComAGC": {
       "name": "Costo unitario responsabilidad comercial de AGC",
-      "dataset_id": "f2081a",
+      "dataset_id": "7BC5F5",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
-      "date_column": "FechaHora",
+      "date_column": "Fecha",
       "dimensions": [],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "CU_ServAGC": {
-      "name": "Costo unitario por servicio regulación secundaria frecuencia",
+      "name": "Costo unitario por servicio regulacion secundaria frecuencia",
       "dataset_id": "7c8129",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -266,7 +362,7 @@
     },
     "DdaCom": {
       "name": "Demanda comercial",
-      "dataset_id": "b7917a",
+      "dataset_id": "d55202",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -276,9 +372,21 @@
       "codMaestra_column": "CodigoSICAgente",
       "esTX2PrimeraVersion": 1
     },
+    "DdaDesconecVoluntariaVerif": {
+      "name": "Demanda desconectable voluntaria verificada",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
     "DdaReal": {
       "name": "Demanda real",
-      "dataset_id": "b7917a",
+      "dataset_id": "14fabb",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -337,10 +445,10 @@
       "esTX2PrimeraVersion": 0
     },
     "DeltaGProg": {
-      "name": "Delta de generación programada",
-      "dataset_id": "2d5afe",
+      "name": "Delta de generacion programada",
+      "dataset_id": "029125",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -350,9 +458,9 @@
     },
     "DeltaHOAbajo": {
       "name": "Delta holgura abajo horaria",
-      "dataset_id": "2d5afe",
+      "dataset_id": "252E2F",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -362,9 +470,9 @@
     },
     "DeltaHOArriba": {
       "name": "Delta holgura arriba horaria",
-      "dataset_id": "2d5afe",
+      "dataset_id": "252E2F",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -374,7 +482,7 @@
     },
     "DeltaInt": {
       "name": "Delta incremento internacional",
-      "dataset_id": "7c8129",
+      "dataset_id": "70E9A6",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -386,7 +494,7 @@
     },
     "DeltaNal": {
       "name": "Delta incremento nacional",
-      "dataset_id": "7c8129",
+      "dataset_id": "70E9A6",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -398,7 +506,7 @@
     },
     "DemandaComercialInternacional": {
       "name": "Demanda comercial internacional",
-      "dataset_id": "ea754c",
+      "dataset_id": "31E0AF",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -469,7 +577,7 @@
       "esTX2PrimeraVersion": 0
     },
     "DireccionViento": {
-      "name": "Dirección del viento",
+      "name": "Direccion del viento",
       "dataset_id": "42f98c",
       "var_column": null,
       "value_column": "DireccionViento",
@@ -481,8 +589,8 @@
       "esTX2PrimeraVersion": 0
     },
     "DispCom": {
-      "name": "Disponibilidad comercial por cada recurso de generación",
-      "dataset_id": "29517d",
+      "name": "Disponibilidad comercial por cada recurso de generacion",
+      "dataset_id": "24F4EC",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -490,7 +598,43 @@
       "dimensions": ["CodigoPlanta"],
       "maestra_column": "Planta",
       "codMaestra_column": "CodigoPlanta",
-      "esTX2PrimeraVersion": 1
+      "esTX2PrimeraVersion": 0
+    },
+    "DispComAnilloRespTotal": {
+      "name": "Disponibilidad comercial contratos respaldo",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "DispComercialArranqueGasCC": {
+      "name": "Disponibilidad asociada con arranque utilizando tecnologia termica a gas ciclo abierto",
+      "dataset_id": "244B98",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "DispDeclarada": {
+      "name": "Disponibilidad declarada",
+      "dataset_id": "5d0d0e",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
     },
     "DispProg": {
       "name": "Disponibilidad programada",
@@ -517,7 +661,7 @@
       "esTX2PrimeraVersion": 0
     },
     "EnergiaExportadaProgramadaRedespacho": {
-      "name": "Energía exportada programada redespacho",
+      "name": "Energia exportada programada redespacho",
       "dataset_id": "7f16cb",
       "var_column": null,
       "value_column": "EnergiaExportadaProgramadaRedespacho",
@@ -529,7 +673,7 @@
       "esTX2PrimeraVersion": 0
     },
     "EnergiaImportadaProgramadaRedespacho": {
-      "name": "Energía importada programada redespacho",
+      "name": "Energia importada programada redespacho",
       "dataset_id": "b9f2ec",
       "var_column": null,
       "value_column": "EnergiaImportadaProgramadaRedespacho",
@@ -553,7 +697,7 @@
       "esTX2PrimeraVersion": 0
     },
     "Energia_Transada_Mecanismo": {
-      "name": "Representatividad de la energía transada",
+      "name": "Representatividad de la energia transada",
       "dataset_id": "EDBDA0",
       "var_column": "CodigoVariable",
       "value_column": "ValorPorcentual",
@@ -565,7 +709,7 @@
       "esTX2PrimeraVersion": 0
     },
     "EnergiaExportadaRealEstimada": {
-      "name": "Energía exportada real estimada",
+      "name": "Energia exportada real estimada",
       "dataset_id": "7f16cb",
       "var_column": null,
       "value_column": "EnergiaExportadaRealEstimada",
@@ -577,7 +721,7 @@
       "esTX2PrimeraVersion": 0
     },
     "EnergiaImportadaRealEstimada": {
-      "name": "Energía importada real estimada",
+      "name": "Energia importada real estimada",
       "dataset_id": "b9f2ec",
       "var_column": null,
       "value_column": "EnergiaImportadaRealEstimada",
@@ -589,7 +733,7 @@
       "esTX2PrimeraVersion": 0
     },
     "EnergiaReferSTNInternacional": {
-      "name": "Energía horaria de los contadores",
+      "name": "Energia horaria de los contadores",
       "dataset_id": "f96857",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -601,8 +745,8 @@
       "esTX2PrimeraVersion": 0
     },
     "EnergiaReferSTNnacional": {
-      "name": "Energías originales fronteras de generación y consumos auxiliares",
-      "dataset_id": "48cd87",
+      "name": "Energias originales fronteras de generacion y consumos auxiliares",
+      "dataset_id": "CD2034",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -625,7 +769,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GeneracionRealEstimada": {
-      "name": "Generación real estimada",
+      "name": "Generacion real estimada",
       "dataset_id": "E17D25",
       "var_column": null,
       "value_column": "GeneracionRealEstimada",
@@ -637,7 +781,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GeneracionSeg": {
-      "name": "Magnitud de generación de seguridad",
+      "name": "Magnitud de generacion de seguridad",
       "dataset_id": "2d5afe",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -649,7 +793,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GIdeal": {
-      "name": "Generación ideal total",
+      "name": "Generacion ideal total",
       "dataset_id": "2d5afe",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -661,7 +805,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GIdealInflexible": {
-      "name": "Generación ideal inflexible demanda NO doméstica Venezuela, doméstica Colombia",
+      "name": "Generacion ideal inflexible demanda NO domestica Venezuela, domestica Colombia",
       "dataset_id": "2d5afe",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -673,10 +817,22 @@
       "esTX2PrimeraVersion": 0
     },
     "GIdealInt": {
-      "name": "Generación ideal internacional (Venezuela)",
+      "name": "Generacion ideal internacional (Venezuela)",
       "dataset_id": "2d5afe",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "GIdealNal": {
+      "name": "Generacion ideal nacional",
+      "dataset_id": "8E7F3C",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -685,10 +841,10 @@
       "esTX2PrimeraVersion": 0
     },
     "GIdealTie": {
-      "name": "Generación ideal internacional (Ecuador)",
-      "dataset_id": "2d5afe",
+      "name": "Generacion ideal internacional (Ecuador)",
+      "dataset_id": "CDD16E",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -697,7 +853,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GProg": {
-      "name": "Generación programada",
+      "name": "Generacion programada",
       "dataset_id": "2d5afe",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -709,7 +865,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GProgDespacho": {
-      "name": "Generación programada despacho unidad",
+      "name": "Generacion programada despacho unidad",
       "dataset_id": "E17D25",
       "var_column": null,
       "value_column": "GeneracionProgramadaDespacho",
@@ -720,8 +876,20 @@
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
     },
+    "GProgGrupoRedespacho": {
+      "name": "Generacion programada por grupo de generacion de redespacho",
+      "dataset_id": "18F0B8",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta","CodigoSICAgente"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
     "GProgRedespacho": {
-      "name": "Generación programada redespacho unidad",
+      "name": "Generacion programada redespacho unidad",
       "dataset_id": "E17D25",
       "var_column": null,
       "value_column": "GeneracionProgramadaRedespacho",
@@ -733,7 +901,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GReal": {
-      "name": "Generación real",
+      "name": "Generacion real",
       "dataset_id": "c41fe8",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -769,7 +937,7 @@
       "esTX2PrimeraVersion": 0
     },
     "MediaHistoricaEnergia": {
-      "name": "Aporte promedio mensual multianual en energía",
+      "name": "Aporte promedio mensual multianual en energia",
       "dataset_id": "BA1C55",
       "var_column": null,
       "value_column": "MediaHistoricaEnergia",
@@ -793,8 +961,8 @@
       "esTX2PrimeraVersion": 0
     },
     "MgCB": {
-      "name": "Energía en bolsa nacional a cargo",
-      "dataset_id": "b1c11e",
+      "name": "Energia en bolsa nacional a cargo",
+      "dataset_id": "42EDC9",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -802,11 +970,11 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "MgCB_Int": {
-      "name": "Energía en bolsa internacional a cargo",
-      "dataset_id": "b1c11e",
+      "name": "Energia en bolsa internacional a cargo",
+      "dataset_id": "E93F85",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -814,11 +982,11 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "MgCTB": {
       "name": "Magnitud compras transacciones en bolsa",
-      "dataset_id": "b1c11e",
+      "dataset_id": "FEC25B",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -829,7 +997,7 @@
       "esTX2PrimeraVersion": 0
     },
     "MgDdaNoCubierta": {
-      "name": "Demanda NO cubierta que se usa para el cálculo del valor a cargo",
+      "name": "Demanda NO cubierta que se usa para el calculo del valor a cargo",
       "dataset_id": "ea754c",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -840,23 +1008,107 @@
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
     },
+    "MgDeclaracionRespOEFCombLiquidoCompraGas": {
+      "name": "Declaracion de respaldo diaria para cada planta y/o unidad de generacion",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
     "MgDesvFueraBanda": {
-      "name": "Magnitud de desviación",
-      "dataset_id": "b1c11e",
+      "name": "Magnitud de desviacion",
+      "dataset_id": "88997D",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
-      "dimensions": ["CodigoSICAgente"],
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "MgDispDeclaradaRespOEF": {
+      "name": "Disponibilidad horaria declarada total que respalda las OEF",
+      "dataset_id": "9CBA0C",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "MgDispDeclaradaRespOEFAjustada": {
+      "name": "Declaracion de respaldo horaria para cada planta y/o unidad",
+      "dataset_id": "5106B9",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "MgDispRespOEFAjustada": {
+      "name": "Disponibilidad horaria de respaldo de OEF ajustada",
+      "dataset_id": "126C20",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "MgEnergiaVendEmbal_Ajustada": {
+      "name": "Energia vendida y embalsada ajustada para la planta de generacion",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 1
+    },
+    "MgEnergiaVendEmbal_Excedente": {
+      "name": "Excedentes de energia vendida y embalsada",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 1
+    },
+    "MgGeneracionSegFueraMerito": {
+      "name": "Magnitud de generacion de seguridad del pais importador",
+      "dataset_id": "4A17B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
       "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
     },
     "MgRecNegAGC": {
-      "name": "Reconciliación negativa para planta que realiza AGC",
-      "dataset_id": "2d5afe",
+      "name": "Reconciliacion negativa para planta que realiza AGC",
+      "dataset_id": "B53464",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -865,10 +1117,10 @@
       "esTX2PrimeraVersion": 0
     },
     "MgRecNegNoAGC": {
-      "name": "Reconciliación negativa para planta que NO realiza AGC",
-      "dataset_id": "2d5afe",
+      "name": "Reconciliacion negativa para planta que NO realiza AGC",
+      "dataset_id": "8F2AFC",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -877,22 +1129,22 @@
       "esTX2PrimeraVersion": 0
     },
     "MgRecPosAGC": {
-      "name": "Magnitud de reconciliación positiva recursos que prestan servicio de AGC",
-      "dataset_id": "2d5afe",
+      "name": "Magnitud de reconciliacion positiva recursos que prestan servicio de AGC",
+      "dataset_id": "F37316",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "MgRecPosArranque": {
-      "name": "Magnitud de reconciliación positiva arranque",
-      "dataset_id": "2d5afe",
+      "name": "Magnitud de reconciliacion positiva arranque",
+      "dataset_id": "A1DBD9",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -901,10 +1153,10 @@
       "esTX2PrimeraVersion": 0
     },
     "MgRecPosNoAGC": {
-      "name": "Magnitud de reconciliación positiva recurso NO realizan AGC",
-      "dataset_id": "2d5afe",
+      "name": "Magnitud de reconciliacion positiva recurso NO realizan AGC",
+      "dataset_id": "8DA3D8",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaHora",
       "dimensions": ["CodigoPlanta"],
@@ -925,8 +1177,8 @@
       "esTX2PrimeraVersion": 0
     },
     "MgVTB": {
-      "name": "Magnitud ventas de energía en bolsa",
-      "dataset_id": "b1c11e",
+      "name": "Magnitud ventas de energia en bolsa",
+      "dataset_id": "30E8EC",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -934,11 +1186,11 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 1
+      "esTX2PrimeraVersion": 0
     },
     "MgVB": {
-      "name": "Energía en bolsa nacional a favor",
-      "dataset_id": "b1c11e",
+      "name": "Energia en bolsa nacional a favor",
+      "dataset_id": "E14D70",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -949,8 +1201,8 @@
       "esTX2PrimeraVersion": 1
     },
     "MgVB_Int": {
-      "name": "Energía en bolsa internacional a favor",
-      "dataset_id": "b1c11e",
+      "name": "Energia en bolsa internacional a favor",
+      "dataset_id": "11364C",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -959,6 +1211,18 @@
       "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 1
+    },
+    "MHOP": {
+      "name": "Potencia asociada con la holgura",
+      "dataset_id": "ECA1CC",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
     },
     "MinimoOperativo": {
       "name": "Minimo Operativo",
@@ -997,7 +1261,7 @@
       "esTX2PrimeraVersion": 0
     },
     "MontosGarantiasReservaCapacidad": {
-      "name": "Montos de garantías de reserva de capacidad",
+      "name": "Montos de garantias de reserva de capacidad",
       "dataset_id": "8d7548",
       "var_column": null,
       "value_column": "MontoGarantiaReservaCapacidad",
@@ -1009,7 +1273,7 @@
       "esTX2PrimeraVersion": 0
     },
     "MPO_Int": {
-      "name": "Máximo precio ofertado internacional",
+      "name": "Maximo precio ofertado internacional",
       "dataset_id": "3F3687",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1021,7 +1285,7 @@
       "esTX2PrimeraVersion": 0
     },
     "MPO_Nal": {
-      "name": "Máximo precio ofertado nacional",
+      "name": "Maximo precio ofertado nacional",
       "dataset_id": "3F3687",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1033,7 +1297,7 @@
       "esTX2PrimeraVersion": 0
     },
     "MPO_Tie": {
-      "name": "Máximo precio ofertado TIE",
+      "name": "Maximo precio ofertado TIE",
       "dataset_id": "3F3687",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1046,11 +1310,11 @@
     },
     "NEMA": {
       "name": "Nivel del embalse reportado menos los compromisos EVE",
-      "dataset_id": "2d5afe",
+      "dataset_id": "7AEE6F",
       "var_column": "CodigoVariable",
-      "value_column": "ValorTexto",
+      "value_column": "Valor",
       "version_column": "Version",
-      "date_column": "FechaHora",
+      "date_column": "Fecha",
       "dimensions": ["CodigoPlanta"],
       "maestra_column": null,
       "codMaestra_column": null,
@@ -1058,7 +1322,19 @@
     },
     "NEMG": {
       "name": "Nivel de embalse declarado por el agente",
-      "dataset_id": "6dc639",
+      "dataset_id": "BD26DC",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "NPV": {
+      "name": "Nivel de probabilidad de vertimiento",
+      "dataset_id": "658DAE",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1069,8 +1345,8 @@
       "esTX2PrimeraVersion": 0
     },
     "OCV_Hidraulico": {
-      "name": "Otros costos variables hidráulicos",
-      "dataset_id": "f2081a",
+      "name": "Otros costos variables hidraulicos",
+      "dataset_id": "C8172F",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1078,11 +1354,23 @@
       "dimensions": [],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
+    },
+    "OCV_PE": {
+      "name": "Otros costos variables asociados al SIN",
+      "dataset_id": "1F06A2",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 1
     },
     "OCV_Termico": {
-      "name": "Otros costos variables térmicos",
-      "dataset_id": "f2081a",
+      "name": "Otros costos variables termicos",
+      "dataset_id": "C8172F",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1090,7 +1378,19 @@
       "dimensions": [],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
+    },
+    "OEFDiaria": {
+      "name": "Obligacion energia firme diaria",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 1
     },
     "PAR_Ofertado": {
       "name": "Precio de oferta de arranque y parada",
@@ -1153,7 +1453,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PerdidasDemandaInternacional": {
-      "name": "Pérdidas asociadas a la demanda internacional",
+      "name": "Perdidas asociadas a la demanda internacional",
       "dataset_id": "b7917a",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1165,7 +1465,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PerdidasDemandaNoRegulada": {
-      "name": "Pérdida asociada a la demanda NO regulada",
+      "name": "Perdida asociada a la demanda NO regulada",
       "dataset_id": "b7917a",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1177,7 +1477,7 @@
       "esTX2PrimeraVersion": 1
     },
     "PerdidasDemandaRegulada": {
-      "name": "Pérdida asociada a la demanda regulada",
+      "name": "Perdida asociada a la demanda regulada",
       "dataset_id": "b7917a",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1201,8 +1501,8 @@
       "esTX2PrimeraVersion": 1
     },
     "PerdidasEnergia": {
-      "name": "Pérdidas de agentes generadores",
-      "dataset_id": "b7917a",
+      "name": "Perdidas de agentes generadores",
+      "dataset_id": "22e6e3",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1213,7 +1513,7 @@
       "esTX2PrimeraVersion": 1
     },
     "PMaximoCargoConfi": {
-      "name": "Precio máximo del cxc",
+      "name": "Precio maximo del cxc",
       "dataset_id": "6dc639",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1237,7 +1537,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PONE_ExpCol": {
-      "name": "Precio de exportación en el nodo frontera",
+      "name": "Precio de exportacion en el nodo frontera",
       "dataset_id": "c41fe8",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -1273,13 +1573,25 @@
       "esTX2PrimeraVersion": 0
     },
     "PPBOGReal": {
-      "name": "Precio de bolsa ponderado con generación real",
+      "name": "Precio de bolsa ponderado con generacion real",
       "dataset_id": "96D56E",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
       "date_column": "Fecha",
       "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "PPromPonCargoConfi": {
+      "name": "Precio promedio del cxc",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
       "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
@@ -1297,7 +1609,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PrecioEscasezActivacion": {
-      "name": "Precio de escasez de activación",
+      "name": "Precio de escasez de activacion",
       "dataset_id": "ae3f23",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1322,7 +1634,7 @@
     },
     "PrecioEscasezPonderado": {
       "name": "Precios de escasez promedio ponderado por sistema",
-      "dataset_id": "7c8129",
+      "dataset_id": "43D616",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1381,7 +1693,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PrecioOfertaArranqueParadaUSD": {
-      "name": "Precio oferta arranque y parada en dólares",
+      "name": "Precio oferta arranque y parada en dolares",
       "dataset_id": "e427a2",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1393,7 +1705,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PrecioOfertaConfiguracion": {
-      "name": "Precio de oferta por configuración ofertada",
+      "name": "Precio de oferta por configuracion ofertada",
       "dataset_id": "b18005",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1405,7 +1717,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PresionAtmosferica": {
-      "name": "Presión atmosférica",
+      "name": "Presion atmosferica",
       "dataset_id": "42f98c",
       "var_column": null,
       "value_column": "PresionAtmosferica",
@@ -1429,7 +1741,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PromedioAcumuladoEnergia": {
-      "name": "Aportes hídricos acumulados de las series hidrológicas expresados en energía",
+      "name": "Aportes hidricos acumulados de las series hidrologicas expresados en energia",
       "dataset_id": "BA1C55",
       "var_column": null,
       "value_column": "PromedioAcumuladoEnergia",
@@ -1441,7 +1753,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PromedioAcumuladoMasa": {
-      "name": "Aportes hídricos acumulados de las series hidrológicas",
+      "name": "Aportes hidricos acumulados de las series hidrologicas",
       "dataset_id": "f138b6",
       "var_column": null,
       "value_column": "PromedioAcumuladoMasa",
@@ -1453,7 +1765,7 @@
       "esTX2PrimeraVersion": 0
     },
     "PromedioAcumuladoPorcentaje": {
-      "name": "Aportes hídricos acumulados respecto a la media histórica en energía",
+      "name": "Aportes hidricos acumulados respecto a la media historica en energia",
       "dataset_id": "34FFDA",
       "var_column": null,
       "value_column": "PromedioAcumuladoPorcentaje",
@@ -1476,9 +1788,21 @@
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 1
     },
+    "RelacionindicePlattsYPromedioPlatts": {
+      "name": "Relacion indice platts US gulf coast residual fuel",
+      "dataset_id": "96DDFE",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "Fecha",
+      "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 1
+    },
     "RRI": {
-      "name": "Remuneración real individual diaria",
-      "dataset_id": "6dc639",
+      "name": "Remuneracion real individual diaria",
+      "dataset_id": "BE51B1",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1488,21 +1812,9 @@
       "codMaestra_column": "CodigoPlanta",
       "esTX2PrimeraVersion": 1
     },
-    "RRI_Maximo_Recibir": {
-      "name": "Remuneración real individual máxima",
-      "dataset_id": "6dc639",
-      "var_column": "CodigoVariable",
-      "value_column": "Valor",
-      "version_column": "Version",
-      "date_column": "FechaInicio",
-      "dimensions": ["CodigoPlanta"],
-      "maestra_column": "Planta",
-      "codMaestra_column": "CodigoPlanta",
-      "esTX2PrimeraVersion": 1
-    },
-    "RRI_sinAnillosdeSeg": {
-      "name": "Remuneración real individual diaria SIN contratos",
-      "dataset_id": "6dc639",
+    "RRI_ContratosCompraMS": {
+      "name": "Remuneracion real individual diaria con contratos de compra",
+      "dataset_id": "BE51B1",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1510,7 +1822,31 @@
       "dimensions": ["CodigoPlanta"],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 1
+      "esTX2PrimeraVersion": 0
+    },
+    "RRI_Maximo_Recibir": {
+      "name": "Remuneracion real individual maxima",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": "Planta",
+      "codMaestra_column": "CodigoPlanta",
+      "esTX2PrimeraVersion": 0
+    },
+    "RRI_sinAnillosdeSeg": {
+      "name": "Remuneracion real individual diaria SIN contratos",
+      "dataset_id": "BE51B1",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaInicio",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
     },
     "TarifaFAZNI_Actualizada": {
       "name": "Tarifa FAZNI",
@@ -1525,7 +1861,7 @@
       "esTX2PrimeraVersion": 0
     },
     "TarifaLey99_Actualizada_Hidraulico": {
-      "name": "Aportes ley 99 de 1993 para hidráulicos",
+      "name": "Aportes ley 99 de 1993 para hidraulicos",
       "dataset_id": "7c8129",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1537,13 +1873,49 @@
       "esTX2PrimeraVersion": 0
     },
     "TarifaLey99_Actualizada_Termico": {
-      "name": "Aportes ley 99 de 1993 para térmicos",
+      "name": "Aportes ley 99 de 1993 para termicos",
       "dataset_id": "7c8129",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
       "date_column": "FechaInicio",
       "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "TCRB": {
+      "name": "Disponibilidad arranque utilizando tecnologia termica a gas ciclo carbon",
+      "dataset_id": "39db4e",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "TCST": {
+      "name": "Disponibilidad asociada con arranque utilizando tecnologia termica a gas ciclo sting",
+      "dataset_id": "ff15e5",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "TVAP": {
+      "name": "Disponibilidad asociada con arranque utilizando tecnologia termica a gas vapor",
+      "dataset_id": "b84962",
+      "var_column": "CodigoVariable",
+      "value_column": "Valor",
+      "version_column": "Version",
+      "date_column": "FechaHora",
+      "dimensions": ["CodigoPlanta"],
       "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
@@ -1561,7 +1933,7 @@
       "esTX2PrimeraVersion": 0
     },
     "ValorVentasContratosSICEP": {
-      "name": "Valor contratos convocatorias públicas SICEP",
+      "name": "Valor contratos convocatorias publicas SICEP",
       "dataset_id": "ab3d66",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1597,7 +1969,7 @@
       "esTX2PrimeraVersion": 0
     },
     "VlrComprasRPF": {
-      "name": "Valor regulación primaria de frecuencia",
+      "name": "Valor regulacion primaria de frecuencia",
       "dataset_id": "7c8129",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1610,15 +1982,15 @@
     },
     "VlrResComAGC": {
       "name": "Responsabilidad comercial de AGC",
-      "dataset_id": "f2081a",
+      "dataset_id": "520A3F",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
-      "date_column": "FechaHora",
+      "date_column": "Fecha",
       "dimensions": [],
       "maestra_column": null,
       "codMaestra_column": null,
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "Vlr_CB": {
       "name": "Valor compras en bolsa nacional",
@@ -1634,7 +2006,7 @@
     },
     "Vlr_CB_Int": {
       "name": "Valor compras en bolsa internacional",
-      "dataset_id": "b1c11e",
+      "dataset_id": "4295B4",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1642,11 +2014,11 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": "Agente",
       "codMaestra_column": "CodigoSICAgente",
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "Vlr_CB_TIE": {
       "name": "Valor compras en bolsa ties",
-      "dataset_id": "b1c11e",
+      "dataset_id": "1E0AC7",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1654,7 +2026,7 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": "Agente",
       "codMaestra_column": "CodigoSICAgente",
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "Vlr_Rest_conAlivio": {
       "name": "Valor restricciones del sistema aplicados los alivios",
@@ -1670,7 +2042,7 @@
     },
     "Vlr_VB": {
       "name": "Valor ventas en bolsa nacional",
-      "dataset_id": "b1c11e",
+      "dataset_id": "F387F3",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1678,11 +2050,11 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": "Agente",
       "codMaestra_column": "CodigoSICAgente",
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "Vlr_VB_Int": {
       "name": "Valor ventas en bolsa internacional",
-      "dataset_id": "b1c11e",
+      "dataset_id": "6D6E23",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1690,11 +2062,11 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": "Agente",
       "codMaestra_column": "CodigoSICAgente",
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "Vlr_VB_TIE": {
       "name": "Valor ventas en bolsa TIES",
-      "dataset_id": "b1c11e",
+      "dataset_id": "A88E47",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1702,11 +2074,11 @@
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": "Agente",
       "codMaestra_column": "CodigoSICAgente",
-      "esTX2PrimeraVersion": 0
+      "esTX2PrimeraVersion": 1
     },
     "Vlr_CTB": {
       "name": "Valor compras transacciones bolsa",
-      "dataset_id": "b1c11e",
+      "dataset_id": "81D183",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1718,7 +2090,7 @@
     },
     "Vlr_VTB": {
       "name": "Valor ventas transacciones bolsa",
-      "dataset_id": "b1c11e",
+      "dataset_id": "95C913",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
       "version_column": "Version",
@@ -1729,7 +2101,7 @@
       "esTX2PrimeraVersion": 0
     },
     "VolumenMaximoTecnicoEnergia": {
-      "name": "Volúmen máximo técnico energía",
+      "name": "Volumen maximo tecnico energia",
       "dataset_id": "c51127",
       "var_column": null,
       "value_column": "VolumenMaximoTecnicoEnergia",
@@ -1753,7 +2125,7 @@
       "esTX2PrimeraVersion": 0
     },
     "VolumenTotalEnergia": {
-      "name": "Volumen total del embalse expresado en energía",
+      "name": "Volumen total del embalse expresado en energia",
       "dataset_id": "c51127",
       "var_column": null,
       "value_column": "VolumenTotalEnergia",
@@ -1765,7 +2137,7 @@
       "esTX2PrimeraVersion": 0
     },
     "VolumenUtilDiarioEnergia": {
-      "name": "Volumen útil diario expresado en energía",
+      "name": "Volumen util diario expresado en energia",
       "dataset_id": "c51127",
       "var_column": null,
       "value_column": "VolumenUtilDiarioEnergia",
@@ -1777,7 +2149,7 @@
       "esTX2PrimeraVersion": 0
     },
     "VolumenUtilPorcentaje": {
-      "name": "Volumen útil diario expresado en porcentaje",
+      "name": "Volumen util diario expresado en porcentaje",
       "dataset_id": "843497",
       "var_column": null,
       "value_column": "VolumenUtilPorcentaje",
@@ -1791,7 +2163,7 @@
   }, 
   "maestra": {
     "Agente": {
-      "name": "Contiene el listado de agentes registrados en el mercado por actividad y para cada día",
+      "name": "Contiene el listado de agentes registrados en el mercado por actividad y para cada dia",
       "dataset_id": "972263",
       "var_column": null,
       "value_column": null,
@@ -1803,7 +2175,7 @@
       "esTX2PrimeraVersion": 0
     },
     "Area": {
-      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de las áreas operativas en las que está dividido el Sistema Interconectado Nacional y que se presentan en el SIMEM",
+      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de las areas operativas en las que esta dividido el Sistema Interconectado Nacional y que se presentan en el SIMEM",
       "dataset_id": "841808",
       "var_column": null,
       "value_column": null,
@@ -1827,7 +2199,7 @@
       "esTX2PrimeraVersion": 0
     },
     "Planta_Prueba": {
-      "name": "Contiene el listado de las plantas de generación registradas que se encuentran en pruebas",
+      "name": "Contiene el listado de las plantas de generacion registradas que se encuentran en pruebas",
       "dataset_id": "7F18B1",
       "var_column": null,
       "value_column": null,
@@ -1839,7 +2211,7 @@
       "esTX2PrimeraVersion": 0
     },
     "Subarea": {
-      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de las subáreas operativas en las que está dividido el Sistema Interconectado Nacional y que se presentan en el SIMEM",
+      "name": "Listado que sirve como apoyo al usuario de los diferentes conjuntos de datos para extraer el nombre de las subareas operativas en las que esta dividido el Sistema Interconectado Nacional y que se presentan en el SIMEM",
       "dataset_id": "10F2C9",
       "var_column": null,
       "value_column": null,
