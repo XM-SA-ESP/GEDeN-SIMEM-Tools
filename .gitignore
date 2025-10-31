@@ -167,3 +167,5 @@ coverage-reports/
 
 *.code-workspace
 .tmp
+
+src/UploadJsonVariables.py
