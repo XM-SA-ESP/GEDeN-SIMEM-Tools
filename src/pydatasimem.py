@@ -51,24 +51,6 @@ class _Validation:
     def log_approve(variable):
         approve_message = f"Variable values validated: {variable}"
         logging.debug(approve_message)
-
-    # @staticmethod
-    # def filter(var_column : str, var_values: str | list) -> None | tuple[str,list]:
-    #     if not var_column and not var_values:
-    #         logging.info("No filter has been chosen.")
-    #         return None
-    #     if not var_column or not var_values:
-    #         logging.info("Check that the column and values are both defined for the filter. No filter has been chosen")
-    #         return None
-    #     if not isinstance(var_column, str):
-    #         raise TypeError("Column filter must be a string")
-    #     if isinstance(var_values, str):
-    #         var_values = [var_values]
-    #     elif not isinstance(var_values, list):
-    #         raise TypeError("Values filter must be a string or a list")
-    #     var_filter = (var_column, var_values)
-    #     _Validation.log_approve(var_filter)
-    #     return var_filter
     
     @staticmethod
     def date(var_date) -> dt.datetime:
@@ -298,9 +280,6 @@ class ReadSIMEM:
             logging.info("Dataset will be empty - Start date is bigger than end date")
         self.__start_date: dt.datetime = start_date
         self.__end_date: dt.datetime = end_date
-        # if hasattr(self, '__dataset_info'):
-        #     self.__dataset_info["parameters"]["startDate"] =  dt.datetime.strftime(start_date, date_format)
-        #     self.__dataset_info["parameters"]["endDate"] =  dt.datetime.strftime(end_date, date_format)
         logging.info("Dates defined")
         
     def _set_dataset_data(self, catalog: bool = False) -> None:
@@ -842,7 +821,6 @@ class VariableSIMEM:
         filters=[var_column,"=",self._var]
         if self.__filters is not None:
             filters = VariableSIMEM.create_filter(filters,self.__filters)
-        # print(filters)
         dataset = ReadSIMEM(self._dataset_id, start_date, end_date, filters=filters)
         check_filter = False
         if var_column is not None:
@@ -1427,51 +1405,69 @@ class MaestraSIMEM(VariableSIMEM):
 #%%
 if __name__ == '__main__':
 
+    # Se obtiene el catálogo de variables implementadas en VariableSIMEM
+    variables = VariableSIMEM.get_collection()
+
+    # Se obtiene el catágo de variables de SIMEM
+    catalog_var = CatalogSIMEM("variables")
+    data_var = catalog_var.get_data()
+    print(data_var)
+
+    # Se obtiene el catágo de conjuntos de SIMEM
+    catalog_df = CatalogSIMEM(catalog_type='datasets')
+    data_df = catalog_df.get_data()
+    print(data_df)
+
+#%%
+    # Se crean parámetros para el uso de VariableSIMEM
+
+    codigo_variable = 'PB_Nal'
+    fecha_inicio = '2024-01-01'
+    fecha_fin = '2026-02-28'
+    filter_variable = ["Valor","between",["290","300"]]
+    
+#%%
+    # Se inicilizan dos instancias de VariableSIMEM, una para extraer la última versión y otra para extraer solamente la versión TXR
+    
+    pb_nal_final = VariableSIMEM(cod_variable=codigo_variable, start_date=fecha_inicio, 
+                               end_date=fecha_fin, version=0, filters=filter_variable)
+    pb_nal_txr = VariableSIMEM(cod_variable=codigo_variable, start_date=fecha_inicio, 
+                               end_date=fecha_fin, version='TXR', filters=filter_variable)
+
+#%%
+    # Se obtienen los datos del precio de bolsa nacional en su última versión
+
+    data_final=pb_nal_final.get_data()
+    pb_nal_final.describe_data()
+    print(data_final)
+
+#%%
+    # Se obtienen los datos del precio de bolsa nacional en versión TX3
+
+    data_txr=pb_nal_txr.get_data()
+    pb_nal_txr.describe_data()
+    print(data_txr)
+
+#%%
+    # Se crean parámetros para el uso de ReadSIMEM
+
     dataset_id = 'aecac4'
     fecha_inicio = '2024-01-01'
-    fecha_fin = '2026-01-05'
-    # filters = ["Valor","between",["80","90"]]
+    fecha_fin = '2026-02-28'
     filters = [["CodigoVariable","=","CERE"],["Valor","<","80"],["Valor",">","79"]]
-    # catalogVar = CatalogSIMEM(catalog_type='datasets').get_data()
-#     filter_variable = [["Valor","<","300"],["Valor",">","290"]]#['Valor','between',['290','300']]
-#     # variables = VariableSIMEM.get_collection()
-#     pb_nal_tx1 = VariableSIMEM(cod_variable="PB_Nal", start_date=fecha_inicio, 
-#                                end_date=fecha_fin, version='TXR', filters=filter_variable)
-#     pb_nal_tx2 = VariableSIMEM(cod_variable="PB_Nal", start_date=fecha_inicio, 
-#                                end_date=fecha_fin, version=0, filters=filter_variable)
 
-# # # #%%
-#     data1=pb_nal_tx1.get_data()
-#     pb_nal_tx1.describe_data()
+#%%
+    # Se inicializa la instancia de ReadSIMEM y se obtienen los datos del CERE aplicando los filtros
 
-# # # #%%
-#     data2=pb_nal_tx2.get_data()
-#     pb_nal_tx2.describe_data()
-
-#     print(data1)
-#     print('-----------------')
-#     print(data2)
-# #%%
     simem = ReadSIMEM(dataset_id, fecha_inicio, fecha_fin, filters=filters)
     df = simem.main(output_folder="", filter=True)
     print(df)
-    # print(simem.get_columns())
-    # print(simem.get_datasetid())
+    print(simem.get_columns())
+    print(simem.get_datasetid())
     print(simem.get_name())
     print(simem.get_metadata())
-    # simem.get_metadata().to_clipboard()
     print(simem.get_granularity())
     print(simem.get_startdate())
     print(simem.get_enddate())
     print(simem.get_filters())
-    # filters_2 = [["CodigoVariable","=","CERE"],["Valor","between",["80","100"]]]
-    # simem.set_filter(filters_2)
-    # df = simem.main(output_folder="", filter=True)
-    # print(df)
-    # print(simem.get_filters())
-    # print(simem.get_resolution())
-    # print(simem.get_filter_url())
-    # print(simem.get_filter_column())
-    # catalog_var = CatalogSIMEM("variables")
-    # data = catalog_var.get_data()
-    # print(data)
+    print(simem.get_resolution())

@@ -60,3 +60,9 @@ simem.get_granularity()
 ```bash
 simem.get_resolution()
 ```
+
+8. Obtener el filtro del conjunto de datos
+
+```bash
+simem.get_filters()
+```
