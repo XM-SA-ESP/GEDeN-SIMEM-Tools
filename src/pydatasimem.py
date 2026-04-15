@@ -432,9 +432,9 @@ class ReadSIMEM:
         if type == 'get':
             response = session.get(url)
         elif type == 'post' and filter:
-            response = session.post(url, json=filters)
+            response = session.post(url, json=filters, stream=True)
         else:
-            response = session.post(url)
+            response = session.post(url, stream=True)
         logging.info("Response with status: %s", response.status_code)
         response.raise_for_status()
         data = response.json()

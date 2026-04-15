@@ -169,3 +169,4 @@ coverage-reports/
 .tmp
 
 src/UploadJsonVariables.py
+setup.py
