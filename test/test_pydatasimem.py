@@ -12,6 +12,7 @@ import tempfile
 TEST_RESPONSE = {
     "parameters": {"startDate": "", "endDate": ""},
     "result": {
+        "records": [{'x': 1}],
         "metadata": {"granularity": "Diaria"},
         "columns": [{"name": "col"}],
         "filterDate": "Fecha",
@@ -35,49 +36,6 @@ class TestValidation(unittest.TestCase):
             _Validation.log_approve("test_variable")
         except Exception as e:
             self.fail(f"log_approve raised an exception: {e}")
-
-    def test_filter_no_column_no_values(self):
-        column = None
-        values = None
-        result = _Validation.filter(column, values)
-        self.assertIsNone(result)
-
-    def test_filter_no_column(self):
-        column = None
-        values = "values"
-        result = _Validation.filter(column, values)
-        self.assertIsNone(result)
-
-    def test_filter_no_values(self):
-        column = "Column"
-        values = None
-        result = _Validation.filter(column, values)
-        self.assertIsNone(result)
-
-    def test_filter_invalid_column_type(self):
-        column = 123
-        values = "values"
-        with self.assertRaises(TypeError):
-            _Validation.filter(column, values)
-
-    def test_filter_invalid_values_type(self):
-        column = "Column"
-        values = 123
-        with self.assertRaises(TypeError):
-            _Validation.filter(column, values)
-
-
-    def test_filter_valid_string_value(self):
-        column = "column"
-        values = "values"
-        result = _Validation.filter(column, values)
-        self.assertEqual(result, ("column", ["values"]))
-
-    def test_filter_valid_list_value(self):
-        column = "column"
-        values = ["value1", "value2"]
-        result = _Validation.filter(column, values)
-        self.assertEqual(result, ("column", ["value1", "value2"]))
 
     def test_date_with_datetime(self):
       
@@ -146,6 +104,46 @@ class TestValidation(unittest.TestCase):
         empty_df = pd.DataFrame()
         with self.assertRaises(TypeError):
             _Validation.dataset(empty_df, "2024-01-01", "2024-01-31")
+    
+    def test_validate_filter_ok_with_list_values(self):
+        f = ["Campo", "=", ["A", "B"]]
+        out = _Validation.validate_filter(f)
+        self.assertEqual(out, f)
+
+    def test_validate_filter_wrong_length(self):
+        with self.assertRaises(TypeError):
+            _Validation.validate_filter(["SoloDos", "="])
+
+    def test_validate_filter_wrong_types(self):
+        with self.assertRaises(TypeError):
+            _Validation.validate_filter([123, "=", ["A"]])
+        with self.assertRaises(TypeError):
+            _Validation.validate_filter(["Campo", 123, ["A"]])
+        with self.assertRaises(TypeError):
+            _Validation.validate_filter(["Campo", "=", 123])
+        with self.assertRaises(TypeError):
+            _Validation.validate_filter(["Campo", "=", ["A", 1]])  # elemento no string
+
+    def test_validate_operation_value_between_ok(self):
+        op, val = _Validation.validate_operation_value("between", ["1", "2"])
+        self.assertEqual(op, "between")
+        self.assertEqual(val, "1,2")
+
+    def test_validate_operation_value_in_requires_list(self):
+        with self.assertRaises(ValueError):
+            _Validation.validate_operation_value("in", "A")
+
+    def test_validate_operation_value_gt_requires_string(self):
+        with self.assertRaises(ValueError):
+            _Validation.validate_operation_value(">", ["10"])
+
+    def test_validate_operation_value_between_needs_two_values(self):
+        with self.assertRaises(ValueError):
+            _Validation.validate_operation_value("between", ["1"])
+
+    def test_validate_operation_value_invalid_op(self):
+        with self.assertRaises(TypeError):
+            _Validation.validate_operation_value("foo", "bar")
 
 class test_clase(unittest.TestCase):
 
@@ -168,20 +166,6 @@ class test_clase(unittest.TestCase):
             cls.start_date,
             cls.end_date
         )
-
-    @patch('src.pydatasimem.ReadSIMEM._make_request', return_value=TEST_RESPONSE)
-    def test_set_dates_updates_info(self, mock_request):
-        obj = ReadSIMEM("abc123", "2024-01-01", "2024-01-10")
-        obj.set_dates("2024-01-05", "2024-01-06")
-        self.assertIn("startDate", obj._ReadSIMEM__dataset_info["parameters"])
-        self.assertIn("endDate", obj._ReadSIMEM__dataset_info["parameters"])
-
-    @patch('src.pydatasimem.ReadSIMEM._make_request', return_value=TEST_RESPONSE)
-    def test_get_records_empty(self, mock_request):
-        obj = ReadSIMEM("abc123", "2024-01-01", "2024-01-10")
-        with patch.object(obj, '_make_request', return_value={"result": {"records": []}}):
-            records = obj._get_records("fake_url", MagicMock())
-        self.assertEqual(records, [])
 
     @patch('src.pydatasimem.ReadSIMEM._make_request', return_value=TEST_RESPONSE)
     @patch('src.pydatasimem.ReadSIMEM._get_records', return_value=[{"col": "val"}])
@@ -238,7 +222,6 @@ class test_clase(unittest.TestCase):
         and the dates are correctly changed inside the ReadSIMEM object
         """
 
-        # Checks that the value initialized in setup is correct inside the object
         test_start_date = dt.datetime(2024, 4, 14, 0, 0)
         test_end_date = dt.datetime(2024, 4, 16, 0, 0)
         init_start_date = self.read_simem._ReadSIMEM__start_date
@@ -246,18 +229,15 @@ class test_clase(unittest.TestCase):
         self.assertEqual(init_start_date, test_start_date)
         self.assertEqual(init_end_date, test_end_date)
 
-        # Checks that the value is correctly changed inside the object
         test_datetime_date = dt.datetime(2021, 1, 1, 0, 0)
         test_string_date = '2021-01-01'
 
-        # Checks the result when a string is given
         self.read_simem.set_dates(test_string_date, test_string_date)
         changed_start_date = self.read_simem._ReadSIMEM__start_date
         changed_end_date = self.read_simem._ReadSIMEM__end_date
         self.assertEqual(changed_start_date, test_datetime_date)
         self.assertEqual(changed_end_date, test_datetime_date)
         
-        # Checks the result when entered a datetime object is given
         self.read_simem.set_dates(test_datetime_date, test_datetime_date)
         changed_start_date = self.read_simem._ReadSIMEM__start_date
         changed_end_date = self.read_simem._ReadSIMEM__end_date
@@ -265,27 +245,11 @@ class test_clase(unittest.TestCase):
         self.assertEqual(changed_end_date, test_datetime_date)
         self.apply_exception()
 
-
-    def test_set_filter(self):
-        """
-        Checks that the filter is correctly assigned and the filter url attribute
-        exists in the ReadSIMEM object.
-        """
-        test_list_filter = ('test_column', ["value1", "value2"])
-        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
-        changed_filter = self.read_simem._filter_values
-        self.assertEqual(changed_filter, test_list_filter)
-        filter_url = getattr(self.read_simem, '_ReadSIMEM__filter_url', None)
-        self.assertIsNotNone(filter_url)
-        self.apply_exception()
-        
     def test_set_dataset_data(self):
         """
         Checks that the initialized information is correctly assigned to the attributes in 
         the ReadSIMEM object.
         """
-        init_dataset_info = self.read_simem._ReadSIMEM__dataset_info
-        self.assertIsInstance(init_dataset_info, dict)
 
         init_columns = self.read_simem._ReadSIMEM__columns
         self.assertIsInstance(init_columns, pd.DataFrame)
@@ -295,8 +259,6 @@ class test_clase(unittest.TestCase):
         self.assertIsInstance(init_metadata, pd.DataFrame)
         self.assertFalse(init_metadata.empty, "DataFrame is empty")
 
-        init_date_filter = self.read_simem._ReadSIMEM__date_filter
-        self.assertIsInstance(init_date_filter, str)
         init_name = self.read_simem._ReadSIMEM__name
         self.assertIsInstance(init_name, str)
         init_granularity = self.read_simem._ReadSIMEM__granularity
@@ -322,15 +284,6 @@ class test_clase(unittest.TestCase):
         resolution = self.read_simem._ReadSIMEM__check_date_resolution(test_granularity)        
         self.assertEqual(resolution, 0)
         self.apply_exception()
-
-
-    def test_create_urls(self):
-        initial_date = dt.datetime(2024, 3, 14, 0, 0)
-        final_date = dt.datetime(2024, 4, 16, 0, 0)
-        resolution = 1
-        urls = self.read_simem._ReadSIMEM__create_urls(initial_date, final_date, resolution)
-        self.assertListEqual(urls, TEST_URLS)
-        self.apply_exception()
     
     def test_generate_start_dates(self):
         initial_date = dt.datetime(2024, 3, 14, 0, 0)
@@ -341,17 +294,6 @@ class test_clase(unittest.TestCase):
         mock_dates = [['2024-03-14', '2024-04-01'], ['2024-03-31', '2024-04-16']]
         self.assertListEqual(dates, mock_dates)
         self.apply_exception()
-
-    def test_get_records(self):
-        mock_records = self.read_test_data(EC6945_RECORDS_FILE)
-        test_request = self.read_test_data(EC6945_REQUEST_FILE)
-        self.mock_request.get.return_value.json.return_value = test_request
-        
-        url = 'https://www.simem.co/backend-files/api/PublicData?startdate=2024-04-14&enddate=2024-04-16&datasetId=ec6945'
-        records = self.read_simem._get_records(url, self.mock_request)
-        self.assertTrue(len(records), len(mock_records))
-        self.apply_exception()
-
 
     def test_get_datasetid(self):
         object_value = self.read_simem._ReadSIMEM__dataset_id
@@ -372,30 +314,11 @@ class test_clase(unittest.TestCase):
         self.assertEqual(object_value, function_return)
         self.apply_exception()
 
-    def test_get_filter_url(self):
-        test_list_filter = ('test_column', ["value1", "value2"])
-        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
-
-        object_value = self.read_simem._ReadSIMEM__filter_url
-        function_return = self.read_simem.get_filter_url()
-        self.assertEqual(object_value, function_return)
-        self.apply_exception()
-
-    def test_get_filters(self):
-        test_list_filter = ('test_column', ["value1", "value2"])
-        self.read_simem.set_filter(test_list_filter[0], test_list_filter[1])
-        object_value = self.read_simem._filter_values
-        function_return = self.read_simem.get_filters()
-        self.assertEqual(function_return, object_value)
-        self.apply_exception()
-
-
     def test_get_resolution(self):
         object_value = self.read_simem._ReadSIMEM__resolution
         function_return = self.read_simem.get_resolution()
         self.assertEqual(function_return, object_value)
         self.apply_exception()
-
 
     def test_get_granularity(self):
         object_value = self.read_simem._ReadSIMEM__granularity
@@ -409,23 +332,15 @@ class test_clase(unittest.TestCase):
         self.assertFalse(function_return.empty, "DataFrame is empty")
         self.apply_exception()
 
-
     def test_get_columns(self):
         function_return = self.read_simem.get_columns()
         self.assertFalse(function_return.empty, "DataFrame is empty")
         self.apply_exception()
 
-
     def test_get_name(self):
         object_value = self.read_simem._ReadSIMEM__name
         function_return = self.read_simem.get_name()
         self.assertEqual(function_return,object_value)
-        self.apply_exception()
-
-
-    def test_get_dataset_info(self):
-        function_return = self.read_simem._ReadSIMEM__get_dataset_info()
-        self.assertIsInstance(function_return, dict)
         self.apply_exception()
 
     @staticmethod
@@ -440,45 +355,6 @@ class test_clase(unittest.TestCase):
         global EXCEPTION
         EXCEPTION = True
 
-    @patch('requests.Session.get')
-    def test_make_request_success(self, mock_get):
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.json.return_value = {"success": True, "parameters": {"idDataset": "abc123"}}
-        mock_get.return_value = mock_response
-
-        session = MagicMock()
-        session.get.return_value = mock_response
-        data = ReadSIMEM._make_request("fake_url", session)
-        self.assertTrue(data["success"])
-
-    @patch('requests.Session.get')
-    def test_make_request_failure_prints_message(self, mock_get):
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.json.return_value = {
-            "success": False,
-            "parameters": {"idDataset": "wrong_id"},
-            "message": "Dataset not found"
-        }
-        mock_get.return_value = mock_response
-
-        session = MagicMock()
-        session.get.return_value = mock_response
-        data = ReadSIMEM._make_request("fake_url", session)
-        self.assertIn("message", data)
-
-    @patch('requests.Session.get')
-    def test_make_request_http_error(self, mock_get):
-        mock_response = MagicMock()
-        mock_response.raise_for_status.side_effect = Exception("HTTP Error")
-        mock_get.return_value = mock_response
-
-        session = MagicMock()
-        session.get.return_value = mock_response
-        with self.assertRaises(Exception):
-            ReadSIMEM._make_request("fake_url", session)
-
     def test_generate_dates_basic(self):
         start = dt.datetime(2024, 1, 15)
         end = dt.datetime(2024, 3, 10)
@@ -487,37 +363,160 @@ class test_clase(unittest.TestCase):
         self.assertTrue(len(end_dates) > 0)
         self.assertEqual(start_dates[0], "2024-01-15")
 
-    def test_create_urls_with_and_without_filter(self):
-        obj = MagicMock()
-        obj.url_api = "https://api.test?startdate={}&enddate={}"
-        obj.get_startdate.return_value = dt.datetime(2024, 1, 1)
-        obj.get_enddate.return_value = dt.datetime(2024, 1, 10)
-        obj.get_datasetid.return_value = "abc123"
-        obj.get_filter_url.return_value = "&columnDestinyName=test&values=value"
-        obj._generate_dates.return_value = (["2024-01-01"], ["2024-01-10"])
+    @patch('src.pydatasimem.ReadSIMEM._make_request')  # Evita red en __init__ -> _set_dataset_data
+    def test__create_urls_builds_expected_urls(self, mock_req):
+        # Respuesta mínima para que __init__ no truene
+        mock_req.return_value = {
+            "parameters": {"startDate": "", "endDate": ""},
+            "result": {
+                "metadata": {"granularity": "Diaria"},
+                "columns": [{"name": "col"}],
+                "filterDate": "Fecha",
+                "name": "Dataset"
+            }
+        }
+        # Importante: también parcheamos requests.Session para que __init__ no abra sesión real
+        with patch('requests.Session'):
+            obj = ReadSIMEM("ec6945", "2024-03-14", "2024-04-16")
+            # Forzamos generate_dates (no usa red) para controlar las fechas
+            with patch('src.pydatasimem.ReadSIMEM._generate_dates',
+                       return_value=(["2024-03-14", "2024-04-01"],
+                                     ["2024-03-31", "2024-04-16"])):
+                urls = obj._ReadSIMEM__create_urls(obj.get_startdate(), obj.get_enddate(), obj.get_resolution())
+                expected = [
+                    "https://www.simem.co/backend-files/api/datos-publicos?startDate=2024-03-14&endDate=2024-03-31&datasetId=ec6945",
+                    "https://www.simem.co/backend-files/api/datos-publicos?startDate=2024-04-01&endDate=2024-04-16&datasetId=ec6945",
+                ]
+                self.assertListEqual(urls, expected)
 
-        urls_no_filter = ReadSIMEM._ReadSIMEM__create_urls(obj, "2024-01-01", "2024-01-10", 1, filter=False)
-        urls_with_filter = ReadSIMEM._ReadSIMEM__create_urls(obj, "2024-01-01", "2024-01-10", 1, filter=True)
+    @patch('src.pydatasimem.ReadSIMEM._make_request')
+    @patch('requests.Session')  # Evita sesión real en __init__
+    def test__get_filter_and_setfilter_getfilters(self, mock_sess, mock_req):
+        mock_req.return_value = {
+            "parameters": {"startDate": "", "endDate": ""},
+            "result": {
+                "metadata": {"granularity": "Diaria"},
+                "columns": [{"name": "col"}],
+                "filterDate": "Fecha",
+                "name": "Dataset"
+            }
+        }
+        obj = ReadSIMEM("aecac4", "2024-01-01", "2024-01-31")
 
-        self.assertIn("startdate=2024-01-01", urls_no_filter[0])
-        self.assertIn("&columnDestinyName=test", urls_with_filter[0])
+        # __get_filter (estático-privado): sólo transforma a estructura de API (sin postear nada)
+        raw = ["Valor", "between", ["80", "100"]]
+        flt = ReadSIMEM._ReadSIMEM__get_filter(raw)
+        self.assertEqual(flt[0]["Fd"], "Valor")
+        self.assertEqual(flt[0]["Op"], "btw")
+        self.assertEqual(flt[0]["Vl"], "80,100")
 
-    def test_get_filter_url_and_filters(self):
-        obj = MagicMock()
-        setattr(obj, "_ReadSIMEM__filter_url", "&columnDestinyName=test&values=value")
-        setattr(obj, "_filter_values", ("col", ["val"]))
-        self.assertEqual(ReadSIMEM.get_filter_url(obj), "&columnDestinyName=test&values=value")
-        self.assertEqual(ReadSIMEM.get_filters(obj), ("col", ["val"]))
+        # set_filter / get_filters (estado interno)
+        with self.assertRaises(TypeError):
+            obj.set_filter(None)
+        obj.set_filter(raw)
+        gf = obj.get_filters()
+        self.assertIsInstance(gf, list)
+        self.assertEqual(gf[0]["Fd"], "Valor")
 
-        delattr(obj, "_ReadSIMEM__filter_url")
-        delattr(obj, "_filter_values")
-        self.assertIsNone(ReadSIMEM.get_filter_url(obj))
-        self.assertIsNone(ReadSIMEM.get_filters(obj))
+    @patch('src.pydatasimem.ReadSIMEM._make_request')
+    @patch('requests.Session')
+    def test__get_filter_bool_flag(self, mock_sess, mock_req):
+        mock_req.return_value = {
+            "parameters": {"startDate": "", "endDate": ""},
+            "result": {"metadata": {"granularity": "Diaria"},
+                       "columns": [{"name": "c"}],
+                       "filterDate": "Fecha", "name": "Dataset"}
+        }
+        obj = ReadSIMEM("aecac4", "2024-01-01", "2024-01-31")
+        obj._ReadSIMEM__filter = True
+        self.assertTrue(obj._ReadSIMEM__get_filter_bool())
 
-    def test_get_filter_column(self):
-        obj = MagicMock()
-        setattr(obj, "_ReadSIMEM__date_filter", "Fecha")
-        self.assertEqual(ReadSIMEM.get_filter_column(obj), "Fecha")
+    @patch('src.pydatasimem.ReadSIMEM._make_request')
+    @patch('requests.Session')
+    def test__set_datasetid_affects_urls(self, mock_sess, mock_req):
+        mock_req.return_value = {
+            "parameters": {"startDate": "", "endDate": ""},
+            "result": {"metadata": {"granularity": "Diaria"},
+                       "columns": [{"name": "col"}],
+                       "filterDate": "Fecha",
+                       "name": "Dataset"}
+        }
+        obj = ReadSIMEM("abc123", "2024-01-01", "2024-01-31")
+        # El __init__ ya agregó datasetId a url_data_api y url_info_api
+        self.assertIn("&datasetId=abc123", obj.url_data_api)
+
+        # Si pido catalog=True, anexa a url_api
+        obj._set_datasetid("zz99zz", catalog=True)
+        self.assertIn("&datasetId=zz99zz", obj.url_api)
+
+    def test__make_request_get_and_post_only_with_mock_session(self):
+        # Creamos una sesión falsa y respuestas falsas; no hay red real
+        mock_session = MagicMock()
+
+        # GET -> data con 'success' y 'parameters'
+        resp_get = MagicMock()
+        resp_get.status_code = 200
+        resp_get.json.return_value = {
+            "success": True,
+            "parameters": {"idDataset": "xxxxxx"},
+            "result": {"records": [{"a": 1}]}
+        }
+
+        # POST -> data genérica
+        resp_post = MagicMock()
+        resp_post.status_code = 200
+        resp_post.json.return_value = {"records": [{"b": 2}]}
+
+        mock_session.get.return_value = resp_get
+        mock_session.post.return_value = resp_post
+
+        # GET
+        out_get = ReadSIMEM._make_request("http://dummy", mock_session, type='get', filter=False)
+        self.assertIn("result", out_get)
+
+        # POST sin filtro
+        out_post = ReadSIMEM._make_request("http://dummy", mock_session, type='post', filter=False)
+        self.assertIn("records", out_post)
+
+        # POST con filtro
+        out_post_f = ReadSIMEM._make_request(
+            "http://dummy", mock_session, type='post', filter=True, filters=[{"Fd": "X"}]
+        )
+        self.assertIn("records", out_post_f)
+
+    @patch('src.pydatasimem.ReadSIMEM._make_request', return_value={
+        "parameters": {"startDate": "", "endDate": ""},
+        "result": {
+            "metadata": {"granularity": "Diaria"},
+            "columns": [{"name": "col"}],
+            "filterDate": "Fecha",
+            "name": "TestDataset"
+        }
+    })
+    @patch('requests.Session')  # evita abrir sesiones reales
+    def test__set_dataset_data_populates_attributes(self, mock_sess, mock_req):
+        # Instanciará y llamará _set_dataset_data en __init__, pero con mocks
+        obj = ReadSIMEM("abc123", "2024-01-01", "2024-01-31")
+        # Afirmamos el estado (sin red)
+        self.assertIsInstance(obj.get_columns(), pd.DataFrame)
+        self.assertIsInstance(obj.get_metadata(), pd.DataFrame)
+        self.assertIsInstance(obj.get_name(), str)
+        self.assertIn(obj.get_granularity(), ["Diaria", "Horaria", "Mensual", "Semanal", "Anual"])
+
+    @patch('src.pydatasimem.ReadSIMEM._make_request', return_value=TEST_RESPONSE)
+    @patch('requests.Session')
+    def test__get_records_get_and_zero(self, mock_sess, mock_mr):
+        # Instancia sin red: __init__ también queda amortiguado por Session mock + _make_request mock
+        obj = ReadSIMEM("abc123", "2024-01-01", "2024-01-31")
+
+        # GET -> lista con 1 registro (no hay red real)
+        out = obj._get_records("http://dummy", session=MagicMock(), type='get')
+        self.assertEqual(out, [{"x": 1}])
+
+        # GET -> cero registros
+        with patch('src.pydatasimem.ReadSIMEM._make_request', return_value={"result": {"records": []}}):
+            out0 = obj._get_records("http://dummy", session=MagicMock(), type='get')
+            self.assertEqual(out0, [])
 
 class FakeReadSIMEM:
 
@@ -578,6 +577,28 @@ class TestCatalogSIMEM(unittest.TestCase):
         self.assertIsInstance(data, pd.DataFrame)
         self.assertFalse(data.empty)
         self.assertIn("name", data.columns)
+    
+    @patch('src.pydatasimem.ReadSIMEM._set_datasetid')
+    @patch('src.pydatasimem.ReadSIMEM._get_records', return_value=[{"id": 1}])
+    @patch('src.pydatasimem.ReadSIMEM._make_request', return_value={
+        "parameters": {}, "result": {"metadata": {"granularity": "Diaria"},
+                                     "columns": [{"name": "col"}],
+                                     "filterDate": "Fecha", "name": "Catalog"}})
+    def test_init_datasets_calls_set_datasetid_with_catalog_id(self, mock_req, mock_records, mock_setid):
+        obj = CatalogSIMEM("datasets")
+        mock_setid.assert_called()   # llamado con catalog=True y catalog_id
+        self.assertFalse(obj.get_data().empty)
+
+    @patch('src.pydatasimem.ReadSIMEM._set_datasetid')
+    @patch('src.pydatasimem.ReadSIMEM._get_records', return_value=[{"id": 2}])
+    @patch('src.pydatasimem.ReadSIMEM._make_request', return_value={
+        "parameters": {}, "result": {"metadata": {"granularity": "Diaria"},
+                                     "columns": [{"name": "col"}],
+                                     "filterDate": "Fecha", "name": "Catalog"}})
+    def test_init_variables_calls_set_datasetid_with_variable_inventory_id(self, mock_req, mock_records, mock_setid):
+        obj = CatalogSIMEM("variables")
+        mock_setid.assert_called()
+        self.assertFalse(obj.get_data().empty)
 
 class TestVariableSIMEM(unittest.TestCase):
  
@@ -735,7 +756,7 @@ class TestVariableSIMEM(unittest.TestCase):
             "FechaInicio": [pd.to_datetime("2024-01-01")],
             "FechaFin": [pd.to_datetime("2024-01-12")],
             "FechaPublicacion": [pd.to_datetime("2024-01-01")],
-            "EsMaximaVersion": [True],
+            "esMaximaVersion": [True],
             "order": [0]
         })
  
@@ -867,6 +888,7 @@ class TestVariableSIMEM(unittest.TestCase):
         self.assertIn('FechaPublicacion', result.columns)
         mock_main.assert_called_once()
     
+    @patch('src.pydatasimem.ReadSIMEM.__init__', return_value=None)  # Evita side-effects/red al instanciar
     @patch('src.pydatasimem.ReadSIMEM.main', return_value=pd.DataFrame({
         'Version': ['TX1', 'TX2'],
         'FechaInicio': ['2024-01-01', '2024-01-01'],
@@ -878,12 +900,26 @@ class TestVariableSIMEM(unittest.TestCase):
     }))
     @patch.object(VariableSIMEM, '_order_date', side_effect=lambda dataset, date_column: dataset.assign(month=[1, 1]))
     @patch.object(VariableSIMEM, '_filter_by_version', return_value=pd.DataFrame({'Version': ['TX2']}))
-    def test_versions_with_string_version(self, mock_filter, mock_order, mock_main):
-        result = VariableSIMEM._versions(pd.to_datetime('2024-01-01'),
-                                        pd.to_datetime('2024-01-31'),
-                                        'dummy_id', version='TX2', esTX2=False)
+    def test_versions_with_string_version(self, mock_filter_by_version, mock_order_date, mock_main, mock_init):
+        if not hasattr(VariableSIMEM, '_cache'):
+            VariableSIMEM._cache = {}
+        else:
+            VariableSIMEM._cache.clear()
+
+        result = VariableSIMEM._versions(
+            pd.to_datetime('2024-01-01'),
+            pd.to_datetime('2024-01-31'),
+            'dummy_id',
+            version='TX2',
+            esTX2=False
+        )
+
         self.assertTrue((result['Version'] == 'TX2').all())
-        mock_filter.assert_called_once()
+
+        mock_init.assert_called_once()
+        mock_main.assert_called_once()
+        mock_order_date.assert_called_once()
+        mock_filter_by_version.assert_called_once()
 
     @patch('src.pydatasimem.ReadSIMEM.main', return_value=pd.DataFrame({
         'Version': ['TX1', 'TX2'],
@@ -942,6 +978,32 @@ class TestVariableSIMEM(unittest.TestCase):
         self.assertIn('Precio de escasez', stats)
         self.assertIn('mean', stats['Precio de escasez'])
         self.assertEqual(stats['Precio de escasez']['mean'], 150.0)
+    
+    def test_create_filter_merges_correctly(self):
+        f1 = ["CodigoVariable", "=", "PrecioEscasez"]
+        f2 = ["Valor", ">", "0"]
+        out = VariableSIMEM.create_filter(f1, f2)
+        self.assertEqual(len(out), 2)
+        self.assertIn(f1, out)
+        self.assertIn(f2, out)
+
+        # Si f2 es lista de listas, se agrega f1 al final
+        out2 = VariableSIMEM.create_filter(f1, [f2])
+        self.assertEqual(out2, [f2, f1])
+
+    @patch('src.pydatasimem.ReadSIMEM')
+    def test__read_dataset_data_builds_filter_and_sets_data(self, FakeRead):
+        # Fake ReadSIMEM.main() regresa dataset simple
+        FakeRead.return_value.main.return_value = pd.DataFrame({
+            "Fecha": pd.to_datetime(["2024-01-10"]),
+            "Valor": [100],
+            "CodigoVariable": ["PrecioEscasez"],
+            "Version": ["TX1"]
+        })
+        v = VariableSIMEM("PrecioEscasez", "2024-01-01", "2024-01-31")
+        out = v._read_dataset_data("2024-01-01", "2024-01-31")
+        self.assertIsInstance(out, pd.DataFrame)
+        self.assertEqual(out.shape[0], 1)
     
 class TestMaestraSIMEM(unittest.TestCase):
 

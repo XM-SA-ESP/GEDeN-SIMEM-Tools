@@ -175,7 +175,4 @@ https://www.simem.co/backend-files/api/PublicData?datasetid={}
 - datasetId = Código único de 6 dígitos alfanuméricos que representa el conjunto de datos a consultar
 - startDate = Fecha del primer dato
 - endDate = Fecha del último dato
-- columnDestinyName = Columna por la que se hará filtrado
-- values = Lista de valores a filtrar en la columna definida. Separados por "," (coma) si es más de uno.
-
-
+- filters = Filtros que se usaran
