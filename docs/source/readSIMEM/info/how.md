@@ -7,8 +7,7 @@ Para poder acceder a las funcionalidades de la clase primero se debe inicializar
 - Dataset_id: Id del conjunto de datos que se desea explorar.
 - Fecha_Inicio: Fecha desde la cual se necesita la información.
 - Fecha_Fin: Fecha hasta la que se necesita la información.
-- Column_destiny (Opcional): Nombre de la columna a la cual se le desea aplicar filtro.
-- Var_values (Opcional): Valores del filtro que se desea aplicar.
+- Filtro (Opcional): Lista de filtros a aplicar a la información.
 
 ## Uso
 
@@ -34,8 +33,9 @@ from pydataxm.pydatasimem import ReadSIMEM
 Dataset_id = "EC6945"
 Fecha_Inicio = "2024-01-01"
 Fecha_Fin = "2024-12-31"
-Column = "CodigoVariable"
-Values = "PB_Nal"
+Filtro = ["CodigoVariable","=","PB_Nal"]
+Filtro_2 = [["CodigoVariable","=","PB_Nal"], ["Valor",">=","95"], ["Valor","<","120"], ["Version","in",["TXR","TXF"]]]
 
-simem = ReadSIMEM(Dataset_id, Fecha_Inicio, Fecha_Fin, Column, Values)
+simem = ReadSIMEM(Dataset_id, Fecha_Inicio, Fecha_Fin, Filtro)
+simem_2 = ReadSIMEM(Dataset_id, Fecha_Inicio, Fecha_Fin, Filtro_2)
 ```
