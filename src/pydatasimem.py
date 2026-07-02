@@ -1,7 +1,7 @@
 """
 Module built to simplify the integration of python with the SIMEM open data API 
 
-Author: Sebastian Montoya
+Author: Equipo Analítica XM
 
 """
 
