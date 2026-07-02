@@ -353,7 +353,7 @@
       "dataset_id": "7E9CBB",
       "var_column": null,
       "value_column": "CROM1",
-      "version_column": null,
+      "version_column": "FechaPublicacion",
       "date_column": "FechaProyectada",
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": null,
@@ -365,7 +365,7 @@
       "dataset_id": "7E9CBB",
       "var_column": null,
       "value_column": "CROM2",
-      "version_column": null,
+      "version_column": "FechaPublicacion",
       "date_column": "FechaProyectada",
       "dimensions": ["CodigoSICAgente"],
       "maestra_column": null,
@@ -373,7 +373,7 @@
       "esTX2PrimeraVersion": 0
     },
     "CTECOMBaseCarb": {
-      "name": "Costo de operación y mantenimiento carbón",
+      "name": "Costo de operacion y mantenimiento carbon",
       "dataset_id": "CB2410",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -385,7 +385,7 @@
       "esTX2PrimeraVersion": 0
     },
     "CTECOMBaseGas": {
-      "name": "Costo de operación y mantenimiento gas",
+      "name": "Costo de operacion y mantenimiento gas",
       "dataset_id": "CB2410",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -397,7 +397,7 @@
       "esTX2PrimeraVersion": 0
     },
     "CTECOMBaseOT": {
-      "name": "Costo de operación y mantenimiento diferente a gas y carbón",
+      "name": "Costo de operacion y mantenimiento diferente a gas y carbon",
       "dataset_id": "CB2410",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -661,7 +661,7 @@
       "esTX2PrimeraVersion": 0
     },
     "DesvNegOEF": {
-      "name": "Desviación diaria de obligación de energía firme negativa",
+      "name": "Desviacion diaria de obligacion de energia firme negativa",
       "dataset_id": "693AC9",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -673,7 +673,7 @@
       "esTX2PrimeraVersion": 0
     },
     "DesvPosOEF": {
-      "name": "Desviación diaria de obligación de energía firme positiva",
+      "name": "Desviacion diaria de obligacion de energia firme positiva",
       "dataset_id": "85B998",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -901,7 +901,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GenSegModifiProgramaGenPorSalForz": {
-      "name": "Generación de seguridad modificaciones al programa de generación solicitadas por el CND por salidas forzadas de activos",
+      "name": "Generacion de seguridad modificaciones al programa de generacion solicitadas por el CND por salidas forzadas de activos",
       "dataset_id": "94F4A5",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -913,7 +913,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GenSegOR": {
-      "name": "Generación de seguridad que haya sido solicitada por un OR",
+      "name": "Generacion de seguridad que haya sido solicitada por un OR",
       "dataset_id": "94F4A5",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -925,7 +925,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GenSegRestElecSTN": {
-      "name": "Generación de seguridad restricciones eléctricas y/o soporte de voltaje del STN",
+      "name": "Generacion de seguridad restricciones electricas y/o soporte de voltaje del STN",
       "dataset_id": "94F4A5",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -937,7 +937,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GenSegRestElecSTRSDL": {
-      "name": "Generación de seguridad restricciones eléctricas de los STR y/o SDL",
+      "name": "Generacion de seguridad restricciones electricas de los STR y/o SDL",
       "dataset_id": "94F4A5",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -949,7 +949,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GenSegRestrExpoEnlaceTIE": {
-      "name": "Generación de seguridad restricciones exportaciones de energía enlace TIE",
+      "name": "Generacion de seguridad restricciones exportaciones de energia enlace TIE",
       "dataset_id": "94F4A5",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -1081,7 +1081,7 @@
       "esTX2PrimeraVersion": 0
     },
     "GProgGrupoDespacho": {
-      "name": "Generación programada por grupo de generación de despacho",
+      "name": "Generacion programada por grupo de generacion de despacho",
       "dataset_id": "E055B4",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -1609,7 +1609,7 @@
       "esTX2PrimeraVersion": 0
     },
     "NumIntentoPruebaDisp": {
-      "name": "Número de intentos programados prueba de disponibilidad",
+      "name": "Numero de intentos programados prueba de disponibilidad",
       "dataset_id": "AB052F",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -2149,7 +2149,7 @@
       "esTX2PrimeraVersion": 1
     },
     "RentaCongestionDestinacionFOES": {
-      "name": "Renta de Congestión Destinacion FOES",
+      "name": "Renta de Congestion Destinacion FOES",
       "dataset_id": "d44fe9",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -2245,7 +2245,7 @@
       "esTX2PrimeraVersion": 0
     },
     "Tcomb_Arr": {
-      "name": "Tipo de Combustible con el que arrancó la planta",
+      "name": "Tipo de Combustible con el que arranco la planta",
       "dataset_id": "b461cf",
       "var_column": "CodigoVariable",
       "value_column": "ValorTexto",
@@ -2329,7 +2329,7 @@
       "esTX2PrimeraVersion": 0
     },
     "ValorAsignadoComercializadorEnergiaVendidaEmbalsada": {
-      "name": "Valor a Energía Vendida y Embalsada",
+      "name": "Valor a Energia Vendida y Embalsada",
       "dataset_id": "86d9c6",
       "var_column": "CodigoVariable",
       "value_column": "Valor",
@@ -2703,7 +2703,7 @@
   }, 
   "maestra": {
     "Agente": {
-      "name": "Contiene el listado de agentes registrados en el mercado por actividad y para cada dia",
+      "name": "Listado de agentes registrados en el mercado por actividad y para cada dia",
       "dataset_id": "972263",
       "var_column": null,
       "value_column": null,
@@ -2739,7 +2739,7 @@
       "esTX2PrimeraVersion": 0
     },
     "Planta_Prueba": {
-      "name": "Contiene el listado de las plantas de generacion registradas que se encuentran en pruebas",
+      "name": "Listado de las plantas de generacion registradas que se encuentran en pruebas",
       "dataset_id": "7F18B1",
       "var_column": null,
       "value_column": null,
@@ -2770,6 +2770,18 @@
       "version_column": null,
       "date_column": "Fecha",
       "dimensions": [],
+      "maestra_column": null,
+      "codMaestra_column": null,
+      "esTX2PrimeraVersion": 0
+    },
+    "UnidadGeneracion": {
+      "name": "Listado de las unidades de generacion registradas y su planta asociada",
+      "dataset_id": "670221",
+      "var_column": null,
+      "value_column": null,
+      "version_column": null,
+      "date_column": "Fecha",
+      "dimensions": ["CodigoUnidadGeneracion"],
       "maestra_column": null,
       "codMaestra_column": null,
       "esTX2PrimeraVersion": 0
