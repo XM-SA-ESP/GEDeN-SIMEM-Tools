@@ -403,9 +403,8 @@ class test_clase(unittest.TestCase):
         }
         obj = ReadSIMEM("aecac4", "2024-01-01", "2024-01-31")
 
-        # __get_filter (estático-privado): sólo transforma a estructura de API (sin postear nada)
         raw = ["Valor", "between", ["80", "100"]]
-        flt = ReadSIMEM._ReadSIMEM__get_filter(raw)
+        flt = ReadSIMEM._get_filter(raw)
         self.assertEqual(flt[0]["Fd"], "Valor")
         self.assertEqual(flt[0]["Op"], "btw")
         self.assertEqual(flt[0]["Vl"], "80,100")
@@ -429,7 +428,7 @@ class test_clase(unittest.TestCase):
         }
         obj = ReadSIMEM("aecac4", "2024-01-01", "2024-01-31")
         obj._ReadSIMEM__filter = True
-        self.assertTrue(obj._ReadSIMEM__get_filter_bool())
+        self.assertTrue(obj._get_filter_bool())
 
     @patch('src.pydatasimem.ReadSIMEM._make_request')
     @patch('requests.Session')
