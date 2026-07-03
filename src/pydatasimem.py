@@ -1,7 +1,7 @@
 """
 Module built to simplify the integration of python with the SIMEM open data API 
 
-Author: Sebastian Montoya
+Author: Equipo Analítica XM
 
 """
 
@@ -150,7 +150,7 @@ class ReadSIMEM:
         The base URL for the SIMEM API.
     session : requests.Session
         The session for making requests to the API.
-    __filters : list
+    _filters : list
         The filter values for the dataset request.
     __dataset_info : dict
         The dataset information.
@@ -192,7 +192,7 @@ class ReadSIMEM:
         self.url_info_api: str = base_api_info_url
         self._set_datasetid(dataset_id)
         self.set_dates(start_date, end_date)
-        self.__filters = ReadSIMEM.__get_filter(filters) if filters is not None else filters
+        self._filters = ReadSIMEM._get_filter(filters) if filters is not None else filters
         self._set_dataset_data()
         t1 = time.time()
         logging.info(f'Initiallization complete in: {t1 - t0 : .2f} seconds.')
@@ -200,7 +200,7 @@ class ReadSIMEM:
         print('*' * 100)
 
     @staticmethod
-    def __get_filter(filters: list) -> list:
+    def _get_filter(filters: list) -> list:
         """
         Get and transform the filter provided by the user.
         
@@ -237,7 +237,7 @@ class ReadSIMEM:
         """
         if filters is None:
             raise TypeError(f"The filters are empty")
-        self.__filters = ReadSIMEM.__get_filter(filters)
+        self._filters = ReadSIMEM._get_filter(filters)
         logging.info("Filters defined")
 
     def _set_datasetid(self, dataset_id, catalog: bool = False) -> None:
@@ -365,7 +365,7 @@ class ReadSIMEM:
         list
             A list of records from the dataset.
         """
-        records = self._make_request(url, session, type=type, filter=self.__get_filter_bool(), 
+        records = self._make_request(url, session, type=type, filter=self._get_filter_bool(), 
                                      filters=self.get_filters())
         if type == 'get':  
             result = records.get('result', {})
@@ -428,7 +428,7 @@ class ReadSIMEM:
         dict
             A dictionary containing the response in json encoded format.
         """
-        
+
         if type == 'get':
             response = session.get(url)
         elif type == 'post' and filter:
@@ -568,7 +568,7 @@ class ReadSIMEM:
         """
         return self.__end_date
 
-    def __get_filter_bool(self) -> bool | None:
+    def _get_filter_bool(self) -> bool | None:
         """
         True to aply the filter, False to not do so.
         
@@ -588,7 +588,7 @@ class ReadSIMEM:
             The filter values.
         """
 
-        var_filters = getattr(self, "_ReadSIMEM__filters", None)
+        var_filters = self._filters
         if var_filters is None:
             logging.info("No filter assigned.")
         return var_filters
@@ -730,7 +730,7 @@ class VariableSIMEM:
         self.__esTX2 = self._json_file[self._var]['esTX2PrimeraVersion']
         self._start_date = _Validation.date(start_date)
         self._end_date = _Validation.date(end_date)
-        self.__filters = filters
+        self._filters = filters
         self._quality_check = quality_check
         self._data = None
         self.__versions_df = None
@@ -818,9 +818,9 @@ class VariableSIMEM:
     
         var_column = self._variable_column
 
-        filters=[var_column,"=",self._var]
-        if self.__filters is not None:
-            filters = VariableSIMEM.create_filter(filters,self.__filters)
+        filters = [var_column,"=",self._var] if var_column is not None else None
+        if self._filters is not None:
+            filters = VariableSIMEM.create_filter(filters,self._filters)
         dataset = ReadSIMEM(self._dataset_id, start_date, end_date, filters=filters)
         check_filter = False
         if var_column is not None:
@@ -848,7 +848,7 @@ class VariableSIMEM:
         date_column = self._date_column
         version_column = self._version_column
 
-        if version_column is not None:
+        if version_column is not None and version_column == "Version":
             self.__index_data = dataset.set_index([date_column, version_column] + self._dimensions)
         else:
             self.__index_data = dataset.set_index([date_column] + self._dimensions)
@@ -868,7 +868,10 @@ class VariableSIMEM:
         data = self._index_df(dataset=self._data)
 
         if self._version_column is not None:
-            data = self._calculate_version(dataset=data, version=self.__user_version)
+            if self._version_column == 'FechaPublicacion':
+                data = self._calculate_version_publicacion(dataset=data, version_column=self._version_column, version=self.__user_version)
+            else:
+                data = self._calculate_version(dataset=data, version=self.__user_version)
 
         return data
 
@@ -1171,6 +1174,9 @@ class VariableSIMEM:
         last_day_of_month = first_day_of_month + pd.offsets.MonthEnd(0)
         daily_df = ReadSIMEM(daily_dataset_id, first_day_of_month.strftime("%Y-%m-%d"), last_day_of_month.strftime("%Y-%m-%d")).main()
         daily_df = VariableSIMEM._order_date(dataset=daily_df, date_column='FechaPublicacion')
+        daily_df['FechaInicio'] = pd.to_datetime(daily_df['FechaInicio'])
+        daily_df = daily_df[daily_df['FechaInicio'].dt.month == first_day_of_month.month]
+        daily_df['FechaInicio'] = daily_df['FechaInicio'].dt.strftime('%Y-%m-%d')
 
         return daily_df
     
@@ -1197,7 +1203,7 @@ class VariableSIMEM:
         """
 
         first_day = start_date.replace(day=1)
-        cache_key = (first_day, end_date)
+        cache_key = (first_day, end_date, version)
         
         if cache_key in VariableSIMEM._cache:
                     df_filtered = VariableSIMEM._cache[cache_key]
@@ -1272,7 +1278,6 @@ class VariableSIMEM:
         dataset = dataset.drop(columns = ['FechaInicio', 'FechaFin', 'FechaPublicacion', 'esMaximaVersion', 'order'])
         dataset = dataset.rename(columns = {date_temp: date_column})
         dataset.set_index(index_names, inplace=True)
-
         return dataset
 
     def _calculate_version(self, dataset: pd.DataFrame, version: int | str) -> pd.DataFrame:
@@ -1300,6 +1305,35 @@ class VariableSIMEM:
         filtered_df = self.__versions_df
 
         return VariableSIMEM._filter_date(df, filtered_df, date_column, version_column)
+    
+    def _calculate_version_publicacion(self, dataset: pd.DataFrame, version_column: str, version: int) -> pd.DataFrame:
+        """
+        Filters and sorts the variable dataset based on a specific version of the version column.
+        
+        Parameters:
+            dataset : pd.DateFrame
+                Dataset of the variable.
+            version_column: sty
+                Name of the dataset version column.
+            version : int | str
+                Version value.
+        
+        Returns:
+            pd.DataFrame
+             The variable dataset filtered by the version.
+        """
+
+        df = dataset.copy()
+
+        df[version_column] = pd.to_datetime(df[version_column])
+        df = df.sort_values(by=version_column, ascending=False)
+
+        df['orden'] = df.groupby(level=list(range(df.index.nlevels))).cumcount()
+
+        filtered_df = df[df['orden'] == version].copy()
+        filtered_df = filtered_df.drop(columns=['orden'])
+
+        return filtered_df
     
     def __calculate_stats(self, dataset: pd.DataFrame, column: str) -> dict:
         """
@@ -1372,7 +1406,7 @@ class MaestraSIMEM(VariableSIMEM):
         Return a dataframe with the list of available maestras.
     """
 
-    def __init__(self, maestra: str, start_date: str, end_date: str):
+    def __init__(self, maestra: str, start_date: str, end_date: str, filters: list = None):
         self._json_file = VariableSIMEM._read_json()
         self._json_file = self._json_file['maestra']
         self._var = _Validation.cod_variable(cod_variable=maestra, list_variables=self._json_file, type='maestra')
@@ -1384,6 +1418,7 @@ class MaestraSIMEM(VariableSIMEM):
         self._dimensions = self._json_file[self._var]['dimensions']
         self._start_date = _Validation.date(start_date)
         self._end_date = _Validation.date(end_date)
+        self._filters = filters
         self._quality_check = None
         self._data = None
     
@@ -1402,6 +1437,33 @@ class MaestraSIMEM(VariableSIMEM):
             columns={'index': 'Maestra', 'name': 'Descripción', 'dimensions': 'Cruces'})
  
         return df
+    
+    def _read_dataset_data(self, start_date: str, end_date: str) -> pd.DataFrame:
+        """
+        Use the ReadSIMEM class to get the dataset with the information of the variable.
+        
+        Parameters:
+            start_date : str | dt.datetime 
+                The starting date for the data slicing.
+            end_date : str | dt.datetime 
+                The ending date for the data slicing.
+        
+        Returns:
+            pd.DataFrame
+                The variable dataset.
+        """
+        if self._data is not None:
+            return
+    
+        dataset = ReadSIMEM(self._dataset_id, start_date, end_date, filters=self._filters)
+        check_filter = False
+        if self._filters is not None:
+            self.__granularity = dataset.get_granularity()
+            check_filter = True
+        data = dataset.main(filter = check_filter)
+        self._data = _Validation.dataset(data, start_date, end_date)
+        return self._data
+
 #%%
 if __name__ == '__main__':
 
