@@ -790,14 +790,17 @@ class VariableSIMEM:
             list
                 Filter completed.
         """
-        if isinstance(filter_2, list) and filter_2 and all(isinstance(i, list) for i in filter_2):
-            filter_2.append(filter_1)
-            return filter_2
+        if filter_1 is not None:
+            if isinstance(filter_2, list) and filter_2 and all(isinstance(i, list) for i in filter_2):
+                filter_2.append(filter_1)
+                return filter_2
+            else:
+                filter_3 = []
+                filter_3.append(filter_1)
+                filter_3.append(filter_2)
+                return filter_3
         else:
-            filter_3 = []
-            filter_3.append(filter_1)
-            filter_3.append(filter_2)
-            return filter_3
+            return filter_2
 
     def _read_dataset_data(self, start_date: str, end_date: str) -> pd.DataFrame:
         """
@@ -817,12 +820,13 @@ class VariableSIMEM:
             return
     
         var_column = self._variable_column
+        check_filter = False
 
         filters = [var_column,"=",self._var] if var_column is not None else None
         if self._filters is not None:
             filters = VariableSIMEM.create_filter(filters,self._filters)
+            check_filter = True
         dataset = ReadSIMEM(self._dataset_id, start_date, end_date, filters=filters)
-        check_filter = False
         if var_column is not None:
             self.__granularity = dataset.get_granularity()
             check_filter = True
@@ -1065,7 +1069,7 @@ class VariableSIMEM:
             'FechaInicio' : registry['FechaInicio'].values[0],
             'FechaFin' : registry['FechaFin'].values[0],
             'FechaPublicacion' : pd.to_datetime(date.values[0]).date(),
-            'EsMaximaVersion' : 0,
+            'esMaximaVersion' : 0,
             'order' : order
         }
 
@@ -1242,10 +1246,11 @@ class VariableSIMEM:
                 'FechaInicio' : last_month.strftime("%Y-%m-%d"),
                 'FechaFin' : last_month.strftime("%Y-%m-%d"),
                 'FechaPublicacion' : last_month.strftime("%Y-%m-%d"),
-                'EsMaximaVersion' : 0
+                'esMaximaVersion' : 0
             }
             new_registry_df = pd.DataFrame([new_registry])
             version_df = pd.concat([version_df, new_registry_df], ignore_index=True)
+
         return version_df
     
     @staticmethod
